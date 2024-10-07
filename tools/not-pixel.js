@@ -12,7 +12,7 @@ puppeteer.use(stealth);
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 const readLinesToArray = () => {
-    const lines = fs.readFileSync('./data/localStorage.txt', 'utf-8').trim().split('\n');
+    const lines = fs.readFileSync(`${__dirname}/data/localStorage.txt`, 'utf-8').trim().split('\n');
     const array = [];
     lines.forEach(line => {
         const obj = {};

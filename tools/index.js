@@ -77,12 +77,26 @@ const MainBrowser = async (localStorageData, countFolder) => {
         // }, localStorageData);
         // await page.reload();
 
+
+        // const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
+        // await page.setRequestInterception(true);
+
+        // page.on('request', request => {
+        //     if (request.url().endsWith('telegram-web-app.js')) {
+        //         request.respond({
+        //             status: 200,
+        //             contentType: 'application/javascript',
+        //             body: modifiedJs
+        //         });
+        //     } else {
+        //         request.continue();
+        //     }
+        // });
+
         await page.goto("https://web.telegram.org/k/#@xkucoinbot");
         await sleep(2000);
-
         await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
         await sleep(2000);
-
         await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
         await page.waitForSelector('iframe');
         let iframe = await page.evaluate(() => document.querySelector("iframe")?.getAttribute('src'));
