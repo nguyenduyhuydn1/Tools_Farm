@@ -132,13 +132,8 @@ const postStart = async (user, pixelId) => {
 // =====================================================================
 
 
-
-let xPosition = 0;
-let yPosition = 0;
 const MainBrowser = async (localStorageData, countFolder) => {
     try {
-
-
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -150,16 +145,13 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
-                '--window-size=600,300',
-                `--window-position=${xPosition},${yPosition}`,
+                '--mute-audio',
+                '--window-size=700,700',
+                `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
-        xPosition += 300;
-        if (xPosition + 300 > 1920) {
-            xPosition = 0;
-            yPosition += 200;
-        }
+
 
 
         // const userAgent = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36' };
@@ -208,7 +200,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 7; i < dataArray.length; i++) {
+    for (let i = 0; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }

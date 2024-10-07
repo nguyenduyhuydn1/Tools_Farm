@@ -44,6 +44,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
+                '--mute-audio',
                 '--window-size=600,300',
                 `--window-position=${xPosition},${yPosition}`,
             ],

@@ -9,8 +9,6 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-
-
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 const readLinesToArray = () => {
@@ -30,8 +28,10 @@ const readLinesToArray = () => {
     return array;
 };
 
-let xPosition = 0;
-let yPosition = 0;
+
+
+
+
 const MainBrowser = async (localStorageData, count) => {
     try {
         const browser = await puppeteer.launch({
@@ -46,17 +46,15 @@ const MainBrowser = async (localStorageData, count) => {
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
-                '--window-size=600,300',
-                `--window-position=${xPosition},${yPosition}`,
+                '--mute-audio',
+                '--window-size=700,700',
+                `--window-position=0,0`,
+                // --disable-blink-features=AutomationControlled
+                // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
+                // được sử dụng để vô hiệu hóa một tính năng đặc biệt của Chromium gọi là "AutomationControlled"
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
-        xPosition += 300;
-        if (xPosition + 300 > 1920) {
-            xPosition = 0;
-            yPosition += 200;
-        }
-
 
         const [page] = await browser.pages();
         await page.goto("https://web.telegram.org/");
@@ -66,6 +64,19 @@ const MainBrowser = async (localStorageData, count) => {
             }
         }, localStorageData);
         await page.reload();
+        await sleep(2000);
+        await browser.close();
+
+        // await page.waitForSelector('iframe');
+        // let iframe = await page.evaluate(() => {
+        //     let match;
+        //     let iframeElement = document.querySelector("iframe");
+        //     if (iframeElement) {
+        //         const src = iframeElement.src;
+        //         match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+        //     }
+        //     return match;
+        // });
     } catch (error) {
         console.error("Error:", error.message);
     }
