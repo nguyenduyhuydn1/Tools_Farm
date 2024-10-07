@@ -22,7 +22,7 @@ echo [8] auto_click
 echo [9] 
 echo [0] Exit
 echo.
-set /p choice=please choose 1 number [1-4]: 
+set /p choice=please choose 1 number [0-9]: 
 
 :: Handle the menu selection
 if "%choice%"=="1" (

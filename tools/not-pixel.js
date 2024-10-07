@@ -191,10 +191,10 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
 
         let arrNumber = randomNumber();
-        await getInfo(iframe, i);
+        await getInfo(iframe, countFolder);
         await sleep(1000)
         let { charges } = await getStatus(iframe)
-        await getClaim(x);
+        await getClaim(iframe);
         await sleep(1000)
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[i])
@@ -208,7 +208,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i++) {
+    for (let i = 7; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }
