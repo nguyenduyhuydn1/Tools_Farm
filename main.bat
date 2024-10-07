@@ -13,7 +13,7 @@ echo.
 echo Select the project to run:
 echo [1] major
 echo [2] tomarket
-echo [3] 
+echo [3] Not-Pixel
 echo [4] 
 echo [5] 
 echo [6] blum
@@ -22,7 +22,7 @@ echo [8] auto_click
 echo [9] 
 echo [0] Exit
 echo.
-set /p choice=Please enter your choice [1-4]: 
+set /p choice=please choose 1 number [1-4]: 
 
 :: Handle the menu selection
 if "%choice%"=="1" (
@@ -30,7 +30,7 @@ if "%choice%"=="1" (
 ) else if "%choice%"=="2" (
     call :startProject "tomarket" "C:\Users\huy\Desktop\Tool_Farm\tomarket-main"
 ) else if "%choice%"=="3" (
-    @REM call :startProject "Project 3" "C:\path\to\project3"
+    call :startProject "Not-Pixel" "C:\Users\huy\Desktop\Tool_Farm\not-pixel"
 ) else if "%choice%"=="6" (
     python .\script-python\bots\src\aimbot.py
 ) else if "%choice%"=="7" (
