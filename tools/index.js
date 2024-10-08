@@ -12,7 +12,7 @@ puppeteer.use(stealth);
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 const readLinesToArray = () => {
-    const lines = fs.readFileSync('./data/localStorage.txt', 'utf-8').trim().split('\n');
+    const lines = fs.readFileSync(`${__dirname}/data/localStorage.txt`, 'utf-8').trim().split('\n');
     const array = [];
     lines.forEach(line => {
         const obj = {};
@@ -25,6 +25,8 @@ const readLinesToArray = () => {
         });
         array.push(obj);
     });
+    console.log(array);
+
     return array;
 };
 
@@ -57,16 +59,14 @@ const MainBrowser = async (localStorageData, countFolder) => {
         }
 
 
-        // const userAgent = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36' };
         // const addFunc = async (page) => {
-        //     await page.setExtraHTTPHeaders(userAgent);
-
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
         //     const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
         //     await page.evaluateOnNewDocument(preloadFile);
         // };
 
         const [page] = await browser.pages();
+        // await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148');
         // await addFunc(page);
 
         // await page.goto("https://web.telegram.org/");
