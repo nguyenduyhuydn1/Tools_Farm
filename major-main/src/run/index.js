@@ -63,21 +63,19 @@ const run = async (user, index) => {
     }
     try {
       if (countRetryProxy >= MAX_RETRY_PROXY) {
-        const dataLog = `[No ${user.index} _ ID: ${
-          user.info.id
-        } _ Time: ${dayjs().format(
-          "YYYY-MM-DDTHH:mm:ssZ[Z]"
-        )}] Lỗi kết nối proxy - ${user.proxy}`;
+        const dataLog = `[No ${user.index} _ ID: ${user.info.id
+          } _ Time: ${dayjs().format(
+            "YYYY-MM-DDTHH:mm:ssZ[Z]"
+          )}] Lỗi kết nối proxy - ${user.proxy}`;
         fileHelper.writeLog("log.error.txt", dataLog);
         break;
       }
 
       if (countRetryLogin >= MAX_RETRY_LOGIN) {
-        const dataLog = `[No ${user.index} _ ID: ${
-          user.info.id
-        } _ Time: ${dayjs().format(
-          "YYYY-MM-DDTHH:mm:ssZ[Z]"
-        )}] Lỗi đăng nhập thất bại quá ${MAX_RETRY_LOGIN} lần`;
+        const dataLog = `[No ${user.index} _ ID: ${user.info.id
+          } _ Time: ${dayjs().format(
+            "YYYY-MM-DDTHH:mm:ssZ[Z]"
+          )}] Lỗi đăng nhập thất bại quá ${MAX_RETRY_LOGIN} lần`;
         fileHelper.writeLog("log.error.txt", dataLog);
         break;
       }
@@ -169,16 +167,17 @@ if (IS_SHOW_COUNTDOWN && users.length) {
       }, countdownList[0]);
       const offset = dayjs().unix() - minTimeCountdown.created;
       const countdown = minTimeCountdown.time - offset;
-      process.stdout.write("\x1b[K");
-      process.stdout.write(
-        colors.white(
-          `[${dayjs().format(
-            "DD-MM-YYYY HH:mm:ss"
-          )}] Đã chạy hết các luồng, cần chờ: ${colors.blue(
-            datetimeHelper.formatTime(countdown)
-          )}     \r`
-        )
-      );
+      process.exit(1);
+      // process.stdout.write("\x1b[K");
+      // process.stdout.write(
+      //   colors.white(
+      //     `[${dayjs().format(
+      //       "DD-MM-YYYY HH:mm:ss"
+      //     )}] Đã chạy hết các luồng, cần chờ: ${colors.blue(
+      //       datetimeHelper.formatTime(countdown)
+      //     )}     \r`
+      //   )
+      // );
     } else {
       isLog = false;
     }
@@ -191,4 +190,4 @@ if (IS_SHOW_COUNTDOWN && users.length) {
   });
 }
 
-setInterval(() => {}, 1000); // Để script không kết thúc ngay
+setInterval(() => { }, 1000); // Để script không kết thúc ngay

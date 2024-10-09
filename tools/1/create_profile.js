@@ -8,6 +8,7 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
+const randomUseragent = require('random-useragent');
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -38,6 +39,7 @@ const MainBrowser = async (localStorageData, count) => {
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,      //Kucoi
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${count + 300}`,             //memefi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
             args: [
@@ -57,7 +59,10 @@ const MainBrowser = async (localStorageData, count) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
+        await page.setUserAgent(userAgent);
+
         await page.goto("https://web.telegram.org/");
         await page.evaluate((data) => {
             for (const [key, value] of Object.entries(data)) {
@@ -67,17 +72,6 @@ const MainBrowser = async (localStorageData, count) => {
         await page.reload();
         await sleep(2000);
         await browser.close();
-
-        // await page.waitForSelector('iframe');
-        // let iframe = await page.evaluate(() => {
-        //     let match;
-        //     let iframeElement = document.querySelector("iframe");
-        //     if (iframeElement) {
-        //         const src = iframeElement.src;
-        //         match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-        //     }
-        //     return match;
-        // });
     } catch (error) {
         console.error("Error:", error.message);
     }

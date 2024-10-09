@@ -8,6 +8,7 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
+const randomUseragent = require('random-useragent');
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -111,18 +112,21 @@ const getInfo = async (user, count) => {
 
 const getStatus = async (user) => {
     let status = await fetchData("https://notpx.app/api/v1/mining/status", user, "GET");
+    console.log(`status: ${JSON.stringify(status)}`);
+    console.log("============================================================================");
     return status;
 }
 
 const getClaim = async (user) => {
     let claim = await fetchData("https://notpx.app/api/v1/mining/claim", user, "GET");
-    console.log(`claimed: ${claim?.claimed}`);
+    console.log(`claimed: ${JSON.stringify(claim)}`);
+    console.log("============================================================================");
     return claim;
 }
 
 const postStart = async (user, pixelId) => {
     let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#000000" });
-    console.log(`balance:${start?.balance}`);
+    console.log(`balance:${JSON.stringify(start)}`);
     return start;
 }
 
@@ -152,16 +156,9 @@ const MainBrowser = async (localStorageData, countFolder) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-
-
-        // const addFunc = async (page) => {
-        //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
-        //     const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
-        //     await page.evaluateOnNewDocument(preloadFile);
-        // };
-
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        // await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148');
+        await page.setUserAgent(userAgent);
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await sleep(2000);
@@ -180,7 +177,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
             return match;
         });
 
-
+        await sleep(5000)
         let arrNumber = randomNumber();
         await getInfo(iframe, countFolder);
         await sleep(1000)

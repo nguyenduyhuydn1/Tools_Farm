@@ -41,7 +41,7 @@ setInterval(() => {
     } catch (error) {
         console.log("xx");
     }
-}, 500)
+}, 1000)
 
 
 

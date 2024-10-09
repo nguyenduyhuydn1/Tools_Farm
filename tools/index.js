@@ -8,6 +8,10 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
+const randomUseragent = require('random-useragent');
+
+// Generate a random Android user-agent string
+
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -25,8 +29,6 @@ const readLinesToArray = () => {
         });
         array.push(obj);
     });
-    console.log(array);
-
     return array;
 };
 
@@ -58,15 +60,16 @@ const MainBrowser = async (localStorageData, countFolder) => {
             yPosition += 200;
         }
 
-
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
         //     const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
         //     await page.evaluateOnNewDocument(preloadFile);
         // };
 
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        // await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148');
+        await page.setUserAgent(userAgent);
+
         // await addFunc(page);
 
         // await page.goto("https://web.telegram.org/");
@@ -131,10 +134,26 @@ const MainBrowser = async (localStorageData, countFolder) => {
     }
 };
 
+// (async () => {
+//     const dataArray = readLinesToArray();
+//     for (let i = 0; i < dataArray.length; i++) {
+//         await MainBrowser(dataArray[i], i);
+//         await sleep(1000)
+//     }
+// })();
+
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i++) {
-        await MainBrowser(dataArray[i], i);
-        await sleep(1000)
+    for (let i = 0; i < dataArray.length; i += 2) {
+        const promises = [];
+
+        promises.push(MainBrowser(dataArray[i], i));
+
+        if (i + 1 < dataArray.length) {
+            promises.push(MainBrowser(dataArray[i + 1], i + 1));
+        }
+
+        await Promise.all(promises);
+        await sleep(1000);
     }
 })();

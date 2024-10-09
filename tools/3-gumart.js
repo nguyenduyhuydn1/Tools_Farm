@@ -8,6 +8,7 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
+const randomUseragent = require('random-useragent');
 
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -54,7 +55,9 @@ async function navigateToIframe(page, regex = false) {
     }
 }
 
+
 async function waitForTextContent(page, selector, text, timeout = 10000) {
+    // Kiểm tra sự thay đổi trong DOM: Khi bạn muốn đợi một phần tử có nội dung hoặc thuộc tính thay đổi.
     await page.waitForFunction(
         (selector, text) => {
             const element = document.querySelector(selector);
@@ -65,15 +68,6 @@ async function waitForTextContent(page, selector, text, timeout = 10000) {
         text
     );
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -200,14 +194,51 @@ let fetchClaim = async (token) => {
         console.log(`Đã lấy ${claim_value}`);
     }
 }
+
 let fetchBoost = async (token) => {
-    let { status_code, errors } = await fetchData("https://api.gumart.click/api/boost", token, "POST", {});
+    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/boost", token, "POST", {});
     if (status_code == 200) {
         if (errors) console.log(errors);
-        console.log(`Đã boost`);
+        if (data) {
+            console.log(`Đã boost`, JSON.stringify(data));
+        }
     }
 }
 
+let fetchMissions = async (token) => {
+    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/missions", token, "get");
+    if (status_code == 200) {
+        if (errors) console.log(errors);
+        if (data) {
+            const combinedMissions = [
+                ...data.missions.daily,
+                ...data.missions.fixed,
+            ].filter(v => v.status !== 'finished');
+            return combinedMissions;
+        }
+    }
+}
+
+
+let fetchStartTask = async (token, id) => {
+    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/start`, token, "POST");
+    if (status_code == 200) {
+        if (errors) console.log(errors);
+        if (message) console.log(message);
+        return data;
+    }
+}
+
+let fetchClaimTask = async (token, id) => {
+    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/claim`, token, "POST");
+    console.log(status_code);
+
+    if (status_code == 200) {
+        if (errors) console.log(errors);
+        if (message) console.log(message);
+        if (data) console.log(data.title);
+    }
+}
 
 // =====================================================================
 // =====================================================================
@@ -233,8 +264,9 @@ const MainBrowser = async (localStorageData, countFolder) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
+        await page.setUserAgent(userAgent);
 
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await sleep(2000);
@@ -251,53 +283,44 @@ const MainBrowser = async (localStorageData, countFolder) => {
             }
         },);
         await sleep(5000)
+
         if (iframeSrc) {
             console.log("=====================================================================");
             console.log(`                           tài khoản ${countFolder}`);
             console.log("=====================================================================");
-
             let token = await takeToken(iframeSrc);
             await fetchInfo(token);
             await fetchClaim(token);
             await fetchBoost(token);
+
+            let tasks = await fetchMissions(token);
+            for (const e of tasks) {
+                console.log(e.title);
+                if (e.status == "claimable") await fetchClaimTask(token, e.id);
+
+                if (e.status == "startable") {
+                    let data = await fetchStartTask(token, e.id);
+                    let currentTime = Math.floor(Date.now() / 1000);
+                    let futureTime = data.claimable_at;
+                    let delayInSeconds = futureTime - currentTime;
+                    console.log(delayInSeconds / 60);
+
+                    promiseTasks.push(new Promise((resolve) => {
+                        setTimeout(async () => {
+                            await fetchClaimTask(token, e.id);
+                            resolve()
+                        }, delayInSeconds * 1000);
+                    }));
+                }
+            }
         }
         browser.close();
-
-
-        // ngày sau có thể dùng
-        // await clickIfExists(page, "#__nuxt > div > div > section > div > button")
-
-        // let selectorCheckAccount = "#__nuxt > div > div > section > div > div:nth-child(2) > button"
-        // await waitForTextContent(page, selectorCheckAccount, 'Let’s go!', 20000)
-        // await clickIfExists(page, selectorCheckAccount)
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
-        // await clickIfExists(page, "#__nuxt div.swiper-slide.swiper-slide-active > div > div:nth-child(3) > button");
-        // // await clickIfExists(page, "#__nuxt > div > div > section > div.relative > button");
-        // // await clickIfExists(page, "#__nuxt > div > div > section > div.relative div.transition-all > button");
-
-
-        // await sleep(2000);
-        // await sleep(2000);
-        // await sleep(2000);
     } catch (error) {
-        await sleep(2000);
-        await sleep(2000);
-        await sleep(2000);
-        await sleep(2000);
-        await sleep(2000);
-        await sleep(2000);
         console.error("Error:", error.message);
     }
 };
+
+let promiseTasks = [];
 
 (async () => {
     const dataArray = readLinesToArray();
@@ -305,4 +328,10 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }
+
+    console.log(promiseTasks.length);
+    Promise.all(promiseTasks).then(() => {
+        console.log('Tất cả các task đã hoàn thành');
+    });
 })();
+

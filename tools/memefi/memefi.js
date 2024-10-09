@@ -9,6 +9,7 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins')
 stealth.enabledEvasions.delete('media.codecs')
 puppeteer.use(stealth);
+const randomUseragent = require('random-useragent');
 
 
 const sleep = (milliseconds) => {
@@ -16,7 +17,7 @@ const sleep = (milliseconds) => {
 };
 
 const readLinesToArray = () => {
-    const lines = fs.readFileSync('localStorage.txt', 'utf-8').trim().split('\n');
+    const lines = fs.readFileSync(`../data/localStorage.txt`, 'utf-8').trim().split('\n');
     const array = [];
     lines.forEach(line => {
         const obj = {};
@@ -39,7 +40,7 @@ let MainBrowser = (async (countFolder) => {
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder}`,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`,
             args: ['--test-type',
                 '--disable-gpu',
                 '--no-sandbox',
@@ -60,17 +61,19 @@ let MainBrowser = (async (countFolder) => {
         //     }
         // });
 
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        // await page.setExtraHTTPHeaders(userAgent);
+        await page.setUserAgent(userAgent);
+
         // let pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
         // const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
         // await page.evaluateOnNewDocument(preloadFile);
 
-        let memescript = path.join(__dirname, 'public', 'memefi.js');
+        let memescript = path.join(__dirname, '..', 'public', 'memefi.js');
         const preMemescript = fs.readFileSync(memescript, 'utf8');
         await page.evaluateOnNewDocument(preMemescript);
 
-        const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
+        const modifiedJs = fs.readFileSync('../public/telegram-web-app.js', 'utf8');
         await page.setRequestInterception(true);
 
         page.on('request', request => {
@@ -140,7 +143,7 @@ function waitForInput() {
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
-        await MainBrowser(i + 100);
+        await MainBrowser(i);
         await waitForInput();
     }
 })();
