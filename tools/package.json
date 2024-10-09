@@ -11,6 +11,7 @@
 	"description": "",
 	"dependencies": {
 		"fs-extra": "^11.2.0",
+		"proxy-chain": "^2.5.3",
 		"puppeteer": "^22.11.1",
 		"puppeteer-extra": "^3.3.6",
 		"puppeteer-extra-plugin-stealth": "^2.11.2",

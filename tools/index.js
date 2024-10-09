@@ -55,7 +55,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
-        xPosition += 300;   
+        xPosition += 300;
         if (xPosition + 300 > 1920) {
             xPosition = 0;
             yPosition += 200;

@@ -333,5 +333,6 @@ let promiseTasks = [];
     Promise.all(promiseTasks).then(() => {
         console.log('Tất cả các task đã hoàn thành');
     });
+    process.exit(1)
 })();
 

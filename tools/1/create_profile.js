@@ -100,7 +100,7 @@ function waitForInput() {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 29; i < 30; i++) {
+    for (let i = o; i < 30; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
         await waitForInput();
