@@ -39,9 +39,10 @@ const MainBrowser = async (localStorageData, count) => {
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,      //Kucoi
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${count + 300}`,             //memefi
+            // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${count + 300}`,             //memefi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
+            // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${count + 1000}`,          //BuyAccTele
             args: [
                 '--test-type',
                 '--disable-gpu',
@@ -59,19 +60,19 @@ const MainBrowser = async (localStorageData, count) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
+        // const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        await page.setUserAgent(userAgent);
+        // await page.setUserAgent(userAgent);
 
-        await page.goto("https://web.telegram.org/");
-        await page.evaluate((data) => {
-            for (const [key, value] of Object.entries(data)) {
-                localStorage.setItem(key, value);
-            }
-        }, localStorageData);
-        await page.reload();
-        await sleep(2000);
-        await browser.close();
+        await page.goto("https://web.telegram.org/k/");
+        // await page.evaluate((data) => {
+        //     for (const [key, value] of Object.entries(data)) {
+        //         localStorage.setItem(key, value);
+        //     }
+        // }, localStorageData);
+        // await page.reload();
+        // await sleep(2000);
+        // await browser.close();
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -80,27 +81,28 @@ const MainBrowser = async (localStorageData, count) => {
 
 
 
-// const readline = require('readline');
+const readline = require('readline');
 
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// });
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-// function waitForInput() {
-//     return new Promise((resolve) => {
-//         rl.on('line', (input) => {
-//             if (input.toLowerCase() === 's') {
-//                 resolve();
-//             }
-//         });
-//     });
-// }
+function waitForInput() {
+    return new Promise((resolve) => {
+        rl.on('line', (input) => {
+            if (input.toLowerCase() === 's') {
+                resolve();
+            }
+        });
+    });
+}
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i++) {
+    for (let i = 29; i < 30; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
+        await waitForInput();
     }
 })();
