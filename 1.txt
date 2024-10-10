@@ -1,0 +1,2130 @@
+fetch("https://tg-bot-tap.laborx.io/api/v1/auth/validate-init/v2", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "cache-control": "no-cache",
+    "content-type": "application/json",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"initData\":\"query_id=AAE5xaxLAwAAADnFrEsXfuFx&user=%7B%22id%22%3A7712064825%2C%22first_name%22%3A%22Hoangdnvn3%20%F0%9F%9B%92%22%2C%22last_name%22%3A%22Nguyen%F0%9F%90%A6%20SUI%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728544495&hash=153f2d6efac3d552f28736282a5bf59be14cf82aeecd3552b02afeb0d5bed8b2\",\"platform\":\"web\"}",
+  "method": "POST"
+});
+
+{
+    "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "flaggedByAdmin": false,
+    "info": {
+        "originalLanguage": "en",
+        "language": "en",
+        "onboardingCompleted": true,
+        "level": 1
+    },
+    "farmingInfo": {
+        "farmingDurationInSec": 14400,
+        "farmingReward": 28800,
+        "multiplier": 1
+    },
+    "levelDescriptions": [
+        {
+            "level": "0",
+            "farmMultiplicator": 1,
+            "farmDuration": 14400
+        },
+        {
+            "level": "1",
+            "price": 1000000,
+            "farmMultiplicator": 2,
+            "farmDuration": 14400
+        },
+        {
+            "level": "2",
+            "price": 1500000,
+            "farmMultiplicator": 3,
+            "farmDuration": 14400
+        },
+        {
+            "level": "3",
+            "price": 2500000,
+            "farmMultiplicator": 5,
+            "farmDuration": 14400
+        },
+        {
+            "level": "4",
+            "price": 4000000,
+            "farmMultiplicator": 8,
+            "farmDuration": 14400
+        },
+        {
+            "level": "5",
+            "price": 5000000,
+            "farmMultiplicator": 13,
+            "farmDuration": 18000
+        },
+        {
+            "level": "6",
+            "price": 6000000,
+            "farmMultiplicator": 20,
+            "farmDuration": 21600
+        },
+        {
+            "level": "7",
+            "price": 15000000,
+            "farmMultiplicator": 25,
+            "farmDuration": 28800
+        },
+        {
+            "level": "8",
+            "price": 30000000,
+            "farmMultiplicator": 30,
+            "farmDuration": 28800
+        }
+    ],
+    "balanceInfo": {
+        "balance": 1282800,
+        "referral": {},
+        "autofarm": false
+    },
+    "dailyRewardInfo": null,
+    "serverTime": "2024-10-10T07:49:27.911Z"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://tg-bot-tap.laborx.io/api/v1/farming/info", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "if-none-match": "W/\"8f-2c9IE76+Q4Zb6ImFcy03iAhhBc4\"",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+{
+    "balance": "1282800.000",
+    "activeFarmingStartedAt": "2024-10-09T09:53:18.300Z",
+    "farmingDurationInSec": 14400,
+    "farmingReward": 28800,
+    "multiplier": 1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://tg-bot-tap.laborx.io/api/v1/referral/link", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "if-none-match": "W/\"4e-YWw/bJcdJcoVGyM1j6AjQTBkTCk\"",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+{"userCount":0,"link":"https://t.me/TimeFarmCryptoBot?start=oVKPXMpzLlcGIk4C"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://tg-bot-tap.laborx.io/api/v1/tasks", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "if-none-match": "W/\"13c8-7TLQG/lnCfZGRO3PYtR1gXQf2JA\"",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+
+const missingSubmitsion = array.filter(obj => !obj.hasOwnProperty('submitsion'));
+
+
+[
+    {
+        "id": "66e9424e639eb1826c7e6e58",
+        "title": "Watch video and earn",
+        "type": "ADSGRAM",
+        "description": "Watch video and earn",
+        "reward": 10000,
+        "twitterAuthUrl": null
+    },
+    {
+        "id": "665dd515a34653000747c2c7",
+        "title": "Follow our CEO on X",
+        "url": "https://x.com/svsergienko",
+        "type": "TWITTER",
+        "description": "Follow our CEO on X",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-02T16:08:45.177Z"
+        }
+    },
+    {
+        "id": "666318485e7893dd79f8b978",
+        "title": "Subscribe to our CEO channel",
+        "url": "https://t.me/sergeisergienkoen",
+        "type": "TELEGRAM",
+        "chatId": "-1002127744569",
+        "description": "Subscribe to our CEO channel",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-02T16:08:40.234Z"
+        }
+    },
+    {
+        "id": "668fbec8647177930d0ac0bc",
+        "title": "Connect TON wallet",
+        "type": "CONNECT_TON_WALLET",
+        "description": "Connect TON wallet",
+        "reward": 250000,
+        "twitterAuthUrl": null
+    },
+    {
+        "id": "66ff85af639eb1826c7e6f54",
+        "title": "Subscribe to trending apps",
+        "url": "https://trap.bot",
+        "type": "TELEGRAM",
+        "description": "Subscribe to trending apps",
+        "reward": 100000,
+        "twitterAuthUrl": null
+    },
+    {
+        "id": "66d7f4f3639eb1826c7e6e10",
+        "title": "Bits Airdrop $200k 31 Oct",
+        "icon": "TELEGRAM",
+        "url": "https://t.me/BitsTonboxBot/BitsAirdrops?startapp=FoYtqRuqofmRB1iUr7dgjM",
+        "type": "API_CHECK",
+        "description": "Bits Airdrop $200k 31 Oct",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-02T17:20:21.730Z"
+        }
+    },
+    {
+        "id": "66b4a0e57bacd7843196ec03",
+        "title": "Play 1win token",
+        "icon": "TELEGRAM",
+        "url": "https://t.me/token1win_bot/start?startapp=refId137364634",
+        "type": "API_CHECK",
+        "description": "Play 1win token",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-03T13:04:20.780Z"
+        }
+    },
+    {
+        "id": "66ff78a8b1372707032eff2e",
+        "title": "Join NOTPİXEL",
+        "url": "https://t.me/notpixel/app?startapp=f5692577651_s609630",
+        "type": "TELEGRAM",
+        "description": "The new project of the founders of Notcoin is reliable and the time to list is near",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-04T08:16:44.032Z"
+        }
+    },
+    {
+        "id": "6700c578d730ed594af557fd",
+        "title": "A channel for UFO lovers",
+        "url": "https://t.me/realufolover",
+        "type": "TELEGRAM",
+        "description": "Information that excites the human mind",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-05T05:52:26.874Z"
+        }
+    },
+    {
+        "id": "6704139038266dc2de10ab88",
+        "title": " Join Channel 1000DaysCrypto",
+        "url": "https://t.me/days1000crypto",
+        "type": "TELEGRAM",
+        "description": "1000DaysCrypto is a leading community in Vietnam focused on Airdrop and Retroactive hunting, backed by a team of blockchain and IT experts. The community has successfully delivered impressive conversion results, including for the Timefarm project. We aim to become a top-tier community by 2025.",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "COMPLETED",
+            "createdAt": "2024-10-10T07:47:51.722Z"
+        }
+    },
+    {
+        "id": "666414ff5e7893dd79f8b97a",
+        "title": "Follow Time Farm on X",
+        "url": "https://x.com/TimeFarmApp",
+        "type": "TWITTER",
+        "description": "Follow Time Farm on X",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-02T16:08:42.445Z"
+        }
+    },
+    {
+        "id": "66797cfa647177930d0ac092",
+        "title": "Subscribe to Learn to Earn channel",
+        "url": "https://t.me/learn2earnings",
+        "type": "TELEGRAM",
+        "chatId": "-1002166307737",
+        "description": "Subscribe to Learn to Earn channel",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-04T02:16:30.049Z"
+        }
+    },
+    {
+        "id": "667401de647177930d0ac081",
+        "title": "Subscribe to Crypto Meme channel",
+        "url": "https://t.me/CryptoMemeFoundation",
+        "type": "TELEGRAM",
+        "chatId": "-1002241470604",
+        "description": "Subscribe to Meme Games channel",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-04T02:16:32.467Z"
+        }
+    },
+    {
+        "id": "665dd530a34653000747c2ca",
+        "title": "Subscribe to TimeFarm channel",
+        "url": "https://t.me/TimeFarmChannel",
+        "type": "TELEGRAM",
+        "chatId": "-1002181448542",
+        "description": "Subscribe to TimeFarm channel",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "CLAIMED",
+            "createdAt": "2024-10-02T16:08:36.160Z"
+        }
+    },
+    {
+        "id": "665dd53ca34653000747c2cb",
+        "title": "Subscribe to TimeFarm chat",
+        "url": "https://t.me/TimeFarmEnglish9",
+        "type": "TELEGRAM",
+        "chatId": "-1002463179405",
+        "description": "Subscribe to TimeFarm chat",
+        "reward": 100000,
+        "twitterAuthUrl": null,
+        "submission": {
+            "reward": 100000,
+            "status": "REJECTED",
+            "createdAt": "2024-10-02T16:08:37.960Z"
+        }
+    },
+    {
+        "id": "66ff8de4639eb1826c7e6f56",
+        "title": "Subscribe to trending apps",
+        "url": "https://t.me/trendingapps",
+        "type": "TELEGRAM",
+        "description": "Subscribe to trending apps",
+        "reward": 100000,
+        "twitterAuthUrl": null
+    },
+    {
+        "id": "67066586639eb1826c7e6f6f",
+        "title": "Subscribe to partner - trending apps",
+        "url": "https://t.me/trendingapps",
+        "type": "TELEGRAM",
+        "description": "Subscribe to trending apps",
+        "reward": 100000,
+        "twitterAuthUrl": null
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://tg-bot-tap.laborx.io/api/v1/farming/finish", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{}",
+  "method": "POST"
+});
+
+
+{"balance":1311600,"referral":{},"autofarm":false}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://tg-bot-tap.laborx.io/api/v1/farming/start", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2MzI5NjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Mjg1NDY1NjcsImF1ZCI6InRnLmFpLmpvYnMiLCJpc3MiOiJ0Zy5haS5qb2JzIiwic3ViIjoiNzcxMjA2NDgyNSIsImp0aSI6ImN4cW0yMnp6dnA0In0.VlHr2hQFB1meBtG0cYTu98PG7_R0PAToHBuV_UrwoznhmDK-TpsbDZ34b_V5meJdc4zpchk1i8_dPXPGxwodmYjNLM6q3hciSfiRuNrTtv-M1XVSZFit-jdGw2Z-X253zsNoMDqRlY-2FrrDROzcFkN-mM3pAvSikMY2Ysw_NqOJWoac_aOO0VQR1Kp--8mhg57aBvUBnDgFuHct3n5wM0mVOu3Dk0XzN3W8hWtNEoZLO_WnDT_A5BuqSLM96cZ9_T1QXrnNeEbsLQbHyqzkfOEWkot21WYKR1ioRfOzRZZZWAR0KzOHGCTEG1L6tfdUhff7KMbsT918tDXKc1ucaXrH-W56V22k4_Ohkncnide_0c7RhOvFCt3TgSqQcFvuXX-qCt9JrlVGzGVWq7n7YDUK1EUgWWA5ZR6I3wm4NU1xUZUIU3sRsziMMc9piu4zKi1wyFPayS2_E7bvJVrSEIwUUMzG9RjdeJG9dGVp1XqslsPJdeO0w6QAPikgyI-fGbtx5Lc0Oro3ZM4xpr3TwRsxP4fn0Ba5KJEYrjjk3J3TKDaWmF3EzN6ivjUWqnhfZ9TyLdYVp6MxFLjZteP_RoRDuyY7hGGe4-mpurBA06oIdyX94Cmxqb5LdT6qQ8ACRqcpKDbyLOpG9S6C48RSvDtc_SWOoIva3_w2PsBRXgQ",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{}",
+  "method": "POST"
+});
+
+
+{
+    "balance": "1311600.000",
+    "activeFarmingStartedAt": "2024-10-10T07:52:31.455Z",
+    "farmingDurationInSec": 14400,
+    "farmingReward": 28800,
+    "multiplier": 1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://api.adsgram.ai/adv?blockId=2994&tg_id=7712064825&tg_platform=web&platform=Win32&language=en", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "cache-control": "max-age=0",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://timefarm.app/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "status_code": 200,
+    "message": "",
+    "errors": null,
+    "data": {
+        "missions": {
+            "daily": [
+                {
+                    "id": 7,
+                    "title": "Share story",
+                    "description": "Share Gumart on telegram\u2019s story",
+                    "point": 15000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/story.png",
+                    "button_text": "Share",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:44",
+                    "claimable_at": 1728532064,
+                    "claimed_at": "2024-10-10 03:47:44",
+                    "function_name": "shareToStory",
+                    "function_data": {
+                        "link": "https:\/\/api.gumart.click\/media\/gumart-story-video.mp4",
+                        "text": "I just posted story from @gumart_bot. Join with me to start your own shop now!"
+                    },
+                    "status": "finished"
+                }
+            ],
+            "fixed": [
+                {
+                    "id": 1,
+                    "title": "Add emoji",
+                    "description": "Add emoji \ud83d\uded2 to your name",
+                    "point": 15000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/emoji.png",
+                    "button_text": "Add",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": null,
+                    "function_name": "checkTelegramName",
+                    "function_data": {
+                        "link": "tg:\/\/settings\/edit_profile"
+                    },
+                    "status": "claimable"
+                },
+                {
+                    "id": 2,
+                    "title": "Follow X",
+                    "description": "Follow Gumart\u2019s X",
+                    "point": 7000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 3,
+                    "title": "Join Announcement Channel",
+                    "description": "Visit Gumart Announcement Channel",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": "2024-10-10 03:47:45",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 4,
+                    "title": "React tweet",
+                    "description": "React the latest tweet",
+                    "point": 4000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/react.png",
+                    "button_text": "React",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 5,
+                    "title": "Visit Website",
+                    "description": "Visit Gumart\u2019s website",
+                    "point": 4000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/web.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/gumart.net"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 6,
+                    "title": "Retweet",
+                    "description": "Retweet Gumart\u2019s post",
+                    "point": 5000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/retweet.png",
+                    "button_text": "Retweet",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 28,
+                    "title": "Subscribe Youtube",
+                    "description": "Subscribe Gumart's channel",
+                    "point": 5000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 29,
+                    "title": "Like & Comment Youtube Video",
+                    "description": "Like & Comment our latest video",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": "2024-10-10 03:47:47",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 30,
+                    "title": "React Gumart\u2019s latest post",
+                    "description": "React Announcement Channel post",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "React",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 53,
+                    "title": "Send Gumart\u2019s Invitation",
+                    "description": "Send Gumart\u2019s invitation for 5 friends",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Send",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": null,
+                    "function_name": "openPartnerScreen",
+                    "function_data": {
+                        "count": 5
+                    },
+                    "status": "claimable"
+                },
+                {
+                    "id": 54,
+                    "title": "Watch AMA",
+                    "description": "Watch our latest AMA",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/speaker.png",
+                    "button_text": "Watch",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:48",
+                    "claimable_at": 1728532068,
+                    "claimed_at": "2024-10-10 03:47:48",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.binance.com\/en\/live\/video?roomId=2226489"
+                    },
+                    "status": "finished"
+                }
+            ]
+        },
+        "tasks": {
+            "gumart": [
+                {
+                    "id": 1,
+                    "title": "Add emoji",
+                    "description": "Add emoji \ud83d\uded2 to your name",
+                    "point": 15000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/emoji.png",
+                    "button_text": "Add",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": null,
+                    "function_name": "checkTelegramName",
+                    "function_data": {
+                        "link": "tg:\/\/settings\/edit_profile"
+                    },
+                    "status": "claimable"
+                },
+                {
+                    "id": 2,
+                    "title": "Follow X",
+                    "description": "Follow Gumart\u2019s X",
+                    "point": 7000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 3,
+                    "title": "Join Announcement Channel",
+                    "description": "Visit Gumart Announcement Channel",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:45",
+                    "claimable_at": 1728532065,
+                    "claimed_at": "2024-10-10 03:47:45",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 4,
+                    "title": "React tweet",
+                    "description": "React the latest tweet",
+                    "point": 4000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/react.png",
+                    "button_text": "React",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 5,
+                    "title": "Visit Website",
+                    "description": "Visit Gumart\u2019s website",
+                    "point": 4000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/web.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/gumart.net"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 6,
+                    "title": "Retweet",
+                    "description": "Retweet Gumart\u2019s post",
+                    "point": 5000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/retweet.png",
+                    "button_text": "Retweet",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 7,
+                    "title": "Share story",
+                    "description": "Share Gumart on telegram\u2019s story",
+                    "point": 15000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/story.png",
+                    "button_text": "Share",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:44",
+                    "claimable_at": 1728532064,
+                    "claimed_at": "2024-10-10 03:47:44",
+                    "function_name": "shareToStory",
+                    "function_data": {
+                        "link": "https:\/\/api.gumart.click\/media\/gumart-story-video.mp4",
+                        "text": "I just posted story from @gumart_bot. Join with me to start your own shop now!"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 28,
+                    "title": "Subscribe Youtube",
+                    "description": "Subscribe Gumart's channel",
+                    "point": 5000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:46",
+                    "claimable_at": 1728532066,
+                    "claimed_at": "2024-10-10 03:47:46",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 29,
+                    "title": "Like & Comment Youtube Video",
+                    "description": "Like & Comment our latest video",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Visit",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": "2024-10-10 03:47:47",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 30,
+                    "title": "React Gumart\u2019s latest post",
+                    "description": "React Announcement Channel post",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "React",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": "2024-10-10 04:06:03",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/GumartEC"
+                    },
+                    "status": "finished"
+                },
+                {
+                    "id": 53,
+                    "title": "Send Gumart\u2019s Invitation",
+                    "description": "Send Gumart\u2019s invitation for 5 friends",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Send",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:47",
+                    "claimable_at": 1728532067,
+                    "claimed_at": null,
+                    "function_name": "openPartnerScreen",
+                    "function_data": {
+                        "count": 5
+                    },
+                    "status": "claimable"
+                },
+                {
+                    "id": 54,
+                    "title": "Watch AMA",
+                    "description": "Watch our latest AMA",
+                    "point": 10000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/speaker.png",
+                    "button_text": "Watch",
+                    "duration": null,
+                    "started_at": "2024-10-10 03:42:48",
+                    "claimable_at": 1728532068,
+                    "claimed_at": "2024-10-10 03:47:48",
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.binance.com\/en\/live\/video?roomId=2226489"
+                    },
+                    "status": "finished"
+                }
+            ],
+            "cowtopia": [
+                {
+                    "id": 8,
+                    "title": "Join bot",
+                    "description": "Join Cowtopia\u2019s bot",
+                    "point": 1000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/game.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/cowtopiabot\/app?startapp=1935317777"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 9,
+                    "title": "Follow X",
+                    "description": "Follow Cowtopia\u2019s X",
+                    "point": 1000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/CowtopiaTON"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 10,
+                    "title": "Announcement Channel",
+                    "description": "Visit Cowtopia\u2019s <br\/>Announcement Channel",
+                    "point": 1000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/Cowtopia_Channel"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "dog": [
+                {
+                    "id": 11,
+                    "title": "Join bot",
+                    "description": "Join Dogs\u2019s bot",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/dog.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/dogshouse_bot"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 12,
+                    "title": "Join Announcement Channel",
+                    "description": "Visit Dogs' Announcement Channel",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/dogs_community"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 13,
+                    "title": "Share story",
+                    "description": "Share this video on telegram's story",
+                    "point": 3000,
+                    "image_url": "https:\/\/api.gumart.click\/media\/story.png",
+                    "button_text": "Share",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "shareToStory",
+                    "function_data": {
+                        "link": "https:\/\/api.gumart.click\/media\/dog-video.mp4"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "to_mars_coin": [],
+            "ronaldo": [
+                {
+                    "id": 17,
+                    "title": "Follow Ronaldo",
+                    "description": "Subscribe Ronaldo on Youtube",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Subscribe",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@cristiano"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 18,
+                    "title": "Follow MrBeast",
+                    "description": "Subscribe MrBeast on Youtube",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/youtube.png",
+                    "button_text": "Subscribe",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/www.youtube.com\/@MrBeast"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "billy": [],
+            "coco_park": [],
+            "bool_network": [
+                {
+                    "id": 22,
+                    "title": "Bool Network",
+                    "description": "Join & Unlock Boolean Badge",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/bool_network.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/boolfamily_bot\/join?startapp=0R8RH"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 23,
+                    "title": "Join Bool Channel",
+                    "description": "Visit Bool' Announcement Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+ukLUF5efbJIwN2Ex"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 24,
+                    "title": "Follow X",
+                    "description": "Follow Bool Network X:",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Follow",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/bool_official"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "reality_rush": [
+                {
+                    "id": 25,
+                    "title": "Reality Rush",
+                    "description": "Join Reality Rush",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/reality_rush.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/realityrush_bot\/play?startapp=refererID7930435837"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "sharks": [],
+            "cat_id_paws": [],
+            "panie": [],
+            "ton_wifey": [],
+            "fish_war": [],
+            "catch_ton": [
+                {
+                    "id": 37,
+                    "title": "Join CatchTON",
+                    "description": "Join CatchTON",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/catch_ton.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/catchton_bot\/run?startapp=e84a8d3c-a37b-4c46-ad43-c7727f573b82"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "coin_chance": [
+                {
+                    "id": 38,
+                    "title": "Join CoinChance",
+                    "description": "Join CoinChance",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/coin_chance.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "http:\/\/t.me\/ChanceDrip_bot\/join?startapp=CDG08YWT03OED"
+                    },
+                    "status": "lock"
+                },
+                {
+                    "id": 39,
+                    "title": "Join CoinChance Channel",
+                    "description": "Visit CoinChance Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+vZNFLz156rFlMjM9"
+                    },
+                    "status": "lock"
+                },
+                {
+                    "id": 40,
+                    "title": "Follow X",
+                    "description": "Follow CoinChance X",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/CoinChanceDAO"
+                    },
+                    "status": "lock"
+                }
+            ],
+            "de_pin": [
+                {
+                    "id": 41,
+                    "title": "Join DePIN Alliance",
+                    "description": "Join DePIN Alliance",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/depin.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/DePIN_Alliance_Bot?start=KNA1O0Emwf"
+                    },
+                    "status": "lock"
+                },
+                {
+                    "id": 42,
+                    "title": "Join DePIN Alliance Channel",
+                    "description": "Visit DePIN Alliance Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/DePIN_App"
+                    },
+                    "status": "lock"
+                },
+                {
+                    "id": 43,
+                    "title": "Follow X",
+                    "description": "Follow DePIN Alliance X",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/DePINApp"
+                    },
+                    "status": "lock"
+                }
+            ],
+            "rocket": [
+                {
+                    "id": 44,
+                    "title": "Join The Rocket Official",
+                    "description": "Join The Rocket Official",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/rocket.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/The_Rocket_bot?start=r_6379518630"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 45,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit The Rocket Official Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/the_rocket_official"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "joker": [
+                {
+                    "id": 46,
+                    "title": "Join JOKER",
+                    "description": "Join JOKER",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/joker.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/JokerSwapBot\/app?startapp=r_7930435837"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 47,
+                    "title": "Join JOKER Channel",
+                    "description": "Join JOKER Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+YNoeLHxeudNjYjdk"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "bazar": [],
+            "camel": [
+                {
+                    "id": 50,
+                    "title": "Join Camels",
+                    "description": "Join Camels",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/camels.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "http:\/\/t.me\/CamelsHouseBot\/House?startapp=6701ef6d5fd3cf3602d924a6"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 51,
+                    "title": "Join Camels Channel",
+                    "description": "Visit Camels Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/CamelsChannel"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 52,
+                    "title": "Follow X",
+                    "description": "Follow Camels X",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/CamelsX"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "hipo": [
+                {
+                    "id": 49,
+                    "title": "Join Hipo Gang",
+                    "description": "Join Hipo Gang",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/hipo.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/HipoGangBot\/join?startapp=6379518630"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "not_meme": [
+                {
+                    "id": 55,
+                    "title": "Join NOTMEME",
+                    "description": "Join NOTMEME",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/not-meme.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/NOTMEMEAppBot?start=sqbgrl"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 56,
+                    "title": "Join NOTMEME Channel",
+                    "description": "Join NOTMEME Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+NUmy5ZHHCfg4Yzhi"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 57,
+                    "title": "Follow X",
+                    "description": "Follow NOTMEME X",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/notmeme_app?s=21"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "tearline": [
+                {
+                    "id": 58,
+                    "title": "Join TearlineAI",
+                    "description": "Join TearlineAI",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/tearline.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/TearlineAI_Bot\/app?startapp=fhiNJT1X_0"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "agi": [],
+            "pokemon": [
+                {
+                    "id": 60,
+                    "title": "Join PokemonBall",
+                    "description": "Join PokemonBall",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/pokemon.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/PokemonBall_bot?start=7748059114"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 61,
+                    "title": "Join PokemonBall Channel",
+                    "description": "Visit PokemonBall Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+czGjHyzPZP83MzYy"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "wonton": [
+                {
+                    "id": 62,
+                    "title": "Join WONTON",
+                    "description": "Join WONTON",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/wonton.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/WontonOrgBot\/gameapp?startapp=referralCode=1B1EKV0Y"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "capybara": [
+                {
+                    "id": 63,
+                    "title": "Join Capybara",
+                    "description": "Join Capybara",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/capybara.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/the_capybara_meme_bot\/start?startapp=049cdba8ded35110e46253c1fdfa5cea"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 64,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit Telegram Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+PPxSe8TWDRRiZjI1"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "catia": [
+                {
+                    "id": 67,
+                    "title": "Join Catia",
+                    "description": "Join Catia",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/catia.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/catia_gamebot\/app?startapp=6379518630"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 68,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+eFoZK6gp2Oc2MTg1"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 69,
+                    "title": "Follow X",
+                    "description": "Follow X",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/x.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/x.com\/WeAreCatia"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "bulls_farm": [
+                {
+                    "id": 65,
+                    "title": "Join BullsFarm",
+                    "description": "Join BullsFarm",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/bullsfarm.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/BullsFarmBot\/app?startapp=67050a2120d69298355b0efe"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 66,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit Telegram Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/+0SrnryOrxakyMjZk"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "pencho": [
+                {
+                    "id": 72,
+                    "title": "Join PENCHO",
+                    "description": "Join PENCHO",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/pencho.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/playpenchobot\/play?startapp=WBQZBQ0K2K"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "dejen_dog": [
+                {
+                    "id": 70,
+                    "title": "Join DejenDog",
+                    "description": "Join DejenDog",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/dejen-dog.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/DejenDogBot\/djdog?startapp=0b985154"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 71,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/DejenNews"
+                    },
+                    "status": "startable"
+                }
+            ],
+            "pehe": [
+                {
+                    "id": 73,
+                    "title": "Join PEHE Kingdom",
+                    "description": "Join PEHE Kingdom",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/pehe-kingdom.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/pehekingdom_bot\/open?startapp=wisZaDpWng"
+                    },
+                    "status": "startable"
+                },
+                {
+                    "id": 74,
+                    "title": "Join Telegram Channel",
+                    "description": "Visit Channel",
+                    "point": 1500,
+                    "image_url": "https:\/\/api.gumart.click\/media\/telegram.png",
+                    "button_text": "Join",
+                    "duration": null,
+                    "started_at": null,
+                    "claimable_at": false,
+                    "claimed_at": null,
+                    "function_name": "openExternalLink",
+                    "function_data": {
+                        "link": "https:\/\/t.me\/pehe_kingdom"
+                    },
+                    "status": "startable"
+                }
+            ]
+        }
+    }
+}
+
+
+const ob = {
+  a: [1, 2, 3],
+  b: [4, 5, 6],
+  c: [7, 8, 9] // Ví dụ có thêm thuộc tính khác
+};
+
+let mergedArray = [];
+
+// Duyệt qua tất cả các thuộc tính của đối tượng
+for (let key in ob) {
+  if (Array.isArray(ob[key])) {
+    // Nếu giá trị của thuộc tính là một mảng, gộp nó vào mergedArray
+    mergedArray = mergedArray.concat(ob[key]);
+  }
+}
+
+console.log(mergedArray); // [1, 2, 3, 4, 5, 6, 7, 8, 9]

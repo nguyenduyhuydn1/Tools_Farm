@@ -176,6 +176,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
             }
             return match;
         });
+        browser.close()
 
         await sleep(5000)
         let arrNumber = randomNumber();
@@ -188,7 +189,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
             await postStart(iframe, arrNumber[i])
             await sleep(1000)
         }
-        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

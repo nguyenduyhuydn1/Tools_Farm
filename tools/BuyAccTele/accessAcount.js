@@ -2,33 +2,38 @@ const fs = require("fs-extra");
 const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
 
 const stealth = StealthPlugin();
 stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
-const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
-puppeteer.use(
-    ProxyPlugin({
-        address: '103.171.217.218',
-        port: '25218',
-        credentials: {
-            username: 'userntn171217218',
-            password: 'pK9ZYybthu'
-        }
-    })
-);
+
 const proxyFile = require("./../data/proxy.js");
 const randomUseragent = require('random-useragent');
 
+const { HttpsProxyAgent } = require('https-proxy-agent');
+const axios = require('axios');
+
 const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
 
 let xPosition = 0;
 let yPosition = 0;
 const MainBrowser = async (dataProxy, countFolder) => {
     try {
-        // let proxyServer = `--proxy-server=${dataProxy.ip}`;
+        // puppeteer.use(
+        //     ProxyPlugin({
+        //         address: dataProxy.ip,
+        //         port: dataProxy.port,
+        //         credentials: {
+        //             username: dataProxy.username,
+        //             password: dataProxy.password,
+        //         }
+        //     })
+        // );
+
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -43,7 +48,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 '--mute-audio',
                 '--window-size=600,600',
                 `--window-position=${xPosition},${yPosition}`,
-                // proxyServer
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
@@ -53,54 +57,17 @@ const MainBrowser = async (dataProxy, countFolder) => {
             yPosition += 200;
         }
 
-        // const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
-        const addFunc = async (page) => {
-            const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
-            const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
-            await page.evaluateOnNewDocument(preloadFile);
-        };
+        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
+        await page.setUserAgent(userAgent);
 
-        // if (dataProxy.username && dataProxy.password) {
-        //     await page.authenticate({
-        //         username: dataProxy.username,
-        //         password: dataProxy.password
-        //     });
-        // }
-        await addFunc(page);
-        // await page.setUserAgent(userAgent);
-
-        await page.goto("https://web.telegram.org/k");
         await sleep(3000);
-        await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
-        await sleep(1000);
-        await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
-        await page.waitForSelector('iframe');
-        let iframe = await page.evaluate(() => document.querySelector("iframe")?.getAttribute('src'));
-        if (iframe) await page.goto(iframe);
+        await page.goto("https://web.telegram.org/k/");
         await sleep(3000);
     } catch (error) {
         console.error("Error:", error.message);
     }
 };
-
-// (async () => {
-//     const dataArray = readLinesToArray();
-//     for (let i = 0; i < dataArray.length; i += 2) {
-//         const promises = [];
-
-//         promises.push(MainBrowser(dataArray[i], i));
-
-//         if (i + 1 < dataArray.length) {
-//             promises.push(MainBrowser(dataArray[i + 1], i + 1));
-//         }
-
-//         await Promise.all(promises);
-//         await sleep(1000);
-//     }
-// })();
-
-
 
 
 
@@ -123,8 +90,25 @@ function waitForInput() {
 
 
 (async () => {
-    // await sleep(10000)
-    for (let i = 1; i < 30; i++) {
+
+    // const proxyUrl = 'http://qưeqw:zxc@103.1.217.218:25218';
+    // const agent = new HttpsProxyAgent(proxyUrl);
+    // axios.get('https://api.ipify.org?format=json', {
+    //     httpsAgent: agent,
+    //     httpAgent: agent,
+    //     proxy: false
+    // })
+    //     .then(response => {
+    //         console.log('Your IP address is:', response.data.ip);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching IP address:', error);
+    //     });
+
+
+
+    // // await sleep(10000)
+    for (let i = 0; i < 30; i++) {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);

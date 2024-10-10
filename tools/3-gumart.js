@@ -8,68 +8,8 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
-const randomUseragent = require('random-useragent');
 
-const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-const readLinesToArray = () => {
-    const lines = fs.readFileSync(`${__dirname}/data/localStorage.txt`, 'utf-8').trim().split('\n');
-    const array = [];
-    lines.forEach(line => {
-        const obj = {};
-        const keyValuePairs = line.split('\t');
-        keyValuePairs.forEach(pair => {
-            if (pair) {
-                const [key, value] = pair.split(': ');
-                obj[key] = value;
-            }
-        });
-        array.push(obj);
-    });
-    return array;
-};
-
-async function clickIfExists(page, selector, timeout = 500, callback = () => { }) {
-    const elementExists = await page.$(selector);
-    if (elementExists) {
-        await page.waitForSelector(selector, { hidden: true, visible: true, timeout: timeout }).then(e => e.click());
-        await sleep(2000);
-    } else {
-        callback()
-    }
-}
-
-
-async function navigateToIframe(page, regex = false) {
-    await page.waitForSelector('iframe');
-    const iframeSrc = await page.evaluate((regex) => {
-        const iframeElement = document.querySelector('iframe');
-        if (iframeElement) {
-            if (regex) return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            return iframeElement.src;
-        }
-    }, regex);
-    if (iframeSrc) {
-        await page.goto(iframeSrc)
-    } else {
-    }
-}
-
-
-async function waitForTextContent(page, selector, text, timeout = 10000) {
-    // Kiểm tra sự thay đổi trong DOM: Khi bạn muốn đợi một phần tử có nội dung hoặc thuộc tính thay đổi.
-    await page.waitForFunction(
-        (selector, text) => {
-            const element = document.querySelector(selector);
-            return element.textContent == text;
-        },
-        { timeout },
-        selector,
-        text
-    );
-}
-
-
+const { sleep, clickIfExists, readLinesToArray, userAgent } = require('./../utils/utils.js')
 
 
 // =====================================================================
@@ -210,10 +150,15 @@ let fetchMissions = async (token) => {
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
-            const combinedMissions = [
-                ...data.missions.daily,
-                ...data.missions.fixed,
-            ].filter(v => v.status !== 'finished');
+            let mergedArray = [];
+
+            for (let key in data.tasks) {
+                if (Array.isArray(data.tasks[key])) {
+                    mergedArray = mergedArray.concat(data.tasks[key]);
+                }
+            }
+
+            const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
             return combinedMissions;
         }
     }
@@ -264,7 +209,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
         await page.setUserAgent(userAgent);
 
@@ -330,7 +274,7 @@ let promiseTasks = [];
     }
 
     console.log(promiseTasks.length);
-    Promise.all(promiseTasks).then(() => {
+    await Promise.all(promiseTasks).then(() => {
         console.log('Tất cả các task đã hoàn thành');
     });
     process.exit(1)
