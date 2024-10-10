@@ -239,9 +239,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0],];
             }
         },);
-        await page.goto(urlSrc)
-        await sleep(5000)
-        await sleep(5000)
+        // await page.goto(urlSrc)
         await sleep(5000)
 
         if (iframeSrc) {
@@ -306,7 +304,6 @@ let promiseTasks = [];
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
-        await waitForInput();
     }
     console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
     await Promise.all(promiseTasks).then(() => {
