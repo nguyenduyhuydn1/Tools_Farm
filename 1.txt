@@ -846,3 +846,348 @@ fetch("https://api.adsgram.ai/adv?blockId=2994&tg_id=7712064825&tg_platform=web&
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fetch("https://api.cryptorank.io/v0/tma/account/tasks", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBRTV4YXhMQXdBQUFEbkZyRXNHVV94MSIsInVzZXIiOnsiaWQiOjc3MTIwNjQ4MjUsImZpcnN0X25hbWUiOiJIb2FuZ2Rudm4zIPCfm5IiLCJsYXN0X25hbWUiOiJOZ3V5ZW7wn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzAwMjQiLCJoYXNoIjoiNzc1MDhmOTRlODNjYjc5NTQyYmViMTc1NmUxMTg2ZTU3Yjg5NWExOTY1MmE2Y2U0YzIwNmE4OGQ5NDIxMDg5ZSJ9",
+    "content-type": "application/json",
+    "if-none-match": "W/\"1a88-Aq8uRvzk4Y90ign2nh+zj7nieG8\"",
+    "priority": "u=1, i",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://tma.cryptorank.io/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+
+[
+    {
+        "id": "d77583db-e36d-4823-8619-6bfa1947d161",
+        "name": "Learn & Earn #3",
+        "group": "main",
+        "type": "quiz",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/task_learn_earn_tma1726055947752.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null,
+        "question": {
+            "id": "cd7808c1-d493-412a-83d6-51b8aaed0f6d",
+            "text": "Who has invested in Toncoin on the 8th of October?",
+            "cryptorankUrl": "https://cryptorank.io/ico/toncoin#funding-rounds?utm_source=tma&utm_campaign=quiz",
+            "options": [
+                {
+                    "id": "8c829330-15e8-482d-818e-ce7c327aa4fb",
+                    "text": "Pantera Capital"
+                },
+                {
+                    "id": "22d5f4ef-2152-4b1b-a7bd-1e2fa7996056",
+                    "text": "Binance"
+                },
+                {
+                    "id": "81320031-1583-49a6-961f-d569d6642e90",
+                    "text": "Foresight Ventures"
+                },
+                {
+                    "id": "fe76c720-6b74-4b91-ac17-98be5f28ea89",
+                    "text": "Gate.io"
+                }
+            ]
+        }
+    },
+    {
+        "id": "dedafce3-4658-4eb4-bad5-f29b6cc500c9",
+        "name": "Like Latest Post",
+        "group": "daily",
+        "type": "daily",
+        "reward": 100,
+        "linkUrl": "https://t.me/CryptoRankNews",
+        "iconUrl": "https://img.cryptorank.io/image-hub/telegram_tma1721660863049.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "7e4156ba-bc8e-4b3d-ad18-d154f653992a",
+        "name": "Visit CryptoRank.io",
+        "group": "daily",
+        "type": "daily",
+        "reward": 100,
+        "linkUrl": "https://cryptorank.io/?utm_source=tma",
+        "iconUrl": "https://img.cryptorank.io/image-hub/cr_logo1721660202914.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "709bea8b-4044-4203-b614-b1bda4424d3d",
+        "name": "Create CR Account & Link TG",
+        "group": "cryptorank",
+        "type": "connect",
+        "reward": 1000,
+        "linkUrl": "https://cryptorank.io/account?utm_source=tma",
+        "iconUrl": "https://img.cryptorank.io/image-hub/telegram_tma1721660863049.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "324dc84b-9bea-433c-8035-8d1c161727d8",
+        "name": "Invite 5 Buddies",
+        "group": "main",
+        "type": "milestone-referral-5",
+        "reward": 5000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/invite_buddies1721660831083.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "d40e284f-c389-4d49-b8d7-98d3c8a745ab",
+        "name": "Get 10 000 CR Points",
+        "group": "main",
+        "type": "milestone-points-10000",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/daily_check_task1721660298942.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "9b089eb5-a104-4358-9847-980965e1f19d",
+        "name": "Get 25 000 CR Points",
+        "group": "main",
+        "type": "milestone-points-25000",
+        "reward": 2500,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/daily_check_task1721660298942.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "df61ebb0-ae37-4ba2-b6bb-f41cef4a27c0",
+        "name": "Boost TG",
+        "group": "cryptorank",
+        "type": "unique",
+        "reward": 500,
+        "linkUrl": "https://t.me/CryptoRankNews?boost",
+        "iconUrl": "https://img.cryptorank.io/image-hub/telegram_tma1721660863049.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "a4ec3ba0-e55b-40a2-8251-6ec67d013072",
+        "name": "Connect TON Wallet",
+        "group": "cryptorank",
+        "type": "unique",
+        "reward": 1500,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/connect_ton_wallet_tma1724931298317.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "e3aeaa3e-b98a-4acc-8ba0-6b98df2de720",
+        "name": "Follow X",
+        "group": "cryptorank",
+        "type": "unique",
+        "reward": 500,
+        "linkUrl": "https://x.com/CryptoRank_io",
+        "iconUrl": "https://img.cryptorank.io/image-hub/x_tma1721660942009.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "869a4514-38f8-4b4e-9bc2-774f27b5c525",
+        "name": "Follow CryptoRank Analytics",
+        "group": "cryptorank",
+        "type": "join-chat",
+        "reward": 500,
+        "linkUrl": "https://t.me/CryptoRankNews",
+        "iconUrl": "https://img.cryptorank.io/image-hub/telegram_tma1721660863049.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "4883adc3-8223-47dc-96b4-e4b6ac467e75",
+        "name": "Follow CryptoRank tApp News",
+        "group": "cryptorank",
+        "type": "join-chat",
+        "reward": 500,
+        "linkUrl": "https://t.me/CR_tApp",
+        "iconUrl": "https://img.cryptorank.io/image-hub/telegram_tma1721660863049.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "30d7f59b-0065-473b-8586-1b803804f8e0",
+        "name": "Like Latest Post on X",
+        "group": "daily",
+        "type": "daily",
+        "reward": 100,
+        "linkUrl": "https://twitter.com/CryptoRank_io",
+        "iconUrl": "https://img.cryptorank.io/image-hub/x_tma1721660942009.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "78784743-bddc-42fb-9845-8c57dfba64d3",
+        "name": "Create Alert",
+        "group": "cryptorank",
+        "type": "create-cryptorank-alert",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/create_alert_tma1721899279216.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "cdd8ac0b-c800-4531-8905-500ef4a9c9d5",
+        "name": "Create Portfolio",
+        "group": "cryptorank",
+        "type": "create-cryptorank-portfolio",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/create_portfolio_tma1721899148814.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "848db658-afb6-4d02-b0be-a37424b516a8",
+        "name": "Download Mobile App",
+        "group": "cryptorank",
+        "type": "download-cryptorank-mobile-app",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/download_app_tma1721899389866.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "82524d74-a7ca-4135-89a4-d3a9e4a57f10",
+        "name": "Create Watchlist",
+        "group": "cryptorank",
+        "type": "create-cryptorank-watchlist",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/create_watchlist_tma1721898841144.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "c2783239-8ee6-4f2a-9b59-4722c75f1ace",
+        "name": "Add 💎CR to Telegram name",
+        "group": "cryptorank",
+        "type": "add-cryptorank-symbol-username",
+        "reward": 1000,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/nickname_symbol_tma1724771473260.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "dd9edef9-1af4-43df-b6da-feac6e53e7dc",
+        "name": "$1000 Solidus Ai Tech Raffle",
+        "group": "main",
+        "type": "unique",
+        "reward": 500,
+        "linkUrl": "https://cryptorank.io/earn/quests/aitech-marketplace-raffle?utm_campaign=tma",
+        "iconUrl": "https://img.cryptorank.io/image-hub/cr_logo1721660202914.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    },
+    {
+        "id": "e7dae272-7d17-4543-9a30-92f071439210",
+        "name": "Daily check",
+        "group": "daily",
+        "type": "daily",
+        "reward": 250,
+        "linkUrl": null,
+        "iconUrl": "https://img.cryptorank.io/image-hub/daily_check_task1721660298942.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null,
+        "dailySequence": 0
+    },
+    {
+        "id": "7d0200bd-bf66-48d0-901c-5a159160800e",
+        "name": "Join JetTon Farming",
+        "group": "main",
+        "type": "unique",
+        "reward": 1000,
+        "linkUrl": "https://t.me/JettonFarmingBot?start=r1000001006",
+        "iconUrl": "https://img.cryptorank.io/image-hub/tma_jetton_join_task1728033859168.png",
+        "isDone": false,
+        "storyText": null,
+        "storyMediaFileUrl": null
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

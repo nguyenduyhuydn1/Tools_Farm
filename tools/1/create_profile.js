@@ -8,37 +8,24 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
-const randomUseragent = require('random-useragent');
 
-const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-const readLinesToArray = () => {
-    const lines = fs.readFileSync('../data/localStorage.txt', 'utf-8').trim().split('\n');
-    const array = [];
-    lines.forEach(line => {
-        const obj = {};
-        const keyValuePairs = line.split('\t');
-        keyValuePairs.forEach(pair => {
-            if (pair) {
-                const [key, value] = pair.split(': ');
-                obj[key] = value;
-            }
-        });
-        array.push(obj);
-    });
-    return array;
-};
+const { sleep, readLinesToArray, waitForInput } = require('./../utils/utils.js')
 
 
 
-
+// let localStorageContent = {};
+// for (let i = 0; i < localStorage.length; i++) {
+//     const key = localStorage.key(i);
+//     localStorageContent[key] = localStorage.getItem(key);
+// }
+// console.log(localStorageContent);
 
 const MainBrowser = async (localStorageData, count) => {
     try {
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,      //Kucoi
+            // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${count + 100}`,      //Kucoi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${count + 300}`,             //memefi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
@@ -60,10 +47,7 @@ const MainBrowser = async (localStorageData, count) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-        // const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        // await page.setUserAgent(userAgent);
-
         await page.goto("https://web.telegram.org/k/");
         // await page.evaluate((data) => {
         //     for (const [key, value] of Object.entries(data)) {
@@ -79,28 +63,9 @@ const MainBrowser = async (localStorageData, count) => {
 };
 
 
-
-
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-function waitForInput() {
-    return new Promise((resolve) => {
-        rl.on('line', (input) => {
-            if (input.toLowerCase() === 's') {
-                resolve();
-            }
-        });
-    });
-}
-
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 0; i < 30; i++) {
+    for (let i = 9; i < 300; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
         await waitForInput();
