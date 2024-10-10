@@ -22,7 +22,25 @@ const readLinesToArray = () => {
     return array;
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+const readline = require('readline');
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function waitForInput() {
+    return new Promise((resolve) => {
+        rl.on('line', (input) => {
+            if (input.toLowerCase() === 's') {
+                resolve();
+            }
+        });
+    });
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       not-pixel                                            //                                  
@@ -99,4 +117,5 @@ module.exports = {
     userAgent,
     randomNumber,   // not-pixel
     clickIfExists,
+    waitForInput,
 }

@@ -13,7 +13,7 @@ puppeteer.use(stealth);
 
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const axios = require('axios');
-const { sleep, clickIfExists } = require('./../utils/utils.js')
+const { sleep, clickIfExists, waitForInput } = require('./../utils/utils.js')
 const proxyFile = require("../data/proxy.js");
 
 
@@ -159,6 +159,7 @@ let fetchMissions = async (token, dataProxy) => {
             }
 
             const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
+            // const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
             return combinedMissions;
         }
     }
@@ -252,6 +253,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
             await fetchBoost(token, dataProxy);
 
             let tasks = await fetchMissions(token, dataProxy);
+            let promiseTasks = [];
+
             for (const e of tasks) {
                 console.log(e.title);
                 if (e.status == "claimable") await fetchClaimTask(token, e.id, dataProxy);
@@ -271,6 +274,10 @@ const MainBrowser = async (dataProxy, countFolder) => {
                     }));
                 }
             }
+            // console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
+            // await Promise.all(promiseTasks).then(() => {
+            //     console.log('Tất cả các task đã hoàn thành');
+            // });
         }
         browser.close()
     } catch (error) {
@@ -278,23 +285,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
     }
 };
 
-const readline = require('readline');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-function waitForInput() {
-    return new Promise((resolve) => {
-        rl.on('line', (input) => {
-            if (input.toLowerCase() === 's') {
-                resolve();
-            }
-        });
-    });
-}
-let promiseTasks = [];
 
 (async () => {
     for (let i = 0; i < 30; i++) {
@@ -304,11 +295,8 @@ let promiseTasks = [];
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
+        await waitForInput()
     }
-    console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
-    await Promise.all(promiseTasks).then(() => {
-        console.log('Tất cả các task đã hoàn thành');
-    });
     process.exit(1)
 })();
 
