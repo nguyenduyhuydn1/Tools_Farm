@@ -9,8 +9,7 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, waitForInput } = require('./../utils/utils.js')
-
+const { sleep, readLinesToArray, waitForInput, clickIfExists } = require('./../utils/utils.js')
 
 
 // let localStorageContent = {};
@@ -25,7 +24,7 @@ const MainBrowser = async (localStorageData, count) => {
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${count + 100}`,      //Kucoi
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${count + 100}`,      //Kucoi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${count + 300}`,             //memefi
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
@@ -48,15 +47,35 @@ const MainBrowser = async (localStorageData, count) => {
         });
 
         const [page] = await browser.pages();
-        await page.goto("https://web.telegram.org/k/");
+        // await page.goto("https://web.telegram.org/k/");
+
         // await page.evaluate((data) => {
-        //     for (const [key, value] of Object.entries(data)) {
-        //         localStorage.setItem(key, value);
-        //     }
+        // for (const [key, value] of Object.entries(data)) {
+        //     localStorage.setItem(key, value);
+        // }
         // }, localStorageData);
         // await page.reload();
         // await sleep(2000);
         // await browser.close();
+        // await page.goto("https://web.telegram.org/k/#@major");
+        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        // await sleep(3000);
+        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
+        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
+        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+
+        // await page.waitForSelector('iframe');
+        // let iframe = await page.evaluate(() => {
+        //     let match;
+        //     let iframeElement = document.querySelector("iframe");
+        //     if (iframeElement) {
+        //         const src = iframeElement.src;
+        //         match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+        //     }
+        //     return match;
+        // });
+        // fs.appendFileSync('users.txt', `${iframe}\n`, 'utf-8');
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

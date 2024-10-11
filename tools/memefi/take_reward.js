@@ -97,7 +97,7 @@ let MainBrowser = (async (localStorageData, countFolder) => {
                 await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.sc-gJhJTp.braGIf.MuiBox-root.css-1daa1cd > button")
                 await sleep(2000)
                 await page.goto("https://tg-app.memefi.club/earn");
-                await sleep(3000)
+                await sleep(2000)
                 i--
             } catch (error) {
                 await clickIfExists(page, `body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-1xnhpp1 > div > div.MuiBox-root.css-16xrt4i > div > div:nth-child(1) > div.MuiStack-root.css-xhed8o > a`)
