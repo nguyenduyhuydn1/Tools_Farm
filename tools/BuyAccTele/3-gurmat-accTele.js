@@ -208,14 +208,18 @@ const MainBrowser = async (dataProxy, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
             args: [
-                '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
+                // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+                // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+                // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+                '--disable-video',                 // Vô hiệu hóa video decoding
+                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=1000,700',
+                '--window-size=700,400',
                 `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],
@@ -228,11 +232,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(3000);
-
         await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-
         await page.waitForSelector('iframe');
         const [urlSrc, iframeSrc] = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
@@ -240,7 +241,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0],];
             }
         },);
-        // browser.close()
+        browser.close()
+
         if (iframeSrc) {
             console.log("=====================================================================");
             console.log(`                           tài khoản ${countFolder}`);
@@ -272,7 +274,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                     }));
                 }
             }
-            // console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
+            console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
             Promise.all(promiseTasks).then(() => {
                 console.log('Tất cả các task đã hoàn thành');
             });
@@ -285,7 +287,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
 
 (async () => {
-    for (let i = 28; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue
@@ -293,8 +295,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
     }
-    console.log("nhấn s để kết thúc");
-    await waitForInput()
     process.exit(1)
 })();
 

@@ -12,7 +12,7 @@ puppeteer.use(stealth);
 
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const axios = require('axios');
-const { sleep, randomNumber, clickIfExists } = require('./../utils/utils.js')
+const { sleep, randomNumber, clickIfExists, waitForInput } = require('./../utils/utils.js')
 const proxyFile = require("../data/proxy.js");
 
 
@@ -123,23 +123,27 @@ const MainBrowser = async (dataProxy, countFolder) => {
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,
             args: [
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
+                // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+                // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+                // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+                '--disable-video',                 // Vô hiệu hóa video decoding
+                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=700,700',
+                '--window-size=700,400',
                 `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
         const [page] = await browser.pages();
-        // await page.setUserAgent(userAgent);
         const page2 = await browser.newPage();
         await page2.goto("https://google.com");
-        await sleep(1000);
+        await sleep(3000);
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -159,14 +163,13 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
         let arrNumber = randomNumber();
         await getInfo(iframe, countFolder, dataProxy);
-        await sleep(1000)
         let { charges } = await getStatus(iframe, dataProxy)
         await getClaim(iframe, dataProxy);
-        await sleep(1000)
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[i % 10], dataProxy)
-            await sleep(1000)
         }
+        await waitForInput()
+
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -179,7 +182,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await sleep(1000)
     }
     process.exit(1)
 })();
