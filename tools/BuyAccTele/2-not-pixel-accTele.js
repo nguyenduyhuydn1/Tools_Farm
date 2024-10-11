@@ -142,10 +142,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await sleep(1000);
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@notpixel");
-        await sleep(2000);
-        await sleep(2000);
-        await sleep(2000);
-
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
 
@@ -167,7 +164,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await getClaim(iframe, dataProxy);
         await sleep(1000)
         for (let i = 0; i < charges; i++) {
-            await postStart(iframe, arrNumber[i], dataProxy)
+            await postStart(iframe, arrNumber[i % 10], dataProxy)
             await sleep(1000)
         }
     } catch (error) {
@@ -176,7 +173,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 5; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue

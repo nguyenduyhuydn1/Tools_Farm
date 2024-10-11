@@ -852,6 +852,42 @@ fetch("https://api.adsgram.ai/adv?blockId=2994&tg_id=7712064825&tg_platform=web&
 
 
 
+fetch("https://api.cryptorank.io/v0/tma/account/end-farming", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBRnR1VXBhQXdBQUFHMjVTbHFoc2N0ZSIsInVzZXIiOnsiaWQiOjc5NTcyOTc1MTcsImZpcnN0X25hbWUiOiJEZW5pcyBGb250YW5levCfm5Lwn5KOQ1IiLCJsYXN0X25hbWUiOiIiLCJ1c2VybmFtZSI6ImRlbmlzZm9udGFuZXpsZVB3UTYyOSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg2MTA4NzUiLCJoYXNoIjoiNWZjYjdiM2Q3M2UyYzg5MmM4ZWE5NjViYWM0Mjk4MDljNDNkNmZjMDBlNGYzZWIxNTQ4ZTMzOGNmZTY4MjJiNSJ9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://tma.cryptorank.io/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+{
+    "balance": 1277,
+    "farming": {
+        "state": "END",
+        "timestamp": 1728610982574
+    },
+    "dailyBonus": 11,
+    "wallet": null
+}
+
+
+
+
+
+
 
 
 
@@ -866,8 +902,8 @@ fetch("https://api.adsgram.ai/adv?blockId=2994&tg_id=7712064825&tg_platform=web&
 fetch("https://api.cryptorank.io/v0/tma/account/tasks", {
   "headers": {
     "accept": "*/*",
-    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-    "authorization": "eyJxdWVyeV9pZCI6IkFBRTV4YXhMQXdBQUFEbkZyRXNHVV94MSIsInVzZXIiOnsiaWQiOjc3MTIwNjQ4MjUsImZpcnN0X25hbWUiOiJIb2FuZ2Rudm4zIPCfm5IiLCJsYXN0X25hbWUiOiJOZ3V5ZW7wn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzAwMjQiLCJoYXNoIjoiNzc1MDhmOTRlODNjYjc5NTQyYmViMTc1NmUxMTg2ZTU3Yjg5NWExOTY1MmE2Y2U0YzIwNmE4OGQ5NDIxMDg5ZSJ9",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBSHY0Q1JuQWdBQUFPX2dKR2RXdW4zXyIsInVzZXIiOnsiaWQiOjYwMjU0Mzc0MjMsImZpcnN0X25hbWUiOiJUaWVuIiwibGFzdF9uYW1lIjoiTmd1eWVuIPCfm5Lwn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzM3NjEiLCJoYXNoIjoiZjJkMzRlZGNmYTZiM2Y4ZDhhMGE4YWJjMjBhYzcwNGY4YTM4YTRjZTYyYjNjNDA4NDFjMTNmZDZiNjM5ZDA2NCJ9",
     "content-type": "application/json",
     "if-none-match": "W/\"1a88-Aq8uRvzk4Y90ign2nh+zj7nieG8\"",
     "priority": "u=1, i",
@@ -880,6 +916,14 @@ fetch("https://api.cryptorank.io/v0/tma/account/tasks", {
   "body": null,
   "method": "GET"
 });
+
+
+
+
+
+
+
+
 
 
 [
@@ -1168,6 +1212,70 @@ fetch("https://api.cryptorank.io/v0/tma/account/tasks", {
 
 
 
+fetch("https://api.cryptorank.io/v0/tma/account/claim/task/e7dae272-7d17-4543-9a30-92f071439210", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBSHY0Q1JuQWdBQUFPX2dKR2RXdW4zXyIsInVzZXIiOnsiaWQiOjYwMjU0Mzc0MjMsImZpcnN0X25hbWUiOiJUaWVuIiwibGFzdF9uYW1lIjoiTmd1eWVuIPCfm5Lwn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzM3NjEiLCJoYXNoIjoiZjJkMzRlZGNmYTZiM2Y4ZDhhMGE4YWJjMjBhYzcwNGY4YTM4YTRjZTYyYjNjNDA4NDFjMTNmZDZiNjM5ZDA2NCJ9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://tma.cryptorank.io/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+
+{
+    "balance": 1050,
+    "farming": {
+        "state": "START",
+        "timestamp": 1728573809053
+    },
+    "dailyBonus": 11,
+    "wallet": null
+}
+
+
+
+
+
+claim
+
+
+fetch("https://api.cryptorank.io/v0/tma/account/claim/task/30d7f59b-0065-473b-8586-1b803804f8e0", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBSHY0Q1JuQWdBQUFPX2dKR2RXdW4zXyIsInVzZXIiOnsiaWQiOjYwMjU0Mzc0MjMsImZpcnN0X25hbWUiOiJUaWVuIiwibGFzdF9uYW1lIjoiTmd1eWVuIPCfm5Lwn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzM3NjEiLCJoYXNoIjoiZjJkMzRlZGNmYTZiM2Y4ZDhhMGE4YWJjMjBhYzcwNGY4YTM4YTRjZTYyYjNjNDA4NDFjMTNmZDZiNjM5ZDA2NCJ9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://tma.cryptorank.io/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+
+{
+    "balance": 1150,
+    "farming": {
+        "state": "START",
+        "timestamp": 1728573809053
+    },
+    "dailyBonus": 11,
+    "wallet": null
+}
 
 
 
@@ -1175,19 +1283,32 @@ fetch("https://api.cryptorank.io/v0/tma/account/tasks", {
 
 
 
+fetch("https://api.cryptorank.io/v0/tma/account/start-farming", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "authorization": "eyJxdWVyeV9pZCI6IkFBSHY0Q1JuQWdBQUFPX2dKR2RXdW4zXyIsInVzZXIiOnsiaWQiOjYwMjU0Mzc0MjMsImZpcnN0X25hbWUiOiJUaWVuIiwibGFzdF9uYW1lIjoiTmd1eWVuIPCfm5Lwn5CmIFNVSSIsImxhbmd1YWdlX2NvZGUiOiJlbiIsImFsbG93c193cml0ZV90b19wbSI6dHJ1ZX0sImF1dGhfZGF0ZSI6IjE3Mjg1NzM3NjEiLCJoYXNoIjoiZjJkMzRlZGNmYTZiM2Y4ZDhhMGE4YWJjMjBhYzcwNGY4YTM4YTRjZTYyYjNjNDA4NDFjMTNmZDZiNjM5ZDA2NCJ9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": "https://tma.cryptorank.io/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+{
+    "balance": 800,
+    "farming": {
+        "state": "START",
+        "timestamp": 1728573809053
+    },
+    "dailyBonus": 0,
+    "wallet": null
+}

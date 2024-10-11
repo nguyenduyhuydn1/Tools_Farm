@@ -8,52 +8,7 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
-const randomUseragent = require('random-useragent');
-
-const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-const readLinesToArray = () => {
-    const lines = fs.readFileSync(`${__dirname}/data/localStorage.txt`, 'utf-8').trim().split('\n');
-    const array = [];
-    lines.forEach(line => {
-        const obj = {};
-        const keyValuePairs = line.split('\t');
-        keyValuePairs.forEach(pair => {
-            if (pair) {
-                const [key, value] = pair.split(': ');
-                obj[key] = value;
-            }
-        });
-        array.push(obj);
-    });
-    return array;
-};
-
-const randomNumber = () => {
-    const ranges = [
-        { start: 494495, end: 494501 },
-        { start: 495495, end: 495501 },
-        { start: 496495, end: 496501 },
-        { start: 497495, end: 497501 },
-        { start: 498495, end: 498501 },
-        { start: 499495, end: 499501 }
-    ];
-
-    function getRandomInRange(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    let selectedNumbers = [];
-
-    while (selectedNumbers.length < 10) {
-        const randomRange = ranges[Math.floor(Math.random() * ranges.length)];
-        const randomNumber = getRandomInRange(randomRange.start, randomRange.end);
-        if (!selectedNumbers.includes(randomNumber)) {
-            selectedNumbers.push(randomNumber);
-        }
-    }
-    return selectedNumbers;
-}
+const { sleep, clickIfExists, randomNumber, readLinesToArray, userAgent, waitForInput } = require('./utils/utils.js')
 
 
 
@@ -156,13 +111,11 @@ const MainBrowser = async (localStorageData, countFolder) => {
             ignoreDefaultArgs: ["--enable-automation"],
         });
 
-        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
         await page.setUserAgent(userAgent);
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
-        await sleep(2000);
-
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
         await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
         await sleep(2000);
         await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
@@ -186,7 +139,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await getClaim(iframe);
         await sleep(1000)
         for (let i = 0; i < charges; i++) {
-            await postStart(iframe, arrNumber[i])
+            console.log(i % charges);
+            await postStart(iframe, arrNumber[i % 10])
             await sleep(1000)
         }
     } catch (error) {

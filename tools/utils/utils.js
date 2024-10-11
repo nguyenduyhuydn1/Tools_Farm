@@ -117,5 +117,7 @@ module.exports = {
     userAgent,
     randomNumber,   // not-pixel
     clickIfExists,
+    navigateToIframe,
+    waitForTextContent,
     waitForInput,
 }

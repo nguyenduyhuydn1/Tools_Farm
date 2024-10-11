@@ -275,9 +275,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 }
             }
             // console.log(promiseTasks.length, "-taskkkkkkkkkkkkkkkkkkkk");
-            // await Promise.all(promiseTasks).then(() => {
-            //     console.log('Tất cả các task đã hoàn thành');
-            // });
+            Promise.all(promiseTasks).then(() => {
+                console.log('Tất cả các task đã hoàn thành');
+            });
         }
         browser.close()
     } catch (error) {
@@ -288,14 +288,13 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 3; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
-        await waitForInput()
     }
     process.exit(1)
 })();
