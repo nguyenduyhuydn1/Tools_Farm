@@ -226,7 +226,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
             }
         },);
-        browser.close();
+        browser.close()
 
         if (iframeSrc) {
             console.log("=====================================================================");
@@ -261,6 +261,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
             Promise.all(promiseTasks).then(() => {
                 console.log('Tất cả các task đã hoàn thành');
             });
+
         }
     } catch (error) {
         console.error("Error:", error.message);
@@ -273,9 +274,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
     for (let i = 0; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
-        await waitForInput()
     }
-
+    await sleep(1000)
     process.exit(1)
 })();
 

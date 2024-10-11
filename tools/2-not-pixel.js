@@ -115,34 +115,34 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await page.setUserAgent(userAgent);
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
-        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        // await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
-        // await sleep(2000);
-        // await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
-        // await page.waitForSelector('iframe');
-        // let iframe = await page.evaluate(() => {
-        //     let match;
-        //     let iframeElement = document.querySelector("iframe");
-        //     if (iframeElement) {
-        //         const src = iframeElement.src;
-        //         match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-        //     }
-        //     return match;
-        // });
-        // // browser.close()
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
+        await sleep(2000);
+        await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
+        await page.waitForSelector('iframe');
+        let iframe = await page.evaluate(() => {
+            let match;
+            let iframeElement = document.querySelector("iframe");
+            if (iframeElement) {
+                const src = iframeElement.src;
+                match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+            return match;
+        });
+        browser.close()
 
-        // await sleep(5000)
-        // let arrNumber = randomNumber();
-        // await getInfo(iframe, countFolder);
-        // await sleep(1000)
-        // let { charges } = await getStatus(iframe)
-        // await getClaim(iframe);
-        // await sleep(1000)
-        // for (let i = 0; i < charges; i++) {
-        //     console.log(i % charges);
-        //     await postStart(iframe, arrNumber[i % 10])
-        //     await sleep(1000)
-        // }
+        await sleep(5000)
+        let arrNumber = randomNumber();
+        await getInfo(iframe, countFolder);
+        await sleep(1000)
+        let { charges } = await getStatus(iframe)
+        await getClaim(iframe);
+        await sleep(1000)
+        for (let i = 0; i < charges; i++) {
+            console.log(i % charges);
+            await postStart(iframe, arrNumber[i % 10])
+            await sleep(1000)
+        }
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -155,7 +155,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
-        await waitForInput();
     }
     process.exit(1)
 })();
