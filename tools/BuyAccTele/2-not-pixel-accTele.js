@@ -161,14 +161,15 @@ const MainBrowser = async (dataProxy, countFolder) => {
             }
             return match;
         });
-        browser.close()
-
+        // browser.close()
+        // await waitForInput();
         let arrNumber = randomNumber();
         await getInfo(iframe, countFolder, dataProxy);
         let { charges } = await getStatus(iframe, dataProxy)
         await getClaim(iframe, dataProxy);
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length)], dataProxy)
+            await sleep(1500)
         }
     } catch (error) {
         console.error("Error:", error.message);
@@ -176,11 +177,17 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 10; i < 30; i++) {
         console.log(i, "-innnnndexxx");
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
+        await sleep(2000)
+        await sleep(2000)
+        await sleep(2000)
+        await sleep(2000)
+        await sleep(2000)
+        await sleep(2000)
     }
     process.exit(1)
 })();

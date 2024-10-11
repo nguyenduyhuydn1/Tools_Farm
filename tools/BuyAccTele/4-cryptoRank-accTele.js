@@ -93,9 +93,6 @@ const fetchTask = async (auth, dataProxy) => {
 }
 
 const fetchClaim = async (id, auth, dataProxy) => {
-    console.log("==============================================================");
-    console.log("                       làm nhiệm vụ")
-    console.log("==============================================================");
     let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, auth, 'POST', {}, dataProxy)
 
     if (data) console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
@@ -183,6 +180,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
         let authorization = await getAuthorization
         browser.close()
+        // await waitForInput()
 
         let check1 = await fetchClaimEndFarming(authorization, dataProxy);
         await sleep("5000")
@@ -195,6 +193,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
         }
 
         let tasks = await fetchTask(authorization, dataProxy);
+        console.log("==============================================================");
+        console.log("                       làm nhiệm vụ")
+        console.log("==============================================================");
         for (let x of tasks) {
             await fetchClaim(x.id, authorization, dataProxy);
         }
@@ -213,7 +214,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
-        // await waitForInput()
     }
     process.exit(1)
 })();

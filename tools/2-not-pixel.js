@@ -159,8 +159,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
-        console.log(i);
-
+        console.log(i, "------------------");
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }

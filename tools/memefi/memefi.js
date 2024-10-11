@@ -93,6 +93,8 @@ let MainBrowser = (async (countFolder) => {
         let iframe = await page.evaluate(() => document.querySelector("iframe")?.getAttribute('src'));
         if (iframe) await page.goto(iframe);
         await sleep(2000)
+        await sleep(2000)
+        await sleep(2000)
         while (true) {
             await page.click(`#root > main > div > div > div.MuiBox-root > div.MuiStack-root.css-1x0m3xf > button:nth-child(1)`);
             await sleep(500)

@@ -144,13 +144,20 @@ const fetchBirthStartHunting = async (auth, bird_id) => {
 }
 
 
-const fetchMissions = async (auth, bird_id) => {
+const fetchMissions = async (auth) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/tasks/progresses', 'GET', { authKey: 'telegram-data', authValue: auth, headers, });
     if (data) {
         console.log("==============================================================");
         console.log("                       Missions")
         console.log("==============================================================");
         data = data.filter(v => v.task_user?.completed == null);
+        return data
+    }
+}
+
+const fetchClaimTask = async (auth, idTask) => {
+    let { data } = await fetchData(`https://elb.seeddao.org/api/v1/tasks/${idTask}`, 'POST', { authKey: 'telegram-data', authValue: auth, headers, });
+    if (data) {
         return data
     }
 }
@@ -186,7 +193,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
         });
 
         const [page] = await browser.pages();
-        // await page.setUserAgent(userAgent);
 
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
