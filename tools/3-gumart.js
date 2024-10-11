@@ -9,7 +9,7 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, clickIfExists, readLinesToArray, userAgent } = require('./utils/utils.js')
+const { sleep, clickIfExists, readLinesToArray, userAgent, waitForInput } = require('./utils/utils.js')
 
 
 // =====================================================================
@@ -150,16 +150,16 @@ let fetchMissions = async (token) => {
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
-            // let mergedArray = [];
+            let mergedArray = [];
 
-            // for (let key in data.tasks) {
-            //     if (Array.isArray(data.tasks[key])) {
-            //         mergedArray = mergedArray.concat(data.tasks[key]);
-            //     }
-            // }
+            for (let key in data.tasks) {
+                if (Array.isArray(data.tasks[key])) {
+                    mergedArray = mergedArray.concat(data.tasks[key]);
+                }
+            }
 
-            // const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
-            const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
+            const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
+            // const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
             return combinedMissions;
         }
     }
@@ -236,6 +236,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
             await fetchInfo(token);
             await fetchClaim(token);
             await fetchBoost(token);
+            let promiseTasks = [];
 
             let tasks = await fetchMissions(token);
             for (const e of tasks) {
@@ -257,6 +258,9 @@ const MainBrowser = async (localStorageData, countFolder) => {
                     }));
                 }
             }
+            Promise.all(promiseTasks).then(() => {
+                console.log('Tất cả các task đã hoàn thành');
+            });
         }
         browser.close();
     } catch (error) {
@@ -264,7 +268,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
     }
 };
 
-let promiseTasks = [];
 
 (async () => {
     const dataArray = readLinesToArray();
@@ -273,10 +276,7 @@ let promiseTasks = [];
         await sleep(1000)
     }
 
-    console.log(promiseTasks.length);
-    await Promise.all(promiseTasks).then(() => {
-        console.log('Tất cả các task đã hoàn thành');
-    });
+    await waitForInput()
     process.exit(1)
 })();
 

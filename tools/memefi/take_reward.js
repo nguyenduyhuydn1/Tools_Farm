@@ -9,7 +9,7 @@ stealth.enabledEvasions.delete('navigator.plugins')
 stealth.enabledEvasions.delete('media.codecs')
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, clickIfExists, userAgent } = require('./../utils/utils.js')
+const { sleep, readLinesToArray, clickIfExists, userAgent, waitForInput } = require('./../utils/utils.js')
 
 
 let MainBrowser = (async (localStorageData, countFolder) => {
@@ -116,23 +116,6 @@ let MainBrowser = (async (localStorageData, countFolder) => {
 
 
 
-
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-function waitForInput() {
-    return new Promise((resolve) => {
-        rl.on('line', (input) => {
-            if (input.toLowerCase() === 's') {
-                resolve();
-            }
-        });
-    });
-}
 
 (async () => {
     const dataArray = readLinesToArray();

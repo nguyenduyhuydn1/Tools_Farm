@@ -31,7 +31,7 @@ axios.defaults.headers.common = {
 // =====================================================================
 // =====================================================================
 
-async function fetchData(url, authorization, method, body = null, proxyUrl = null) {
+async function fetchData(url, authorization, method, body = null, proxyUrl = null, headers = null) {
     try {
         if (proxyUrl) {
             let proxyUrlTemp = `http://${proxyUrl.username}:${proxyUrl.password}@${proxyUrl.ip.substring(7)}:${proxyUrl.port}`
@@ -39,6 +39,7 @@ async function fetchData(url, authorization, method, body = null, proxyUrl = nul
             const options = {
                 headers: {
                     "authorization": authorization,
+                    ...headers
                 },
                 method,
                 httpsAgent: agent,
@@ -72,7 +73,10 @@ const fetchFarming = async (auth, dataProxy) => {
     console.log("                       start farning")
     console.log("==============================================================");
     let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', auth, 'POST', {}, dataProxy)
-    if (data) console.log(`balance hiện tại ${data.balance}`);
+    if (data) {
+        console.log(`balance hiện tại ${JSON.stringify(data)}`);
+        return data;
+    }
 }
 
 const fetchTask = async (auth, dataProxy) => {
@@ -82,7 +86,7 @@ const fetchTask = async (auth, dataProxy) => {
     let data = await fetchData('https://api.cryptorank.io/v0/tma/account/tasks', auth, 'GET', {}, dataProxy)
     let arr;
     if (data) {
-        arr = data.filter(v => v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle')
+        arr = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
         arr.map(v => console.log(`nhiệm vụ: ${v.name}`))
     }
     return arr;
@@ -94,7 +98,21 @@ const fetchClaim = async (id, auth, dataProxy) => {
     console.log("==============================================================");
     let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, auth, 'POST', {}, dataProxy)
 
-    if (data) console.log(`đã hoàn thành nv, ${data.balance}`);
+    if (data) console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
+}
+
+const fetchClaimEndFarming = async (auth, dataProxy) => {
+    console.log("==============================================================");
+    console.log("                       claim farm")
+    console.log("==============================================================");
+
+    let headers = { "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"", }
+    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, auth, 'POST', {}, dataProxy, headers)
+
+    if (data) {
+        console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
+        return data;
+    }
 }
 
 
@@ -138,7 +156,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page2.goto("https://google.com");
         await sleep(3000);
         await page.bringToFront();
-        await sleep(3000);
         await page.setRequestInterception(true);
 
         const getAuthorization = new Promise((resolve) => {
@@ -154,23 +171,33 @@ const MainBrowser = async (dataProxy, countFolder) => {
         });
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep("5000")
+
+        console.log("xxx");
+
+        await sleep(5000)
+        await sleep(5000)
+        await sleep(5000)
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-        await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
+        await sleep(2000)
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-        await sleep("5000")
+        console.log("end");
 
         let authorization = await getAuthorization
-        await sleep("1000")
-        await fetchFarming(authorization, dataProxy);
-        await sleep("1000")
+        // browser.close()
+
+        let check1 = await fetchClaimEndFarming(authorization, dataProxy);
+        let check2 = await fetchFarming(authorization, dataProxy);
+        if (!(check1 && check2)) {
+            await sleep("5000")
+            await fetchClaimEndFarming(authorization, dataProxy);
+            await sleep("5000")
+            await fetchFarming(authorization, dataProxy);
+        }
+
         let tasks = await fetchTask(authorization, dataProxy);
-        await sleep("1000")
         for (let x of tasks) {
             await fetchClaim(x.id, authorization, dataProxy);
-            await sleep("1000")
         }
-        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -179,13 +206,14 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
 
 (async () => {
-    for (let i = 2; i < 30; i++) {
+    for (let i = 24; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
+        // await waitForInput()
     }
     process.exit(1)
 })();

@@ -215,7 +215,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=700,700',
+                '--window-size=1000,700',
                 `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],
@@ -240,9 +240,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0],];
             }
         },);
-        // await page.goto(urlSrc)
-        await sleep(5000)
-
+        // browser.close()
         if (iframeSrc) {
             console.log("=====================================================================");
             console.log(`                           tài khoản ${countFolder}`);
@@ -279,7 +277,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 console.log('Tất cả các task đã hoàn thành');
             });
         }
-        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -288,7 +285,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
 
 (async () => {
-    for (let i = 3; i < 30; i++) {
+    for (let i = 28; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue
@@ -296,6 +293,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
     }
+    console.log("nhấn s để kết thúc");
+    await waitForInput()
     process.exit(1)
 })();
 
