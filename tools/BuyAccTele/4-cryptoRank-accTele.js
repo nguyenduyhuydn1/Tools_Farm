@@ -138,14 +138,20 @@ const MainBrowser = async (dataProxy, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
             args: [
+                // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+                // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+                // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+                '--disable-video',                 // Vô hiệu hóa video decoding
+                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=1000,700',
+                '--window-size=700,400',
                 `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],

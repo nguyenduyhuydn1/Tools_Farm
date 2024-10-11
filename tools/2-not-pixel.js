@@ -98,12 +98,14 @@ const MainBrowser = async (localStorageData, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${countFolder + 500}`,
             args: [
-                // '--disable-gpu',
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
                 '--disable-video',                 // Vô hiệu hóa video decoding
                 '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+
+                '--test-type',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
