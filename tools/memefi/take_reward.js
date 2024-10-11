@@ -119,7 +119,7 @@ let MainBrowser = (async (localStorageData, countFolder) => {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 5; i < dataArray.length; i++) {
+    for (let i = 6; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
         await waitForInput();
     }
