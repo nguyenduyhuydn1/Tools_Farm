@@ -42,17 +42,39 @@ function waitForInput() {
     });
 }
 
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//                                      format time                                           //                                  
+////////////////////////////////////////////////////////////////////////////////////////////////
+function formatTime(isoString) {
+    const date = new Date(isoString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Trả về định dạng "DD/MM/YYYY HH:MM:SS"
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       not-pixel                                            //                                  
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const randomNumber = () => {
     const ranges = [
-        { start: 494495, end: 494501 },
-        { start: 495495, end: 495501 },
-        { start: 496495, end: 496501 },
-        { start: 497495, end: 497501 },
-        { start: 498495, end: 498501 },
-        { start: 499495, end: 499501 }
+        { start: 496496, end: 496501 },
+        { start: 497496, end: 497501 },
+        { start: 498496, end: 498501 },
+        { start: 499496, end: 499501 },
     ];
 
     function getRandomInRange(min, max) {
@@ -120,4 +142,5 @@ module.exports = {
     navigateToIframe,
     waitForTextContent,
     waitForInput,
+    formatTime,
 }

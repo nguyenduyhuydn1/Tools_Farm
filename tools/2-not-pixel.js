@@ -80,7 +80,7 @@ const getClaim = async (user) => {
 }
 
 const postStart = async (user, pixelId) => {
-    let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#000000" });
+    let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#2450A4" });
     console.log(`balance:${JSON.stringify(start)}`);
     return start;
 }
@@ -136,13 +136,15 @@ const MainBrowser = async (localStorageData, countFolder) => {
             }
             return match;
         });
+        // await waitForInput()
         browser.close()
 
         await sleep(5000)
         let arrNumber = randomNumber();
         await getInfo(iframe, countFolder);
         await sleep(1000)
-        let { charges } = await getStatus(iframe)
+        let { charges = 10 } = await getStatus(iframe)
+        await sleep(1000)
         await getClaim(iframe);
         await sleep(1000)
         for (let i = 0; i < charges; i++) {

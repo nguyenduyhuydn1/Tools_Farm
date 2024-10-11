@@ -93,7 +93,7 @@ const getClaim = async (user, dataProxy) => {
 }
 
 const postStart = async (user, pixelId, dataProxy) => {
-    let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#000000" }, dataProxy);
+    let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#2450A4" }, dataProxy);
     console.log(`balance:${JSON.stringify(start)}`);
     return start;
 }
@@ -148,7 +148,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(2000)
+        await sleep(3000)
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
 

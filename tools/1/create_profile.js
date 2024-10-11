@@ -33,7 +33,7 @@ const MainBrowser = async (localStorageData, count) => {
             // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${count + 1000}`,          //BuyAccTele
             args: [
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -59,25 +59,27 @@ const MainBrowser = async (localStorageData, count) => {
         // await page.reload();
         // await sleep(2000);
         // await browser.close();
-        // await page.goto("https://web.telegram.org/k/#@major");
-        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        // await sleep(3000);
-        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
-        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
 
-        // await page.waitForSelector('iframe');
-        // let iframe = await page.evaluate(() => {
-        //     let match;
-        //     let iframeElement = document.querySelector("iframe");
-        //     if (iframeElement) {
-        //         const src = iframeElement.src;
-        //         match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-        //     }
-        //     return match;
-        // });
-        // fs.appendFileSync('users.txt', `${iframe}\n`, 'utf-8');
-        // browser.close()
+
+        await page.goto("https://web.telegram.org/k/#@Tomarket_ai_bot");
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(3000);
+        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
+        await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+        await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
+
+        await page.waitForSelector('iframe');
+        let iframe = await page.evaluate(() => {
+            let match;
+            let iframeElement = document.querySelector("iframe");
+            if (iframeElement) {
+                const src = iframeElement.src;
+                match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+            return match;
+        });
+        fs.appendFileSync('users.txt', `${iframe}\n`, 'utf-8');
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -86,9 +88,9 @@ const MainBrowser = async (localStorageData, count) => {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 9; i < 300; i++) {
+    for (let i = 0; i < 300; i++) {
+        if (i == 10) process.exit(1)
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
-        await waitForInput();
     }
 })();

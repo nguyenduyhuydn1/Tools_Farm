@@ -73,16 +73,13 @@ const fetchTask = async (auth) => {
     let data = await fetchData('https://api.cryptorank.io/v0/tma/account/tasks', auth, 'GET', {})
     let arr;
     if (data) {
-        arr = data.filter(v => v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle')
+        arr = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
         arr.map(v => console.log(`nhiệm vụ: ${v.name}`))
     }
     return arr;
 }
 
 const fetchClaim = async (id, auth) => {
-    console.log("==============================================================");
-    console.log("                       làm nhiệm vụ")
-    console.log("==============================================================");
     let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, auth, 'POST', {})
 
     if (data) console.log(`đã hoàn thành nv, ${data.balance}`);
@@ -170,6 +167,9 @@ const MainBrowser = async (localStorageData, countFolder) => {
         }
 
         let tasks = await fetchTask(authorization);
+        console.log("==============================================================");
+        console.log("                       làm nhiệm vụ")
+        console.log("==============================================================");
         for (let x of tasks) {
             await fetchClaim(x.id, authorization)
         }
@@ -184,20 +184,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
         await sleep(1000)
     }
 })();

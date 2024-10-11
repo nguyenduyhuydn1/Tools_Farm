@@ -276,6 +276,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
     }
 };
 
+let promiseTasks = [];
 
 (async () => {
     const dataArray = readLinesToArray();
@@ -283,7 +284,11 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }
-    await sleep(1000)
+    if (promiseTasks.length > 0) {
+        await Promise.all(promiseTasks).then(() => {
+            console.log('Tất cả các task đã hoàn thành');
+        });
+    }
     process.exit(1)
 })();
 

@@ -83,27 +83,29 @@ let MainBrowser = (async (localStorageData, countFolder) => {
         await page.goto("https://tg-app.memefi.club/earn");
         await sleep(3000)
 
-        for (let i = 6; i < arr; i++) {
-            try {
-                console.log(i);
-                await page.click(`#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div:nth-child(${i})`);
-                await sleep(2000)
-                await page.click("#root > main > div > div > div.MuiBox-root.css-89r8mz > div.MuiBox-root.css-0 > div > div > div")
-                await sleep(2000)
-                await page.click("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-4q3rnc > button")
-                await sleep(2000)
-                await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.MuiBox-root > div > div.MuiBox-root.css-16xrt4i > button")
-                await sleep(2000)
-                await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.sc-gJhJTp.braGIf.MuiBox-root.css-1daa1cd > button")
-                await sleep(2000)
-                await page.goto("https://tg-app.memefi.club/earn");
-                await sleep(2000)
-                i--
-            } catch (error) {
-                await clickIfExists(page, `body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-1xnhpp1 > div > div.MuiBox-root.css-16xrt4i > div > div:nth-child(1) > div.MuiStack-root.css-xhed8o > a`)
-                console.log("error");
-                await page.goto("https://tg-app.memefi.club/earn");
-                await sleep(3000)
+        while (true) {
+            for (let i = 6; i < arr; i++) {
+                try {
+                    console.log(i);
+                    await page.click(`#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div:nth-child(${i})`);
+                    await sleep(2000)
+                    await page.click("#root > main > div > div > div.MuiBox-root.css-89r8mz > div.MuiBox-root.css-0 > div > div > div")
+                    await sleep(2000)
+                    await page.click("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-4q3rnc > button")
+                    await sleep(2000)
+                    await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.MuiBox-root > div > div.MuiBox-root.css-16xrt4i > button")
+                    await sleep(2000)
+                    await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.sc-gJhJTp.braGIf.MuiBox-root.css-1daa1cd > button")
+                    await sleep(2000)
+                    await page.goto("https://tg-app.memefi.club/earn");
+                    await sleep(2000)
+                    i--
+                } catch (error) {
+                    await clickIfExists(page, `body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-1xnhpp1 > div > div.MuiBox-root.css-16xrt4i > div > div:nth-child(1) > div.MuiStack-root.css-xhed8o > a`)
+                    console.log("error");
+                    await page.goto("https://tg-app.memefi.club/earn");
+                    await sleep(3000)
+                }
             }
         }
     } catch (error) {
@@ -119,7 +121,7 @@ let MainBrowser = (async (localStorageData, countFolder) => {
 
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 6; i < dataArray.length; i++) {
+    for (let i = 9; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
         await waitForInput();
     }

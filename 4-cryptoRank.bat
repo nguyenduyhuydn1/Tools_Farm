@@ -1,4 +1,5 @@
 :loop
 node C:\Users\huy\Desktop\Tool_Farm\tools\4-cryptoRank.js
-timeout /t 10800 /nobreak
+echo '4-cryptoRank'
+timeout /t 21600 /nobreak
 goto loop

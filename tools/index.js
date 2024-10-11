@@ -135,26 +135,26 @@ const MainBrowser = async (localStorageData, countFolder) => {
     }
 };
 
-// (async () => {
-//     const dataArray = readLinesToArray();
-//     for (let i = 0; i < dataArray.length; i++) {
-//         await MainBrowser(dataArray[i], i);
-//         await sleep(1000)
-//     }
-// })();
-
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i += 2) {
-        const promises = [];
-
-        promises.push(MainBrowser(dataArray[i], i));
-
-        if (i + 1 < dataArray.length) {
-            promises.push(MainBrowser(dataArray[i + 1], i + 1));
-        }
-
-        await Promise.all(promises);
-        await sleep(1000);
+    for (let i = 0; i < dataArray.length; i++) {
+        await MainBrowser(dataArray[i], i);
+        await sleep(1000)
     }
 })();
+
+// (async () => {
+//     const dataArray = readLinesToArray();
+//     for (let i = 0; i < dataArray.length; i += 2) {
+//         const promises = [];
+
+//         promises.push(MainBrowser(dataArray[i], i));
+
+//         if (i + 1 < dataArray.length) {
+//             promises.push(MainBrowser(dataArray[i + 1], i + 1));
+//         }
+
+//         await Promise.all(promises);
+//         await sleep(1000);
+//     }
+// })();

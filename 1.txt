@@ -1,0 +1,1020 @@
+claim farm
+fetch("https://elb.seeddao.org/api/v1/seed/claim", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAGG7xo6AwAAAIbvGjo4J_Dp&user=%7B%22id%22%3A7417294726%2C%22first_name%22%3A%22h%20%F0%9F%9B%92%F0%9F%8C%B1SEED%22%2C%22last_name%22%3A%22n%F0%9F%90%A6%20SUI%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728640416&hash=0be855f1f3b52941a30a7808e3ab2a4089148f43f048883a3b2c4881901b7ebc",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+{
+    "data": {
+        "id": "10821ab5-daa0-45de-b6b8-019e3c33e6fc",
+        "user_id": "704c76c8-ea7f-4a24-b238-7fe4fddf70ea",
+        "timestamp": "2024-10-11T09:54:38.889429Z",
+        "amount": 504000000
+    }
+}
+
+
+
+daily
+
+fetch("https://elb.seeddao.org/api/v1/login-bonuses", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+{"data":{"no":11,"timestamp":"2024-10-11T10:23:36.430621Z","amount":400000000}}
+
+
+
+
+
+
+
+
+
+
+
+
+ thong tin
+sau
+fetch("https://elb.seeddao.org/api/v1/worms/me-all", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+{
+    "data": [
+        {
+            "id": "e063baf4-0540-4498-8e7e-5f5e434fc340",
+            "type": "common",
+            "status": "successful",
+            "updated_at": "2024-10-11T10:22:33.699333Z",
+            "reward": 50000000,
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00"
+        },
+        {
+            "id": "61319ea8-af16-40cc-81b9-cd105c9cf4ec",
+            "type": "common",
+            "status": "successful",
+            "updated_at": "2024-10-10T17:04:22.983154Z",
+            "reward": 50000000,
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00"
+        },
+        {
+            "id": "930ca5e1-b313-4963-919f-eed6561a62b4",
+            "type": "rare",
+            "status": "successful",
+            "updated_at": "2024-10-08T07:32:57.803707Z",
+            "reward": 500000000,
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00"
+        },
+        {
+            "id": "3128f6ce-9b0a-4e95-acbb-4a5ca5056811",
+            "type": "common",
+            "status": "successful",
+            "updated_at": "2024-10-06T00:08:37.366938Z",
+            "reward": 50000000,
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00"
+        },
+        {
+            "id": "7c969a84-8962-4c59-b17a-f4b3ac0b40e8",
+            "type": "common",
+            "status": "successful",
+            "updated_at": "2024-10-05T00:45:34.496926Z",
+            "reward": 50000000,
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00"
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+leader chim thong tin
+fetch("https://elb.seeddao.org/api/v1/bird/is-leader", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+
+
+lay phan thuong cua viec di san
+
+fetch("https://elb.seeddao.org/api/v1/bird-hunt/complete", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"bird_id\":\"b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd\"}",
+  "method": "POST"
+});
+{
+    "data": {
+        "bird": {
+            "id": "b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd",
+            "type": "sparrow",
+            "status": "in-inventory",
+            "energy_level": 0,
+            "energy_max": 2000000000,
+            "happiness_level": 0,
+            "task_level": 0,
+            "is_leader": true,
+            "hunt_start_at": "2024-10-10T07:01:27.134694Z",
+            "hunt_end_at": "2024-10-10T19:01:27.134694Z",
+            "received_reward_at": "0001-01-01T00:00:00Z",
+            "on_market": false,
+            "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00",
+            "created_at": "2024-10-10T07:01:00.919213Z",
+            "updated_at": "2024-10-10T07:01:00.919213Z",
+            "market_id": null,
+            "price": null
+        },
+        "egg_id": null,
+        "egg_type": null,
+        "worm_id": null,
+        "worm_type": null,
+        "egg_piece_id": null,
+        "egg_piece_type": null,
+        "seed_amount": 1520000000
+    }
+}
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+cho chim an
+
+fetch("https://elb.seeddao.org/api/v1/bird-feed", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "content-type": "application/json",
+    
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"bird_id\":\"b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd\",\"worm_ids\":[\"e063baf4-0540-4498-8e7e-5f5e434fc340\"]}",
+  "method": "POST"
+});
+
+{
+    "data": {
+        "id": "b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd",
+        "type": "sparrow",
+        "status": "in-inventory",
+        "energy_level": 2000000000,
+        "energy_max": 2000000000,
+        "happiness_level": 0,
+        "task_level": 0,
+        "is_leader": true,
+        "hunt_start_at": "2024-10-10T07:01:27.134694Z",
+        "hunt_end_at": "2024-10-10T19:01:27.134694Z",
+        "received_reward_at": "2024-10-11T10:27:56.73981Z",
+        "on_market": false,
+        "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00",
+        "created_at": "2024-10-10T07:01:00.919213Z",
+        "updated_at": "2024-10-10T07:01:00.919213Z",
+        "market_id": null,
+        "price": null
+    }
+}
+
+
+
+
+
+
+
+
+
+happy chim
+
+fetch("https://elb.seeddao.org/api/v1/bird-happiness", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"bird_id\":\"b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd\",\"happiness_rate\":10000}",
+  "method": "POST"
+});
+
+{
+    "data": {
+        "id": "b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd",
+        "type": "sparrow",
+        "status": "in-inventory",
+        "energy_level": 2000000000,
+        "energy_max": 2000000000,
+        "happiness_level": 10000,
+        "task_level": 0,
+        "is_leader": false,
+        "hunt_start_at": "0001-01-01T00:00:00Z",
+        "hunt_end_at": "0001-01-01T00:00:00Z",
+        "received_reward_at": "0001-01-01T00:00:00Z",
+        "on_market": false,
+        "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00",
+        "created_at": "2024-10-10T07:01:00.919213Z",
+        "updated_at": "2024-10-10T07:01:00.919213Z",
+        "market_id": null,
+        "price": null
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+di san ngoc
+
+fetch("https://elb.seeddao.org/api/v1/bird-hunt/start", {
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9",
+    "content-type": "application/json",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAHBK7dlAwAAAMErt2VSxMWk&user=%7B%22id%22%3A8148954049%2C%22first_name%22%3A%22Hoangdnvn2%22%2C%22last_name%22%3A%22Hoangdnvn2%20%F0%9F%9B%92%F0%9F%90%A6%20SUI%F0%9F%8C%B1SEED%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728642141&hash=23bb7dcab7bf27a4a70ecfd68e039a786c7396f4f847adc65fe0ce0d92f0988d",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": "{\"bird_id\":\"b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd\",\"task_level\":0}",
+  "method": "POST"
+});
+
+{
+    "data": {
+        "id": "b0d19dd1-3f8b-4498-b0c5-a75ee2d2a2fd",
+        "type": "sparrow",
+        "status": "hunting",
+        "energy_level": 2000000000,
+        "energy_max": 0,
+        "happiness_level": 10000,
+        "task_level": 0,
+        "is_leader": false,
+        "hunt_start_at": "2024-10-11T10:31:16.226891Z",
+        "hunt_end_at": "2024-10-11T22:31:16.226891Z",
+        "received_reward_at": "2024-10-11T10:27:56.73981Z",
+        "on_market": false,
+        "owner_id": "ec8e6446-41ba-4811-8736-cb25b6a8fc00",
+        "created_at": "2024-10-10T07:01:00.919213Z",
+        "updated_at": "2024-10-10T07:01:00.919213Z",
+        "market_id": null,
+        "price": null
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+missions
+
+
+fetch("https://elb.seeddao.org/api/v1/tasks/progresses", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAGG7xo6AwAAAIbvGjo4J_Dp&user=%7B%22id%22%3A7417294726%2C%22first_name%22%3A%22h%20%F0%9F%9B%92%F0%9F%8C%B1SEED%22%2C%22last_name%22%3A%22n%F0%9F%90%A6%20SUI%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728640416&hash=0be855f1f3b52941a30a7808e3ab2a4089148f43f048883a3b2c4881901b7ebc",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "GET"
+});
+a.data.filter(v=>v.task_user?.completed == null)
+{
+    "data": [
+        {
+            "id": "cbf13a23-863e-429f-96ff-17b82673d119",
+            "type": "Join community",
+            "name": "Join GPT360 Channel",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 109,
+            "metadata": {
+                "url": "https://t.me/+Ho5i8z19vP1mYmFk",
+                "name": "GPT360",
+                "image_url": "https://static.seeddao.org/44b03507-fc27-49fa-86f9-b4503b7e39d3.webp",
+                "group_name": "Our Neighborhood",
+                "public_url": "https://t.me/GPT360_Announcement",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "1d4f6d6d-cdc8-42a0-9875-9d29fe564791",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "e98ff8fa-fcf5-416a-9bac-e484ab386090",
+            "type": "Play app",
+            "name": "Play GPT360",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 108,
+            "metadata": {
+                "url": "https://t.me/G360GOBOT/app?startapp=4SQN943OW526",
+                "name": "GPT360",
+                "image_url": "https://static.seeddao.org/44b03507-fc27-49fa-86f9-b4503b7e39d3.webp",
+                "group_name": "Our Neighborhood",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "b36811ad-73a0-4cea-8723-5efff04d195e",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "a23d2061-1aa5-4b79-ae51-5451df7a2bc4",
+            "type": "Follow us",
+            "name": "Follow Arkham",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 107,
+            "metadata": {
+                "url": "https://x.com/intent/follow?screen_name=arkhamintel",
+                "name": "Arkham",
+                "ios_url": "https://x.com/arkhamintel",
+                "image_url": "https://static.seeddao.org/b837e9e4-cb01-4980-8ccc-827312c57ce8.png",
+                "group_name": "Our Neighborhood",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": null
+        },
+        {
+            "id": "d36a5403-2cf3-4ee2-93e1-c5316e8c59ce",
+            "type": "collaboration",
+            "name": "Play TON Kombat",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 101,
+            "metadata": {
+                "url": "https://t.me/Ton_kombat_bot/app?startapp=7326827780",
+                "name": "TON Kombat",
+                "is_tma": true,
+                "image_url": "https://static.seeddao.org/1722a88e-f380-46cb-ab05-3e804181eba7.png",
+                "query_url": "https://liyue.tonkombat.com/api/v1/partner/account/$TELEGRAM_ID$/verify",
+                "group_name": "Our Neighborhood",
+                "group_order": 4,
+                "lookup_value": "data",
+                "query_method": "GET",
+                "auth_header_env": "AUTH_HEADER_TONKOMBAT",
+                "auth_header_name": "x-api-key"
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "dfdb3642-0993-459a-8548-7216803af30a",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "ffc99635-e02c-4d60-b734-262cda8d77da",
+            "type": "Play app",
+            "name": "Play W-Coin",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 93,
+            "metadata": {
+                "url": "https://t.me/wcoin_tapbot/wcoin_app?startapp=NzQ0NTU3Nzk0NA=",
+                "name": "W-Coin",
+                "image_url": "https://static.seeddao.org/12a58ae2-d30e-4685-ba55-3a29c2ce70cf.webp",
+                "group_name": "Our Neighborhood",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "dfafb2a7-919a-40e3-a6db-b523f093dbb4",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "a0f47565-64b1-4f2e-b6bc-48e57f399008",
+            "type": "Join community",
+            "name": "Join Tomarket Channel",
+            "description": "new tomarket 8",
+            "reward_amount": 500000000,
+            "sort": 91,
+            "metadata": {
+                "url": "https://t.me/+vuzoAZpkboI4YTA1",
+                "name": "Tomarket",
+                "image_url": "https://static.seeddao.org/75af6299-42aa-4c93-bfc7-3de0bfdddcf8.png",
+                "group_name": "Our Neighborhood",
+                "public_url": "https://t.me/tomarket_ai",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "26a2c32a-e306-4de1-b793-69147afa6b87",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "503091e7-2d81-441c-bd51-d2051b25ff53",
+            "type": "Play app",
+            "name": "Play Tomarket \u0026 TGE Soon",
+            "description": "new tomarket",
+            "reward_amount": 500000000,
+            "sort": 90,
+            "metadata": {
+                "url": "https://t.me/Tomarket_ai_bot/app?startapp=0002sR6A",
+                "name": "Tomarket",
+                "image_url": "https://static.seeddao.org/75af6299-42aa-4c93-bfc7-3de0bfdddcf8.png",
+                "group_name": "Our Neighborhood",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "d934d983-2bdb-4c5b-bb4e-db4efe0e5056",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "c43551a0-51b2-48c0-ae03-fc9a6fd80cc9",
+            "type": "Join community",
+            "name": "Join SEED updates",
+            "description": " ",
+            "reward_amount": 0,
+            "sort": 20,
+            "metadata": {
+                "url": "https://t.me/seedupdates",
+                "name": "SEED",
+                "image_url": "https://d1j2c9jkfhu70p.cloudfront.net/9474fb82-7b47-4e84-aa06-1b5f8b858b3f.png",
+                "group_name": "",
+                "group_order": "",
+                "subgroup_img": "",
+                "subgroup_name": "",
+                "subgroup_type": ""
+            },
+            "repeats": 1,
+            "tickets": 1,
+            "task_user": null
+        },
+        {
+            "id": "db1c59cd-ec8f-477d-9cce-808fbcc8d768",
+            "type": "TG story",
+            "name": "Post story on telegram",
+            "description": " ",
+            "reward_amount": 0,
+            "sort": 19,
+            "metadata": {
+                "url": "",
+                "name": "SEED",
+                "image_url": "https://d1j2c9jkfhu70p.cloudfront.net/2f7b7086-7ad6-4fe0-9a78-cd7e2125015e.png",
+                "group_name": "",
+                "group_order": "",
+                "story_media": "https://d1j2c9jkfhu70p.cloudfront.net/95877b11-7f71-464d-ad2a-ebc8fb213e28.mp4",
+                "subgroup_img": "",
+                "story_content": "Plant Tree, collect SEED, catch Worms and feed Birds @seed_coin_bot #SEED",
+                "subgroup_name": "",
+                "subgroup_type": ""
+            },
+            "repeats": 1,
+            "tickets": 1,
+            "task_user": null
+        },
+        {
+            "id": "90bf490b-893d-4cce-ba73-169395fa9d0b",
+            "type": "Follow us",
+            "name": "Follow SEED X",
+            "description": " ",
+            "reward_amount": 0,
+            "sort": 18,
+            "metadata": {
+                "url": "https://x.com/intent/follow?screen_name=seedcombinator",
+                "name": "SEED",
+                "ios_url": "https://x.com/SeedCombinator",
+                "image_url": "https://d1j2c9jkfhu70p.cloudfront.net/347bba82-fe83-46f8-879c-2264c66d7bcb.png",
+                "group_name": "",
+                "group_order": "",
+                "subgroup_img": "",
+                "subgroup_name": "",
+                "subgroup_type": ""
+            },
+            "repeats": 1,
+            "tickets": 1,
+            "task_user": null
+        },
+        {
+            "id": "ea241a07-8b9b-4474-9e58-343b61ab2372",
+            "type": "telegram-name-include",
+            "name": "Add \"🌱SEED\" to your name\n(Restart the app to check)",
+            "description": " ",
+            "reward_amount": 2000000000,
+            "sort": 18,
+            "metadata": {
+                "texts": [
+                    "🌱",
+                    "SEED"
+                ],
+                "image_url": "https://static.seeddao.org/a4a63cba-ac78-40c0-b498-e3973ad9dc81.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "74c4f33d-70ef-4486-81ef-f815fc243fbe",
+                "completed": true,
+                "reward_amount": 2000000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "3e1db69b-a39a-47c9-b56d-411084dc5624",
+            "type": "Follow us",
+            "name": "Subsribe to be a SEED pro",
+            "description": " ",
+            "reward_amount": 0,
+            "sort": 17,
+            "metadata": {
+                "url": "https://www.youtube.com/@seedcombinator",
+                "name": "SEED",
+                "ios_url": "https://www.youtube.com/@seedcombinator",
+                "image_url": "https://d1j2c9jkfhu70p.cloudfront.net/efe861e0-f5ad-4e60-8bb0-ae09b6c1c77c.png",
+                "group_name": "",
+                "group_order": "",
+                "subgroup_img": "",
+                "subgroup_name": "",
+                "subgroup_type": ""
+            },
+            "repeats": 1,
+            "tickets": 1,
+            "task_user": null
+        },
+        {
+            "id": "6a94c6c1-7361-4018-89a5-45b42ca4e9ec",
+            "type": "Join community",
+            "name": "Join Alex's Hub",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 17,
+            "metadata": {
+                "url": "https://t.me/Alexnosleep",
+                "name": "Alex's Hub",
+                "image_url": "https://static.seeddao.org/fdef4e75-b8d8-4811-add7-ce2cf363fc68.webp",
+                "group_name": "Our Garden",
+                "public_url": "https://t.me/Alexnosleep",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "e7a78bbd-7443-469b-b319-6771ad68449c",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "20786619-a873-4ee0-a77d-202c2921b10d",
+            "type": "Follow us",
+            "name": "Retweet SEED news",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 16,
+            "metadata": {
+                "url": "https://x.com/SeedCombinator/status/1842053529164484739",
+                "name": "SEED",
+                "ios_url": "https://x.com/SeedCombinator/status/1842053529164484739",
+                "image_url": "https://static.seeddao.org/aa00e0b7-98c0-40ba-a3b6-7a4f327c996e.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "b63847d0-46a5-4b2f-b331-7d72a4beb68e",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "736a1b7e-2f76-4547-9aa3-9d4e2d453867",
+            "type": "Add_list",
+            "name": "Subscribe TON channels",
+            "description": " ",
+            "reward_amount": 500000000,
+            "sort": 15,
+            "metadata": {
+                "url": "https://t.me/addlist/e09oMPlLdTdlYzY1",
+                "name": "TON channels",
+                "ios_url": "https://t.me/addlist/e09oMPlLdTdlYzY1",
+                "image_url": "https://static.seeddao.org/f6ede46c-6b59-450f-9602-6ae069525b0d.png",
+                "group_name": "Our Neighborhood",
+                "group_order": 4
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "a2d75382-e394-4907-a114-bfd95ce61478",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "c92e2b20-0614-4f1d-9207-ec951747f573",
+            "type": "refer",
+            "name": "Invite 3 friends",
+            "description": " ",
+            "reward_amount": 5000000000,
+            "sort": 14,
+            "metadata": {
+                "url": "",
+                "name": "",
+                "ios_url": "",
+                "image_url": "https://static.seeddao.org/a7dd27c6-e82e-4c77-8574-c26b59cdbf29.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 3,
+            "tickets": 0,
+            "task_user": {
+                "id": "d4e09c84-97bf-4198-a452-0513e2633656",
+                "completed": false,
+                "reward_amount": 0,
+                "repeats": 0,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "5007a283-7837-4a15-a6ee-c94236656551",
+            "type": "Follow us",
+            "name": "Follow SEED Combinator",
+            "description": " ",
+            "reward_amount": 1000000000,
+            "sort": 12,
+            "metadata": {
+                "url": "https://twitter.com/intent/follow?screen_name=seedcombinator",
+                "name": "SEED",
+                "ios_url": "https://twitter.com/seedcombinator",
+                "image_url": "https://static.seeddao.org/aa00e0b7-98c0-40ba-a3b6-7a4f327c996e.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "c0612c11-288f-4e6f-b4be-4fd11ae3afa2",
+                "completed": true,
+                "reward_amount": 1000000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "dc1bc321-a395-422a-be0d-f20bb6234d6e",
+            "type": "Follow us",
+            "name": "Subscribe to be a SEED Pro",
+            "description": "youtube",
+            "reward_amount": 1000000000,
+            "sort": 11,
+            "metadata": {
+                "url": "https://www.youtube.com/@seedcombinator",
+                "name": "SEED",
+                "ios_url": "https://www.youtube.com/@seedcombinator",
+                "image_url": "https://static.seeddao.org/df75c44c-05f6-4215-9cf3-a7f0c2d7ac8d.png",
+                "important": "true",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "1ca4c4ab-89d8-4a34-a5cc-02c3f0e33ded",
+                "completed": true,
+                "reward_amount": 1000000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "b8cbb953-54e3-4b16-9fed-291cc87bd33b",
+            "type": "Follow us",
+            "name": "Hot tips to x4 your SEED income",
+            "description": "youtube",
+            "reward_amount": 500000000,
+            "sort": 11,
+            "metadata": {
+                "url": "https://youtube.com/shorts/QOrzPoFQomU?si=ttNKyCXyGJPqYYMl",
+                "name": "SEED",
+                "ios_url": "https://youtube.com/shorts/QOrzPoFQomU?si=ttNKyCXyGJPqYYMl",
+                "image_url": "https://static.seeddao.org/df75c44c-05f6-4215-9cf3-a7f0c2d7ac8d.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "89771a1a-279c-4d27-812b-821d5156dd5a",
+                "completed": true,
+                "reward_amount": 500000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        },
+        {
+            "id": "e3b5e992-8b0a-4cb0-8a70-ca317fbc758e",
+            "type": "Join community",
+            "name": "Subscribe SEED Updates",
+            "description": " ",
+            "reward_amount": 1000000000,
+            "sort": 10,
+            "metadata": {
+                "url": "https://t.me/seedupdates",
+                "name": "SEED",
+                "image_url": "https://static.seeddao.org/8a9b54e2-5e38-4e5d-a398-4d6f89d4229c.png",
+                "group_name": "Our Garden",
+                "group_order": 2
+            },
+            "repeats": 1,
+            "tickets": 0,
+            "task_user": {
+                "id": "f46f3a52-a3ce-4a4f-8fde-fdf647c78e13",
+                "completed": true,
+                "reward_amount": 1000000000,
+                "repeats": 1,
+                "tickets": 0
+            }
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

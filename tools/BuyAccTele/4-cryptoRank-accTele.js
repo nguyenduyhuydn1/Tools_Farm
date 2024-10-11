@@ -182,7 +182,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
 
         let authorization = await getAuthorization
-        // browser.close()
+        browser.close()
 
         let check1 = await fetchClaimEndFarming(authorization, dataProxy);
         await sleep("5000")
@@ -206,22 +206,12 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
 
 (async () => {
-    for (let i = 24; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         console.log(i, "-innnnndexxx");
 
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
-        await sleep(1000)
         await sleep(1000)
         // await waitForInput()
     }

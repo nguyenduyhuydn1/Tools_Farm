@@ -234,7 +234,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(2000)
+        await sleep(3000)
+        await sleep(3000)
+        await sleep(3000)
         await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
         await page.waitForSelector('iframe');
@@ -256,7 +258,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
             await fetchBoost(token, dataProxy);
 
             let tasks = await fetchMissions(token, dataProxy);
-            let promiseTasks = [];
 
             for (const e of tasks) {
                 console.log(e.title);
@@ -287,6 +288,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
     }
 };
 
+let promiseTasks = [];
 
 
 (async () => {
@@ -297,6 +299,11 @@ const MainBrowser = async (dataProxy, countFolder) => {
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
+    }
+    if (promiseTasks.length > 0) {
+        await Promise.all(promiseTasks).then(() => {
+            console.log('Tất cả các task đã hoàn thành');
+        });
     }
     process.exit(1)
 })();
