@@ -88,6 +88,19 @@ const fetchClaim = async (id, auth) => {
     if (data) console.log(`đã hoàn thành nv, ${data.balance}`);
 }
 
+const fetchClaimEndFarming = async (auth) => {
+    console.log("==============================================================");
+    console.log("                       claim farm")
+    console.log("==============================================================");
+
+    let headers = { "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"", }
+    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, auth, 'POST', {})
+
+    if (data) {
+        console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
+        return data;
+    }
+}
 
 // =====================================================================
 // =====================================================================
@@ -144,13 +157,22 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
 
         let authorization = await getAuthorization
+        // browser.close()
 
-        await fetchFarming(authorization);
+        let check1 = await fetchClaimEndFarming(authorization);
+        await sleep("5000")
+        let check2 = await fetchFarming(authorization);
+        if (!(check1 && check2)) {
+            await sleep("5000")
+            await fetchClaimEndFarming(authorization);
+            await sleep("5000")
+            await fetchFarming(authorization);
+        }
+
         let tasks = await fetchTask(authorization);
         for (let x of tasks) {
             await fetchClaim(x.id, authorization)
         }
-        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -162,6 +184,20 @@ const MainBrowser = async (localStorageData, countFolder) => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
         await MainBrowser(dataArray[i], i);
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
         await sleep(1000)
     }
 })();

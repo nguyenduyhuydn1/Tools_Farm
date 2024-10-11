@@ -177,21 +177,15 @@ const MainBrowser = async (dataProxy, countFolder) => {
         });
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
-        console.log("xxx");
-
-        await sleep(5000)
-        await sleep(5000)
-        await sleep(5000)
+        await sleep(3000)
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-        await sleep(2000)
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-        console.log("end");
 
         let authorization = await getAuthorization
         // browser.close()
 
         let check1 = await fetchClaimEndFarming(authorization, dataProxy);
+        await sleep("5000")
         let check2 = await fetchFarming(authorization, dataProxy);
         if (!(check1 && check2)) {
             await sleep("5000")
@@ -218,6 +212,16 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
+        await sleep(1000)
         await sleep(1000)
         // await waitForInput()
     }

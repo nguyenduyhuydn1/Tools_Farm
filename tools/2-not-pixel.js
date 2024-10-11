@@ -146,8 +146,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await getClaim(iframe);
         await sleep(1000)
         for (let i = 0; i < charges; i++) {
-            console.log(i % charges);
-            await postStart(iframe, arrNumber[i % 10])
+            await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
             await sleep(1000)
         }
     } catch (error) {
