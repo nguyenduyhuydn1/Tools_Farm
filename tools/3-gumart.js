@@ -197,12 +197,14 @@ const MainBrowser = async (localStorageData, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${countFolder + 800}`,
             args: [
-                // '--disable-gpu',
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
                 '--disable-video',                 // Vô hiệu hóa video decoding
                 '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+
+                '--test-type',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -219,6 +221,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(2000)
+
         await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")

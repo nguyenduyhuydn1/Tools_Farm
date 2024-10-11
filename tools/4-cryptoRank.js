@@ -135,6 +135,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
         });
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(2000)
+
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
         await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")

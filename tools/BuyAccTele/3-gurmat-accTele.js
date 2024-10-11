@@ -232,6 +232,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(2000)
         await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
         await page.waitForSelector('iframe');

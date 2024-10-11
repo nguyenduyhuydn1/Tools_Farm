@@ -120,6 +120,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(2000)
+
         await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
         await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
         await page.waitForSelector('iframe');

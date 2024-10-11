@@ -122,13 +122,14 @@ const MainBrowser = async (dataProxy, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,
             args: [
-                '--test-type',
-                // '--disable-gpu',
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
                 '--disable-video',                 // Vô hiệu hóa video decoding
                 '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+
+                '--test-type',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -147,6 +148,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await sleep(2000)
         await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
         await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
 
