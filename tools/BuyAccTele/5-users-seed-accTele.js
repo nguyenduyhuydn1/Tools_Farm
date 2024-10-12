@@ -1,4 +1,5 @@
 const fs = require("fs-extra");
+const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
@@ -271,7 +272,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
             },);
             browser.close()
 
-            fs.appendFileSync('seed.txt', `${iframeSrc}\n`, 'utf-8');
             if (iframeSrc) {
                 let token = iframeSrc;
                 await fetchClaimFarm(token, dataProxy);
@@ -284,7 +284,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 if (infoLeader) {
                     let { id, status, hunt_end_at } = infoLeader;
                     let date = Date.now();
-                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
+                    let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } });
                     console.log(Date.now(hunt_end_at), date);
                     if (status == 'hunting') {
                         let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
@@ -317,7 +317,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 for (let x of tasks) {
                     for (let i = 0; i <= x.repeats; i++) {
                         await fetchClaimTask(token, x.id, dataProxy);
-                        await sleep(1000);
+                        await sleep(2000);
                     }
                 }
             }
@@ -328,7 +328,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 17; i < 30; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red")
 
         if (i == 1) continue

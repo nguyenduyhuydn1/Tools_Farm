@@ -1,3 +1,5 @@
+const fs = require("fs-extra");
+const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
@@ -262,7 +264,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 if (infoLeader) {
                     let { id, status, hunt_end_at } = infoLeader;
                     let date = Date.now();
-                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+                    let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
 
                     if (status == 'hunting') {
                         let checkHunting = await fetchCompleteHunting(token, id);

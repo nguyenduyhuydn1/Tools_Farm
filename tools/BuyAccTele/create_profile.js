@@ -10,18 +10,11 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-
-const { HttpsProxyAgent } = require('https-proxy-agent');
-const axios = require('axios');
 const { sleep, waitForInput, userAgent } = require('./../utils/utils.js');
 const { checkIframeAndClick, clickIfExists } = require('./../utils/selector.js');
-
 const proxyFile = require("../data/proxy.js");
-const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
 
-let xPosition = 0;
-let yPosition = 0;
 const MainBrowser = async (dataProxy, countFolder) => {
     try {
         puppeteer.use(
@@ -41,29 +34,41 @@ const MainBrowser = async (dataProxy, countFolder) => {
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
             args: [
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=600,600',
-                `--window-position=${xPosition},${yPosition}`,
+                '--window-size=1000,600',
+                `--window-position=0,0`,
+                // '--start-maximized'
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
-        xPosition += 300;
-        if (xPosition + 300 > 1920) {
-            xPosition = 0;
-            yPosition += 200;
-        }
 
         const [page] = await browser.pages();
-        await page.setUserAgent(userAgent);
+        const page2 = await browser.newPage();
+        await page2.goto("https://google.com");
+        await sleep(3000);
+        await page.bringToFront();
 
-        await sleep(3000);
-        await page.goto("https://web.telegram.org/k/");
-        await sleep(3000);
+        await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
+
+        await checkIframeAndClick(page)
+        const iframeSrc = await page.evaluate(() => {
+            const iframeElement = document.querySelector('iframe');
+            if (iframeElement) {
+                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+        },);
+
+        fs.appendFileSync(path.join(__dirname, 'data', 'seed.txt'), `${iframeSrc}\n`, 'utf-8');
+        // await sleep(3000);
+        // await sleep(3000);
+        // await sleep(3000);
+        // await sleep(3000);
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -79,6 +84,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
         await sleep(1000)
-        await waitForInput();
+        // await waitForInput();
     }
 })();
