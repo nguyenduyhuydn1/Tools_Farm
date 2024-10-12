@@ -7,7 +7,7 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, clickIfExists, readLinesToArray, formatTime, userAgent, waitForInput } = require('./utils/utils.js')
+const { sleep, clickIfExists, readLinesToArray, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./utils/utils.js')
 const { fetchData } = require('./utils/axios.js')
 
 // =====================================================================
@@ -266,11 +266,9 @@ const MainBrowser = async (localStorageData, countFolder) => {
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
-        console.log("========================================");
-        console.log(`%c               tài khoản ${i} `, 'color: red;');
-        console.log("========================================");
+        printFormattedTitle(`tài khoản ${i}`, "red")
         await MainBrowser(dataArray[i], i);
-        await sleep(1000)
+        // await waitForInput()
     }
     process.exit(1)
 })();

@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
 
 const stealth = StealthPlugin();
 stealth.enabledEvasions.delete('iframe.contentWindow');
@@ -8,7 +9,7 @@ stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
 const { sleep, clickIfExists, readLinesToArray, formatTime, userAgent, waitForInput } = require('./utils/utils.js')
-const { fetchData } = require('./utils/axios.js')
+const { fetchData } = require('./../utils/axios.js')
 
 // =====================================================================
 // =====================================================================
@@ -27,8 +28,8 @@ const headers = {
     "Referrer-Policy": "strict-origin-when-cross-origin",
 }
 
-const fetchClaimFarm = async (auth) => {
-    let data = await fetchData('https://elb.seeddao.org/api/v1/seed/claim', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
+const fetchClaimFarm = async (auth, proxyUrl) => {
+    let data = await fetchData('https://elb.seeddao.org/api/v1/seed/claim', 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("               Claim")
@@ -38,8 +39,8 @@ const fetchClaimFarm = async (auth) => {
     }
 }
 
-const fetchLoginBonuses = async (auth) => {
-    let data = await fetchData('https://elb.seeddao.org/api/v1/login-bonuses', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
+const fetchLoginBonuses = async (auth, proxyUrl) => {
+    let data = await fetchData('https://elb.seeddao.org/api/v1/login-bonuses', 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("               check daily")
@@ -49,8 +50,8 @@ const fetchLoginBonuses = async (auth) => {
     }
 }
 
-const fetchInfoWorms = async (auth) => {
-    let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers });
+const fetchInfoWorms = async (auth, proxyUrl) => {
+    let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("           all the worms we have")
@@ -60,8 +61,8 @@ const fetchInfoWorms = async (auth) => {
     }
 }
 
-const fetchInfoLeader = async (auth) => {
-    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird/is-leader', 'GET', { authKey: 'telegram-data', authValue: auth, headers });
+const fetchInfoLeader = async (auth, proxyUrl) => {
+    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird/is-leader', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("               Leader")
@@ -74,8 +75,8 @@ const fetchInfoLeader = async (auth) => {
 // claim do sau khi san ngoc
 // check thong tin leader da di san hay chua roi hay dung ham nay
 // "hunt_end_at": "2024-10-12T02:06:27.987217Z",,"status": "hunting" thi dung ham nay
-const fetchCompleteHunting = async (auth, id) => {
-    let data = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/complete', 'POST', { authKey: 'telegram-data', authValue: auth, headers, body: { bird_id: id } });
+const fetchCompleteHunting = async (auth, id, proxyUrl) => {
+    let data = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/complete', 'POST', { authKey: 'telegram-data', authValue: auth, headers, body: { bird_id: id }, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("           Hunting complete")
@@ -89,14 +90,14 @@ const fetchCompleteHunting = async (auth, id) => {
 // cho chim an
 // check thong tin leader da di san hay chua roi hay dung ham nay
 // "hunt_end_at": "2024-10-12T02:06:27.987217Z",,"status": "hunting" thi dung ham nay
-const fetchBirthFeed = async (auth, info) => {
+const fetchBirthFeed = async (auth, info, proxyUrl) => {
     let addHeader = {
         "accept": "application/json, text/plain, */*",
         "content-type": "application/json",
     }
     if (info) {
         let { bird_id, worm_ids } = info;
-        let { data = null } = await fetchData('https://elb.seeddao.org/api/v1/bird-feed', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, worm_ids } });
+        let { data = null } = await fetchData('https://elb.seeddao.org/api/v1/bird-feed', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, worm_ids }, proxyUrl });
         if (data) {
             console.log("========================================");
             console.log("               Birth Feed")
@@ -107,12 +108,12 @@ const fetchBirthFeed = async (auth, info) => {
 }
 
 // lam chim thoai mai
-const fetchHappyBrith = async (auth, bird_id) => {
+const fetchHappyBrith = async (auth, bird_id, proxyUrl) => {
     let addHeader = {
         "accept": "application/json, text/plain, */*",
         "content-type": "application/json",
     }
-    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-happiness', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, happiness_rate: 10000 } });
+    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-happiness', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, happiness_rate: 10000 }, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("               Happy Birth")
@@ -122,13 +123,13 @@ const fetchHappyBrith = async (auth, bird_id) => {
     }
 }
 
-const fetchBirthStartHunting = async (auth, bird_id) => {
+const fetchBirthStartHunting = async (auth, bird_id, proxyUrl) => {
     let addHeader = {
         "accept": "application/json, text/plain, */*",
         "content-type": "application/json",
     }
 
-    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/start', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, task_level: 0 } });
+    let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/start', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, task_level: 0 }, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("           Birth start hunting")
@@ -139,8 +140,8 @@ const fetchBirthStartHunting = async (auth, bird_id) => {
 }
 
 
-const fetchMissions = async (auth) => {
-    let { data } = await fetchData('https://elb.seeddao.org/api/v1/tasks/progresses', 'GET', { authKey: 'telegram-data', authValue: auth, headers, });
+const fetchMissions = async (auth, proxyUrl) => {
+    let { data } = await fetchData('https://elb.seeddao.org/api/v1/tasks/progresses', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log("========================================");
         console.log("               Missions")
@@ -153,8 +154,8 @@ const fetchMissions = async (auth) => {
     }
 }
 
-const fetchClaimTask = async (auth, idTask) => {
-    let { data } = await fetchData(`https://elb.seeddao.org/api/v1/tasks/${idTask}`, 'POST', { authKey: 'telegram-data', authValue: auth, headers, });
+const fetchClaimTask = async (auth, idTask, proxyUrl) => {
+    let { data } = await fetchData(`https://elb.seeddao.org/api/v1/tasks/${idTask}`, 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log(JSON.stringify(data));
         return data
@@ -165,12 +166,23 @@ const fetchClaimTask = async (auth, idTask) => {
 // =====================================================================
 // =====================================================================
 
-const MainBrowser = async (localStorageData, countFolder) => {
+const MainBrowser = async (dataProxy, countFolder) => {
     try {
+        puppeteer.use(
+            ProxyPlugin({
+                address: dataProxy.ip,
+                port: dataProxy.port,
+                credentials: {
+                    username: dataProxy.username,
+                    password: dataProxy.password,
+                }
+            })
+        );
+
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
             args: [
                 // // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
@@ -192,6 +204,10 @@ const MainBrowser = async (localStorageData, countFolder) => {
         });
 
         const [page] = await browser.pages();
+        const page2 = await browser.newPage();
+        await page2.goto("https://google.com");
+        await sleep(3000);
+        await page.bringToFront();
 
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -215,45 +231,45 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         if (iframeSrc) {
             let token = iframeSrc;
-            await fetchClaimFarm(token)
-            await fetchLoginBonuses(token)
-            let worms = await fetchInfoWorms(token)
-            let { id, status, hunt_end_at } = await fetchInfoLeader(token)
+            await fetchClaimFarm(token, dataProxy);
+            await fetchLoginBonuses(token, dataProxy);
+            let worms = await fetchInfoWorms(token, dataProxy);
+            let { id, status, hunt_end_at } = await fetchInfoLeader(token, dataProxy);
             let date = Date.now();
-            let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+            let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
 
             console.log(Date.now(hunt_end_at), date);
             if (status == 'hunting') {
-                let checkHunting = await fetchCompleteHunting(token, id);
+                let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
                 await sleep(2000);
                 if (checkHunting) {
                     if (worms.length > 0) {
-                        await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                        await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
                         await sleep(2000);
                     }
-                    await fetchHappyBrith(token, id);
+                    await fetchHappyBrith(token, id, dataProxy);
                     await sleep(2000);
-                    await fetchBirthStartHunting(token, id)
+                    await fetchBirthStartHunting(token, id, dataProxy);
                     await sleep(2000);
                 }
             }
             if (status == 'in-inventory') {
                 if (worms.length > 0) {
-                    await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                    await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
                     await sleep(2000);
                 }
-                await fetchHappyBrith(token, id);
+                await fetchHappyBrith(token, id, dataProxy);
                 await sleep(2000);
-                await fetchBirthStartHunting(token, id)
+                await fetchBirthStartHunting(token, id, dataProxy);
                 await sleep(2000);
             }
-            let tasks = await fetchMissions(token)
+            let tasks = await fetchMissions(token, dataProxy);
             console.log("========================================");
             console.log("               claim")
             console.log("========================================");
             for (let x of tasks) {
                 for (let i = 0; i <= x.repeats; i++) {
-                    await fetchClaimTask(token, x.id)
+                    await fetchClaimTask(token, x.id, dataProxy);
                     await sleep(1000);
                 }
             }
@@ -264,14 +280,15 @@ const MainBrowser = async (localStorageData, countFolder) => {
 };
 
 (async () => {
-    const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i++) {
-        console.log("========================================");
-        console.log(`%c               tài khoản ${i} `, 'color: red;');
-        console.log("========================================");
-        await MainBrowser(dataArray[i], i);
-        await sleep(1000)
+    for (let i = 0; i < 30; i++) {
+        printFormattedTitle(`tài khoản ${i}`, "red")
+
+        if (i == 1) continue
+        let proxyIndex = Math.floor(i / 10);
+        await MainBrowser(proxyFile[proxyIndex], i);
+        await waitForInput()
     }
+    process.ex
     process.exit(1)
 })();
 

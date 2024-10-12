@@ -1,5 +1,3 @@
-const fs = require("fs-extra");
-const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
