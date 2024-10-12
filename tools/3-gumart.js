@@ -10,7 +10,7 @@ stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
 const { sleep, readLinesToArray, userAgent, waitForInput } = require('./utils/utils.js')
-const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
+const { checkIframeAndClick } = require('./utils/selector.js')
 
 
 // =====================================================================
@@ -222,13 +222,13 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(2000)
 
-        await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
-        await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-        await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+        await checkIframeAndClick(page);
+        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
+        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
+        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
 
-        await page.waitForSelector('iframe');
+        // await page.waitForSelector('iframe');
         const iframeSrc = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
             if (iframeElement) {
