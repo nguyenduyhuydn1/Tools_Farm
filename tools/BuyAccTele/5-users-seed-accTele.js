@@ -205,9 +205,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 }
 
                 let tasks = await fetchMissions(token, dataProxy);
-                console.log("========================================");
-                console.log("               claim")
-                console.log("========================================");
+                printFormattedTitle(`Claim`, "green")
                 for (let x of tasks) {
                     for (let i = 0; i <= x.repeats; i++) {
                         await fetchClaimTask(token, x.id, dataProxy);
