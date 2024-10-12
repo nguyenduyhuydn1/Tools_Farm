@@ -13,7 +13,7 @@ puppeteer.use(stealth);
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const axios = require('axios');
 const { sleep, randomNumber, waitForInput } = require('./../utils/utils.js')
-const { checkIframeAndClick, clickIfExists } = require('./../utils/selector.js')
+const { checkIframeAndClick } = require('./../utils/selector.js')
 const proxyFile = require("../data/proxy.js");
 
 
@@ -149,9 +149,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(3000)
-        await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-        await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
+
+        await checkIframeAndClick(page);
 
         await page.waitForSelector('iframe');
         let iframe = await page.evaluate(() => {

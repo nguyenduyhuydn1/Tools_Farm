@@ -70,6 +70,7 @@ const fetchInfoLeader = async (auth) => {
         console.log(JSON.stringify(data));
         return data
     }
+    return false;
 }
 
 // claim do sau khi san ngoc
@@ -187,7 +188,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 '--ignore-certificate-errors',
                 '--mute-audio',
                 '--window-size=700,400',
-                `--window - position=0, 0`,
+                `--window-position=0,0`,
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
@@ -197,14 +198,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        let iframeExists;
-        while (!iframeExists) {
-            await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
-            await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-            // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-            iframeExists = await page.$('iframe');
-            await sleep(5000)
-        }
+        await checkIframeAndClick(page);
 
         const iframeSrc = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
@@ -219,15 +213,29 @@ const MainBrowser = async (localStorageData, countFolder) => {
             await fetchClaimFarm(token)
             await fetchLoginBonuses(token)
             let worms = await fetchInfoWorms(token)
-            let { id, status, hunt_end_at } = await fetchInfoLeader(token)
-            let date = Date.now();
-            let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+            let infoLeader = await fetchInfoLeader(token, dataProxy);
 
-            console.log(Date.now(hunt_end_at), date);
-            if (status == 'hunting') {
-                let checkHunting = await fetchCompleteHunting(token, id);
-                await sleep(2000);
-                if (checkHunting) {
+            if (infoLeader) {
+                let { id, status, hunt_end_at } = infoLeader;
+                let date = Date.now();
+                let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+
+                console.log(Date.now(hunt_end_at), date);
+                if (status == 'hunting') {
+                    let checkHunting = await fetchCompleteHunting(token, id);
+                    await sleep(2000);
+                    if (checkHunting) {
+                        if (worms.length > 0) {
+                            await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                            await sleep(2000);
+                        }
+                        await fetchHappyBrith(token, id);
+                        await sleep(2000);
+                        await fetchBirthStartHunting(token, id)
+                        await sleep(2000);
+                    }
+                }
+                if (status == 'in-inventory') {
                     if (worms.length > 0) {
                         await fetchBirthFeed(token, { bird_id: id, worm_ids });
                         await sleep(2000);
@@ -238,16 +246,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
                     await sleep(2000);
                 }
             }
-            if (status == 'in-inventory') {
-                if (worms.length > 0) {
-                    await fetchBirthFeed(token, { bird_id: id, worm_ids });
-                    await sleep(2000);
-                }
-                await fetchHappyBrith(token, id);
-                await sleep(2000);
-                await fetchBirthStartHunting(token, id)
-                await sleep(2000);
-            }
+
             let tasks = await fetchMissions(token)
             console.log("========================================");
             console.log("               claim")

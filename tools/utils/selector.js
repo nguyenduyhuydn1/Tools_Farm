@@ -1,4 +1,4 @@
-
+const { sleep, printFormattedTitle } = require('./utils.js')
 
 async function clickIfExists(page, selector, timeout = 500, callback = () => { }) {
     const elementExists = await page.$(selector);
@@ -13,10 +13,14 @@ async function clickIfExists(page, selector, timeout = 500, callback = () => { }
 async function checkIframeAndClick(page) {
     let iframeExists = false;
 
+    printFormattedTitle(`đang tìm và click`, 'red')
     while (!iframeExists) {
-        await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)");
-        await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)");
+        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)");
+        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)");
+        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
 
+        await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+        await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
         iframeExists = await page.$('iframe') !== null;
         await sleep(5000);
     }

@@ -144,7 +144,7 @@ function waitForInput() {
 // 2,4,5
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 1; i < dataArray.length; i++) {
+    for (let i = 2; i < dataArray.length; i++) {
         await MainBrowser(i);
         await waitForInput();
     }
