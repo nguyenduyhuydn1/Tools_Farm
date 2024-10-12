@@ -33,9 +33,7 @@ const headers = {
 const fetchClaimFarm = async (auth, proxyUrl) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/seed/claim', 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("               Claim")
-        console.log("========================================");
+        printFormattedTitle(`Claim`, "green")
         console.log(JSON.stringify(data));
         return data
     }
@@ -44,9 +42,7 @@ const fetchClaimFarm = async (auth, proxyUrl) => {
 const fetchLoginBonuses = async (auth, proxyUrl) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/login-bonuses', 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("               check daily")
-        console.log("========================================");
+        printFormattedTitle(`check daily`, "green")
         console.log(JSON.stringify(data));
         return data
     }
@@ -55,9 +51,7 @@ const fetchLoginBonuses = async (auth, proxyUrl) => {
 const fetchInfoWorms = async (auth, proxyUrl) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("           all the worms we have")
-        console.log("========================================");
+        printFormattedTitle(`all the worms we have`, "green")
         console.log(`we have ${data.length} worm`);
         return data
     }
@@ -66,9 +60,7 @@ const fetchInfoWorms = async (auth, proxyUrl) => {
 const fetchInfoLeader = async (auth, proxyUrl) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird/is-leader', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("               Leader")
-        console.log("========================================");
+        printFormattedTitle(`Leader`, "green")
         console.log(JSON.stringify(data));
         return data
     }
@@ -81,9 +73,7 @@ const fetchInfoLeader = async (auth, proxyUrl) => {
 const fetchCompleteHunting = async (auth, id, proxyUrl) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/complete', 'POST', { authKey: 'telegram-data', authValue: auth, headers, body: { bird_id: id }, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("           Hunting complete")
-        console.log("========================================");
+        printFormattedTitle(`Hunting complete`, "green")
         console.log(`hunting complete`);
         return data.data
     }
@@ -102,9 +92,7 @@ const fetchBirthFeed = async (auth, info, proxyUrl) => {
         let { bird_id, worm_ids } = info;
         let { data = null } = await fetchData('https://elb.seeddao.org/api/v1/bird-feed', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, worm_ids }, proxyUrl });
         if (data) {
-            console.log("========================================");
-            console.log("               Birth Feed")
-            console.log("========================================");
+            printFormattedTitle(`Birth Feed`, "green")
             return data
         }
     }
@@ -118,9 +106,7 @@ const fetchHappyBrith = async (auth, bird_id, proxyUrl) => {
     }
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-happiness', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, happiness_rate: 10000 }, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("               Happy Birth")
-        console.log("========================================");
+        printFormattedTitle(`Happy Birth`, "green")
         console.log(`happiness_level : ${data.happiness_level}`);
         return data
     }
@@ -134,9 +120,7 @@ const fetchBirthStartHunting = async (auth, bird_id, proxyUrl) => {
 
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/start', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, task_level: 0 }, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("           Birth start hunting")
-        console.log("========================================");
+        printFormattedTitle(`Birth start hunting`, "green")
         console.log(`start hunting and end ${formatTime(data.hunt_end_at)}`);
         return data
     }
@@ -146,9 +130,7 @@ const fetchBirthStartHunting = async (auth, bird_id, proxyUrl) => {
 const fetchMissions = async (auth, proxyUrl) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/tasks/progresses', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
-        console.log("========================================");
-        console.log("               Missions")
-        console.log("========================================");
+        printFormattedTitle(`Missions`, "yellow")
         data = data.filter(v => v.task_user?.completed == false || v.task_user == null);
         data.forEach(e => {
             console.log(e.name);

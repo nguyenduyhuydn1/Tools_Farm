@@ -31,9 +31,7 @@ const headers = {
 const fetchClaimFarm = async (auth) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/seed/claim', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
     if (data) {
-        console.log("========================================");
-        console.log("               Claim")
-        console.log("========================================");
+        printFormattedTitle(`Claim`, "green")
         console.log(JSON.stringify(data));
         return data
     }
@@ -42,9 +40,7 @@ const fetchClaimFarm = async (auth) => {
 const fetchLoginBonuses = async (auth) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/login-bonuses', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
     if (data) {
-        console.log("========================================");
-        console.log("               check daily")
-        console.log("========================================");
+        printFormattedTitle(`check daily`, "green")
         console.log(JSON.stringify(data));
         return data
     }
