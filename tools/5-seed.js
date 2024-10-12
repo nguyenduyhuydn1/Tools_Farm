@@ -164,7 +164,8 @@ let usersArr = [
 const MainBrowser = async (localStorageData, countFolder) => {
     try {
         if (usersArr > 0) {
-            for (let token of usersArr) {
+            for (let tokenTemp of usersArr) {
+                let token = decodeURIComponent(tokenTemp)
                 await fetchClaimFarm(token)
                 await fetchLoginBonuses(token)
                 let worms = await fetchInfoWorms(token)

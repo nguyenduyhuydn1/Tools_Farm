@@ -1,3 +1,4 @@
+const fs = require("fs-extra");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
@@ -166,7 +167,8 @@ let usersArr = [
 const MainBrowser = async (dataProxy, countFolder) => {
     try {
         if (usersArr > 0) {
-            for (let token of usersArr) {
+            for (let tokenTemp of usersArr) {
+                let token = decodeURIComponent(tokenTemp)
                 await fetchClaimFarm(token, dataProxy);
                 await fetchLoginBonuses(token, dataProxy);
                 let worms = await fetchInfoWorms(token, dataProxy);
@@ -243,9 +245,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
                     '--disable-sync',
                     '--ignore-certificate-errors',
                     '--mute-audio',
-                    // '--window-size=700,400',
-                    // `--window-position=0,0`,
-                    '--start-maximized'
+                    '--window-size=700,400',
+                    `--window-position=0,0`,
+                    // '--start-maximized'
                 ],
                 ignoreDefaultArgs: ["--enable-automation"],
             });
@@ -267,8 +269,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
                     return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
                 }
             },);
-            // browser.close()
+            browser.close()
 
+            fs.appendFileSync('seed.txt', `${iframeSrc}\n`, 'utf-8');
             if (iframeSrc) {
                 let token = iframeSrc;
                 await fetchClaimFarm(token, dataProxy);
