@@ -7,7 +7,8 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, clickIfExists, readLinesToArray, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./utils/utils.js')
+const { sleep, readLinesToArray, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./utils/utils.js')
+const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 
 // =====================================================================

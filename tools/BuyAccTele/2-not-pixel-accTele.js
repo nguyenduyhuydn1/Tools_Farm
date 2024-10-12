@@ -12,7 +12,8 @@ puppeteer.use(stealth);
 
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const axios = require('axios');
-const { sleep, randomNumber, clickIfExists, waitForInput } = require('./../utils/utils.js')
+const { sleep, randomNumber, waitForInput } = require('./../utils/utils.js')
+const { checkIframeAndClick, clickIfExists } = require('./../utils/selector.js')
 const proxyFile = require("../data/proxy.js");
 
 

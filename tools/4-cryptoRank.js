@@ -11,7 +11,8 @@ puppeteer.use(stealth);
 
 const axios = require('axios');
 
-const { sleep, clickIfExists, readLinesToArray, userAgent } = require('./utils/utils.js')
+const { sleep, readLinesToArray, userAgent } = require('./utils/utils.js')
+const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 
 axios.defaults.headers.common = {
     "accept": "*/*",
