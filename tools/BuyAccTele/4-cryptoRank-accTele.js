@@ -174,9 +174,11 @@ const MainBrowser = async (dataProxy, countFolder) => {
         });
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await sleep(3000)
-        await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-        await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
+
+        await checkIframeAndClick(page);
+        // await sleep(3000)
+        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
 
         let authorization = await getAuthorization
         browser.close()
