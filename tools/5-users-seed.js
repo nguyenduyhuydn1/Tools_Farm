@@ -159,40 +159,66 @@ const fetchClaimTask = async (auth, idTask) => {
 // =====================================================================
 // =====================================================================
 // =====================================================================
-let usersArr = [
-
-]
 
 const MainBrowser = async (localStorageData, countFolder) => {
     try {
-        if (usersArr > 0) {
-            for (let tokenTemp of usersArr) {
-                let token = decodeURIComponent(tokenTemp)
-                await fetchClaimFarm(token)
-                await fetchLoginBonuses(token)
-                let worms = await fetchInfoWorms(token)
-                let infoLeader = await fetchInfoLeader(token);
 
-                if (infoLeader) {
-                    let { id, status, hunt_end_at } = infoLeader;
-                    let date = Date.now();
-                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+        const browser = await puppeteer.launch({
+            headless: false,
+            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            args: [
+                // // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+                // // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+                // // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+                // '--disable-video',                 // Vô hiệu hóa video decoding
+                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
-                    if (status == 'hunting') {
-                        let checkHunting = await fetchCompleteHunting(token, id);
-                        await sleep(2000);
-                        if (checkHunting) {
-                            if (worms.length > 0) {
-                                await fetchBirthFeed(token, { bird_id: id, worm_ids });
-                                await sleep(2000);
-                            }
-                            await fetchHappyBrith(token, id);
-                            await sleep(2000);
-                            await fetchBirthStartHunting(token, id)
-                            await sleep(2000);
-                        }
-                    }
-                    if (status == 'in-inventory') {
+                '--test-type',
+                '--disable-gpu',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-sync',
+                '--ignore-certificate-errors',
+                '--mute-audio',
+                '--window-size=700,400',
+                `--window-position=0,0`,
+            ],
+            ignoreDefaultArgs: ["--enable-automation"],
+        });
+
+        const [page] = await browser.pages();
+
+        await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+        await checkIframeAndClick(page);
+
+        const iframeSrc = await page.evaluate(() => {
+            const iframeElement = document.querySelector('iframe');
+            if (iframeElement) {
+                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+        },);
+        browser.close()
+
+        if (iframeSrc) {
+            let token = iframeSrc;
+            await fetchClaimFarm(token)
+            await fetchCatchWorms(token)
+            await fetchLoginBonuses(token)
+            let worms = await fetchInfoWorms(token)
+            let infoLeader = await fetchInfoLeader(token);
+
+            if (infoLeader) {
+                let { id, status, hunt_end_at } = infoLeader;
+                let date = Date.now();
+                let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
+
+                if (status == 'hunting') {
+                    let checkHunting = await fetchCompleteHunting(token, id);
+                    await sleep(2000);
+                    if (checkHunting) {
                         if (worms.length > 0) {
                             await fetchBirthFeed(token, { bird_id: id, worm_ids });
                             await sleep(2000);
@@ -203,102 +229,24 @@ const MainBrowser = async (localStorageData, countFolder) => {
                         await sleep(2000);
                     }
                 }
-
-                let tasks = await fetchMissions(token)
-                printFormattedTitle(`Claim`, "yellow")
-                for (let x of tasks) {
-                    for (let i = 0; i <= x.repeats; i++) {
-                        await fetchClaimTask(token, x.id)
-                        await sleep(1000);
+                if (status == 'in-inventory') {
+                    if (worms.length > 0) {
+                        await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                        await sleep(2000);
                     }
+                    await fetchHappyBrith(token, id);
+                    await sleep(2000);
+                    await fetchBirthStartHunting(token, id)
+                    await sleep(2000);
                 }
             }
-        } else {
-            const browser = await puppeteer.launch({
-                headless: false,
-                executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-                userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
-                args: [
-                    // // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-                    // // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-                    // // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                    // '--disable-video',                 // Vô hiệu hóa video decoding
-                    // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
-                    '--test-type',
-                    '--disable-gpu',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-sync',
-                    '--ignore-certificate-errors',
-                    '--mute-audio',
-                    '--window-size=700,400',
-                    `--window-position=0,0`,
-                ],
-                ignoreDefaultArgs: ["--enable-automation"],
-            });
-
-            const [page] = await browser.pages();
-
-            await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
-            await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
-            await checkIframeAndClick(page);
-
-            const iframeSrc = await page.evaluate(() => {
-                const iframeElement = document.querySelector('iframe');
-                if (iframeElement) {
-                    return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-                }
-            },);
-            browser.close()
-
-            if (iframeSrc) {
-                let token = iframeSrc;
-                await fetchClaimFarm(token)
-                await fetchCatchWorms(token)
-                await fetchLoginBonuses(token)
-                let worms = await fetchInfoWorms(token)
-                let infoLeader = await fetchInfoLeader(token);
-
-                if (infoLeader) {
-                    let { id, status, hunt_end_at } = infoLeader;
-                    let date = Date.now();
-                    let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
-
-                    if (status == 'hunting') {
-                        let checkHunting = await fetchCompleteHunting(token, id);
-                        await sleep(2000);
-                        if (checkHunting) {
-                            if (worms.length > 0) {
-                                await fetchBirthFeed(token, { bird_id: id, worm_ids });
-                                await sleep(2000);
-                            }
-                            await fetchHappyBrith(token, id);
-                            await sleep(2000);
-                            await fetchBirthStartHunting(token, id)
-                            await sleep(2000);
-                        }
-                    }
-                    if (status == 'in-inventory') {
-                        if (worms.length > 0) {
-                            await fetchBirthFeed(token, { bird_id: id, worm_ids });
-                            await sleep(2000);
-                        }
-                        await fetchHappyBrith(token, id);
-                        await sleep(2000);
-                        await fetchBirthStartHunting(token, id)
-                        await sleep(2000);
-                    }
-                }
-
-                let tasks = await fetchMissions(token)
-                printFormattedTitle(`Claim`, "yellow")
-                for (let x of tasks) {
-                    for (let i = 0; i <= x.repeats; i++) {
-                        await fetchClaimTask(token, x.id)
-                        await sleep(1000);
-                    }
+            let tasks = await fetchMissions(token)
+            printFormattedTitle(`Claim`, "yellow")
+            for (let x of tasks) {
+                for (let i = 0; i <= x.repeats; i++) {
+                    await fetchClaimTask(token, x.id)
+                    await sleep(1000);
                 }
             }
         }

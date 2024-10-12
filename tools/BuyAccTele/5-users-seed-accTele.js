@@ -161,41 +161,82 @@ const fetchClaimTask = async (auth, idTask, proxyUrl) => {
 // =====================================================================
 // =====================================================================
 // =====================================================================
-let usersArr = [
-
-]
 
 const MainBrowser = async (dataProxy, countFolder) => {
     try {
-        if (usersArr > 0) {
-            for (let tokenTemp of usersArr) {
-                let token = decodeURIComponent(tokenTemp)
-                await fetchClaimFarm(token, dataProxy);
-                await fetchLoginBonuses(token, dataProxy);
-                let worms = await fetchInfoWorms(token, dataProxy);
-                let infoLeader = await fetchInfoLeader(token, dataProxy);
+        puppeteer.use(
+            ProxyPlugin({
+                address: dataProxy.ip,
+                port: dataProxy.port,
+                credentials: {
+                    username: dataProxy.username,
+                    password: dataProxy.password,
+                }
+            })
+        );
+
+        const browser = await puppeteer.launch({
+            headless: false,
+            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
+            args: [
+                // // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+                // // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+                // // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+                // '--disable-video',                 // Vô hiệu hóa video decoding
+                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+
+                '--test-type',
+                // '--disable-gpu',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-sync',
+                '--ignore-certificate-errors',
+                '--mute-audio',
+                '--window-size=700,400',
+                `--window-position=0,0`,
+                // '--start-maximized'
+            ],
+            ignoreDefaultArgs: ["--enable-automation"],
+        });
+
+        const [page] = await browser.pages();
+        const page2 = await browser.newPage();
+        await page2.goto("https://google.com");
+        await sleep(3000);
+        await page.bringToFront();
+
+        await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+        await checkIframeAndClick(page);
+
+        const iframeSrc = await page.evaluate(() => {
+            const iframeElement = document.querySelector('iframe');
+            if (iframeElement) {
+                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+        },);
+        browser.close()
+
+        if (iframeSrc) {
+            let token = iframeSrc;
+            await fetchClaimFarm(token, dataProxy);
+            await fetchCatchWorms(token, dataProxy);
+            await fetchLoginBonuses(token, dataProxy);
+            let worms = await fetchInfoWorms(token, dataProxy);
+            let infoLeader = await fetchInfoLeader(token, dataProxy);
 
 
-                if (infoLeader) {
-                    let { id, status, hunt_end_at } = infoLeader;
-                    let date = Date.now();
-                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
-                    console.log(Date.now(hunt_end_at), date);
-                    if (status == 'hunting') {
-                        let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
-                        await sleep(2000);
-                        if (checkHunting) {
-                            if (worms.length > 0) {
-                                await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
-                                await sleep(2000);
-                            }
-                            await fetchHappyBrith(token, id, dataProxy);
-                            await sleep(2000);
-                            await fetchBirthStartHunting(token, id, dataProxy);
-                            await sleep(2000);
-                        }
-                    }
-                    if (status == 'in-inventory') {
+            if (infoLeader) {
+                let { id, status, hunt_end_at } = infoLeader;
+                let date = Date.now();
+                let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } });
+                console.log(Date.now(hunt_end_at), date);
+                if (status == 'hunting') {
+                    let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
+                    await sleep(2000);
+                    if (checkHunting) {
                         if (worms.length > 0) {
                             await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
                             await sleep(2000);
@@ -206,119 +247,24 @@ const MainBrowser = async (dataProxy, countFolder) => {
                         await sleep(2000);
                     }
                 }
-
-                let tasks = await fetchMissions(token, dataProxy);
-                printFormattedTitle(`Claim`, "green")
-                for (let x of tasks) {
-                    for (let i = 0; i <= x.repeats; i++) {
-                        await fetchClaimTask(token, x.id, dataProxy);
-                        await sleep(1000);
+                if (status == 'in-inventory') {
+                    if (worms.length > 0) {
+                        await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
+                        await sleep(2000);
                     }
+                    await fetchHappyBrith(token, id, dataProxy);
+                    await sleep(2000);
+                    await fetchBirthStartHunting(token, id, dataProxy);
+                    await sleep(2000);
                 }
             }
-        } else {
-            puppeteer.use(
-                ProxyPlugin({
-                    address: dataProxy.ip,
-                    port: dataProxy.port,
-                    credentials: {
-                        username: dataProxy.username,
-                        password: dataProxy.password,
-                    }
-                })
-            );
 
-            const browser = await puppeteer.launch({
-                headless: false,
-                executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-                userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
-                args: [
-                    // // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-                    // // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-                    // // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                    // '--disable-video',                 // Vô hiệu hóa video decoding
-                    // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
-
-                    '--test-type',
-                    // '--disable-gpu',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-sync',
-                    '--ignore-certificate-errors',
-                    '--mute-audio',
-                    '--window-size=700,400',
-                    `--window-position=0,0`,
-                    // '--start-maximized'
-                ],
-                ignoreDefaultArgs: ["--enable-automation"],
-            });
-
-            const [page] = await browser.pages();
-            const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
-            await sleep(3000);
-            await page.bringToFront();
-
-            await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
-            await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
-            await checkIframeAndClick(page);
-
-            const iframeSrc = await page.evaluate(() => {
-                const iframeElement = document.querySelector('iframe');
-                if (iframeElement) {
-                    return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-                }
-            },);
-            browser.close()
-
-            if (iframeSrc) {
-                let token = iframeSrc;
-                await fetchClaimFarm(token, dataProxy);
-                await fetchCatchWorms(token, dataProxy);
-                await fetchLoginBonuses(token, dataProxy);
-                let worms = await fetchInfoWorms(token, dataProxy);
-                let infoLeader = await fetchInfoLeader(token, dataProxy);
-
-
-                if (infoLeader) {
-                    let { id, status, hunt_end_at } = infoLeader;
-                    let date = Date.now();
-                    let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } });
-                    console.log(Date.now(hunt_end_at), date);
-                    if (status == 'hunting') {
-                        let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
-                        await sleep(2000);
-                        if (checkHunting) {
-                            if (worms.length > 0) {
-                                await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
-                                await sleep(2000);
-                            }
-                            await fetchHappyBrith(token, id, dataProxy);
-                            await sleep(2000);
-                            await fetchBirthStartHunting(token, id, dataProxy);
-                            await sleep(2000);
-                        }
-                    }
-                    if (status == 'in-inventory') {
-                        if (worms.length > 0) {
-                            await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
-                            await sleep(2000);
-                        }
-                        await fetchHappyBrith(token, id, dataProxy);
-                        await sleep(2000);
-                        await fetchBirthStartHunting(token, id, dataProxy);
-                        await sleep(2000);
-                    }
-                }
-
-                let tasks = await fetchMissions(token, dataProxy);
-                printFormattedTitle(`Claim`, "green")
-                for (let x of tasks) {
-                    for (let i = 0; i <= x.repeats; i++) {
-                        await fetchClaimTask(token, x.id, dataProxy);
-                        await sleep(2000);
-                    }
+            let tasks = await fetchMissions(token, dataProxy);
+            printFormattedTitle(`Claim`, "green")
+            for (let x of tasks) {
+                for (let i = 0; i <= x.repeats; i++) {
+                    await fetchClaimTask(token, x.id, dataProxy);
+                    await sleep(2000);
                 }
             }
         }
@@ -328,7 +274,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 17; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red")
 
         if (i == 1) continue

@@ -200,6 +200,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         console.log("========================================");
         for (let x of tasks) {
             await fetchClaim(x.id, authorization, dataProxy);
+            await sleep(1000)
         }
     } catch (error) {
         console.error("Error:", error.message);
@@ -217,7 +218,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await sleep(1000)
     }
     process.exit(1)
 })();

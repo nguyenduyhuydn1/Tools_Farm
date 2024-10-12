@@ -53,22 +53,22 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await sleep(3000);
         await page.bringToFront();
 
-        await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
+        // await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
 
-        await checkIframeAndClick(page)
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
+        // await checkIframeAndClick(page)
+        // const iframeSrc = await page.evaluate(() => {
+        //     const iframeElement = document.querySelector('iframe');
+        //     if (iframeElement) {
+        //         return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+        //     }
+        // },);
 
-        fs.appendFileSync(path.join(__dirname, 'data', 'seed.txt'), `${iframeSrc}\n`, 'utf-8');
-        // await sleep(3000);
-        // await sleep(3000);
-        // await sleep(3000);
-        // await sleep(3000);
-        browser.close()
+        // fs.appendFileSync(path.join(__dirname, 'data', 'seed.txt'), `${iframeSrc}\n`, 'utf-8');
+        // // await sleep(3000);
+        // // await sleep(3000);
+        // // await sleep(3000);
+        // // await sleep(3000);
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
