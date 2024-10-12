@@ -8,9 +8,9 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./../utils/utils.js')
-const { checkIframeAndClick } = require('./../utils/selector.js')
-const { fetchData } = require('./../utils/axios.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle } = require('../utils/utils.js')
+const { checkIframeAndClick } = require('../utils/selector.js')
+const { fetchData } = require('../utils/axios.js')
 const proxyFile = require("../data/proxy.js");
 
 // =====================================================================
@@ -219,7 +219,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        if (usersArr.length > 0) {
+        if (usersArr.length == 0) {
             await checkIframeAndClick(page);
 
             const iframeSrc = await page.evaluate(() => {

@@ -19,8 +19,8 @@ const headers = {
     "accept-language": "en-US,en;q=0.9",
     "priority": "u=1, i",
     "sec-ch-ua": "Mozilla/5.0 (Linux; U; Android 1.5; de-de; Galaxy Build/CUPCAKE) AppleWebKit/528.5  (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-ch-ua-mobile": "?1",
+    "sec-ch-ua-platform": "\"Android\"",
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
@@ -50,12 +50,21 @@ const fetchLoginBonuses = async (auth) => {
     }
 }
 
+// const fetchCatchWorms = async (auth) => {
+//     let data = await fetchData('https://elb.seeddao.org/api/v1/worms/catch', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
+//     if (data) {
+//         console.log("========================================");
+//         console.log("               check daily")
+//         console.log("========================================");
+//         console.log(JSON.stringify(data));
+//         return data
+//     }
+// }
+
 const fetchInfoWorms = async (auth) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers });
     if (data) {
-        console.log("========================================");
-        console.log("           all the worms we have")
-        console.log("========================================");
+        printFormattedTitle(`all the worms we have`, "green")
         console.log(`we have ${data.length} worm`);
         return data
     }
@@ -64,9 +73,7 @@ const fetchInfoWorms = async (auth) => {
 const fetchInfoLeader = async (auth) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird/is-leader', 'GET', { authKey: 'telegram-data', authValue: auth, headers });
     if (data) {
-        console.log("========================================");
-        console.log("               Leader")
-        console.log("========================================");
+        printFormattedTitle(`Leader`, "green")
         console.log(JSON.stringify(data));
         return data
     }
@@ -79,9 +86,7 @@ const fetchInfoLeader = async (auth) => {
 const fetchCompleteHunting = async (auth, id) => {
     let data = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/complete', 'POST', { authKey: 'telegram-data', authValue: auth, headers, body: { bird_id: id } });
     if (data) {
-        console.log("========================================");
-        console.log("           Hunting complete")
-        console.log("========================================");
+        printFormattedTitle(`Hunting complete`, "green")
         console.log(`hunting complete`);
         return data.data
     }
@@ -100,9 +105,7 @@ const fetchBirthFeed = async (auth, info) => {
         let { bird_id, worm_ids } = info;
         let { data = null } = await fetchData('https://elb.seeddao.org/api/v1/bird-feed', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, worm_ids } });
         if (data) {
-            console.log("========================================");
-            console.log("               Birth Feed")
-            console.log("========================================");
+            printFormattedTitle(`Birth Feed`, "green")
             return data
         }
     }
@@ -116,9 +119,7 @@ const fetchHappyBrith = async (auth, bird_id) => {
     }
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-happiness', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, happiness_rate: 10000 } });
     if (data) {
-        console.log("========================================");
-        console.log("               Happy Birth")
-        console.log("========================================");
+        printFormattedTitle(`Happy Birth`, "green")
         console.log(`happiness_level : ${data.happiness_level}`);
         return data
     }
@@ -132,9 +133,7 @@ const fetchBirthStartHunting = async (auth, bird_id) => {
 
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird-hunt/start', 'POST', { authKey: 'telegram-data', authValue: auth, headers: { ...headers, ...addHeader }, body: { bird_id, task_level: 0 } });
     if (data) {
-        console.log("========================================");
-        console.log("           Birth start hunting")
-        console.log("========================================");
+        printFormattedTitle(`Birth start hunting`, "green")
         console.log(`start hunting and end ${formatTime(data.hunt_end_at)}`);
         return data
     }
@@ -144,9 +143,7 @@ const fetchBirthStartHunting = async (auth, bird_id) => {
 const fetchMissions = async (auth) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/tasks/progresses', 'GET', { authKey: 'telegram-data', authValue: auth, headers, });
     if (data) {
-        console.log("========================================");
-        console.log("               Missions")
-        console.log("========================================");
+        printFormattedTitle(`Missions`, "yellow")
         data = data.filter(v => v.task_user?.completed == false || v.task_user == null);
         data.forEach(e => {
             console.log(e.name);
@@ -166,6 +163,9 @@ const fetchClaimTask = async (auth, idTask) => {
 // =====================================================================
 // =====================================================================
 // =====================================================================
+let usersArr = [
+
+]
 
 const MainBrowser = async (localStorageData, countFolder) => {
     try {
@@ -198,33 +198,44 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
+        if (usersArr.length == 0) {
+            await checkIframeAndClick(page);
 
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
-        // browser.close()
+            const iframeSrc = await page.evaluate(() => {
+                const iframeElement = document.querySelector('iframe');
+                if (iframeElement) {
+                    return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+                }
+            },);
+            // browser.close()
 
-        if (iframeSrc) {
-            let token = iframeSrc;
-            await fetchClaimFarm(token)
-            await fetchLoginBonuses(token)
-            let worms = await fetchInfoWorms(token)
-            let infoLeader = await fetchInfoLeader(token, dataProxy);
+            if (iframeSrc) {
+                let token = iframeSrc;
+                await fetchClaimFarm(token)
+                await fetchLoginBonuses(token)
+                let worms = await fetchInfoWorms(token)
+                let infoLeader = await fetchInfoLeader(token);
 
-            if (infoLeader) {
-                let { id, status, hunt_end_at } = infoLeader;
-                let date = Date.now();
-                let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+                if (infoLeader) {
+                    let { id, status, hunt_end_at } = infoLeader;
+                    let date = Date.now();
+                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
 
-                console.log(Date.now(hunt_end_at), date);
-                if (status == 'hunting') {
-                    let checkHunting = await fetchCompleteHunting(token, id);
-                    await sleep(2000);
-                    if (checkHunting) {
+                    if (status == 'hunting') {
+                        let checkHunting = await fetchCompleteHunting(token, id);
+                        await sleep(2000);
+                        if (checkHunting) {
+                            if (worms.length > 0) {
+                                await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                                await sleep(2000);
+                            }
+                            await fetchHappyBrith(token, id);
+                            await sleep(2000);
+                            await fetchBirthStartHunting(token, id)
+                            await sleep(2000);
+                        }
+                    }
+                    if (status == 'in-inventory') {
                         if (worms.length > 0) {
                             await fetchBirthFeed(token, { bird_id: id, worm_ids });
                             await sleep(2000);
@@ -235,26 +246,62 @@ const MainBrowser = async (localStorageData, countFolder) => {
                         await sleep(2000);
                     }
                 }
-                if (status == 'in-inventory') {
-                    if (worms.length > 0) {
-                        await fetchBirthFeed(token, { bird_id: id, worm_ids });
-                        await sleep(2000);
+
+                let tasks = await fetchMissions(token)
+                printFormattedTitle(`Claim`, "yellow")
+                for (let x of tasks) {
+                    for (let i = 0; i <= x.repeats; i++) {
+                        await fetchClaimTask(token, x.id)
+                        await sleep(1000);
                     }
-                    await fetchHappyBrith(token, id);
-                    await sleep(2000);
-                    await fetchBirthStartHunting(token, id)
-                    await sleep(2000);
                 }
             }
+        } else {
+            for (let token of usersArr) {
+                await fetchClaimFarm(token)
+                await fetchLoginBonuses(token)
+                let worms = await fetchInfoWorms(token)
+                let infoLeader = await fetchInfoLeader(token);
 
-            let tasks = await fetchMissions(token)
-            console.log("========================================");
-            console.log("               claim")
-            console.log("========================================");
-            for (let x of tasks) {
-                for (let i = 0; i <= x.repeats; i++) {
-                    await fetchClaimTask(token, x.id)
-                    await sleep(1000);
+                if (infoLeader) {
+                    let { id, status, hunt_end_at } = infoLeader;
+                    let date = Date.now();
+                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } })
+
+                    console.log(Date.now(hunt_end_at), date);
+                    if (status == 'hunting') {
+                        let checkHunting = await fetchCompleteHunting(token, id);
+                        await sleep(2000);
+                        if (checkHunting) {
+                            if (worms.length > 0) {
+                                await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                                await sleep(2000);
+                            }
+                            await fetchHappyBrith(token, id);
+                            await sleep(2000);
+                            await fetchBirthStartHunting(token, id)
+                            await sleep(2000);
+                        }
+                    }
+                    if (status == 'in-inventory') {
+                        if (worms.length > 0) {
+                            await fetchBirthFeed(token, { bird_id: id, worm_ids });
+                            await sleep(2000);
+                        }
+                        await fetchHappyBrith(token, id);
+                        await sleep(2000);
+                        await fetchBirthStartHunting(token, id)
+                        await sleep(2000);
+                    }
+                }
+
+                let tasks = await fetchMissions(token);
+                printFormattedTitle(`Claim`, "yellow");
+                for (let x of tasks) {
+                    for (let i = 0; i <= x.repeats; i++) {
+                        await fetchClaimTask(token, x.id)
+                        await sleep(1000);
+                    }
                 }
             }
         }
