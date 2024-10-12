@@ -46,16 +46,14 @@ const fetchLoginBonuses = async (auth) => {
     }
 }
 
-// const fetchCatchWorms = async (auth) => {
-//     let data = await fetchData('https://elb.seeddao.org/api/v1/worms/catch', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
-//     if (data) {
-//         console.log("========================================");
-//         console.log("               check daily")
-//         console.log("========================================");
-//         console.log(JSON.stringify(data));
-//         return data
-//     }
-// }
+const fetchCatchWorms = async (auth) => {
+    let data = await fetchData('https://elb.seeddao.org/api/v1/worms/catch', 'POST', { authKey: 'telegram-data', authValue: auth, headers });
+    if (data) {
+        printFormattedTitle(`Catch Worms`, "green")
+        console.log(JSON.stringify(data));
+        return data
+    }
+}
 
 const fetchInfoWorms = async (auth) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers });
@@ -250,11 +248,12 @@ const MainBrowser = async (localStorageData, countFolder) => {
                     return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
                 }
             },);
-            // browser.close()
+            browser.close()
 
             if (iframeSrc) {
                 let token = iframeSrc;
                 await fetchClaimFarm(token)
+                await fetchCatchWorms(token)
                 await fetchLoginBonuses(token)
                 let worms = await fetchInfoWorms(token)
                 let infoLeader = await fetchInfoLeader(token);

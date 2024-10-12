@@ -48,6 +48,15 @@ const fetchLoginBonuses = async (auth, proxyUrl) => {
     }
 }
 
+const fetchCatchWorms = async (auth, proxyUrl) => {
+    let data = await fetchData('https://elb.seeddao.org/api/v1/worms/catch', 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
+    if (data) {
+        printFormattedTitle(`Catch Worms`, "green")
+        console.log(JSON.stringify(data));
+        return data
+    }
+}
+
 const fetchInfoWorms = async (auth, proxyUrl) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/worms/me-all', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
@@ -265,6 +274,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
             if (iframeSrc) {
                 let token = iframeSrc;
                 await fetchClaimFarm(token, dataProxy);
+                await fetchCatchWorms(token, dataProxy);
                 await fetchLoginBonuses(token, dataProxy);
                 let worms = await fetchInfoWorms(token, dataProxy);
                 let infoLeader = await fetchInfoLeader(token, dataProxy);

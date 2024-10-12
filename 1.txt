@@ -1,0 +1,31 @@
+fetch("https://elb.seeddao.org/api/v1/worms/catch", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.9",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "telegram-data": "query_id=AAE5xaxLAwAAADnFrEuFlOpT&user=%7B%22id%22%3A7712064825%2C%22first_name%22%3A%22Hoangdnvn3%20%F0%9F%9B%92%F0%9F%8C%B1SEED%22%2C%22last_name%22%3A%22Nguyen%F0%9F%90%A6%20SUI%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1728723961&hash=b624ca5e159956635bed8e41af7c7157eb2f2e290029636ec5774f1a6d8f6350",
+    "Referer": "https://cf.seeddao.org/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "body": null,
+  "method": "POST"
+});
+
+
+{
+    "data": {
+        "id": "9f9d23a5-5bf0-4fd2-ab20-da513cc3dff2",
+        "type": "epic",
+        "status": "failed",
+        "updated_at": "2024-10-12T09:06:15.57081Z",
+        "reward": 3000000000,
+        "on_market": false,
+        "owner_id": "5b739715-e5d8-4a58-b6a7-66f1e4cab52a"
+    }
+}
