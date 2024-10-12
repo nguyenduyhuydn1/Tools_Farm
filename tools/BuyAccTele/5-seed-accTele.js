@@ -8,8 +8,8 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./../utils/utils.js')
-const { checkIframeAndClick, clickIfExists } = require('./../utils/selector.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle } = require('./../utils/utils.js')
+const { checkIframeAndClick } = require('./../utils/selector.js')
 const { fetchData } = require('./../utils/axios.js')
 const proxyFile = require("../data/proxy.js");
 
@@ -21,8 +21,8 @@ const headers = {
     "accept-language": "en-US,en;q=0.9",
     "priority": "u=1, i",
     "sec-ch-ua": "Mozilla/5.0 (Linux; U; Android 1.5; de-de; Galaxy Build/CUPCAKE) AppleWebKit/528.5  (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-ch-ua-mobile": "?1",
+    "sec-ch-ua-platform": "\"Android\"",
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
@@ -65,8 +65,6 @@ const fetchInfoWorms = async (auth, proxyUrl) => {
 
 const fetchInfoLeader = async (auth, proxyUrl) => {
     let { data } = await fetchData('https://elb.seeddao.org/api/v1/bird/is-leader', 'GET', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
-    console.log(data);
-
     if (data) {
         console.log("========================================");
         console.log("               Leader")
@@ -170,6 +168,9 @@ const fetchClaimTask = async (auth, idTask, proxyUrl) => {
 // =====================================================================
 // =====================================================================
 // =====================================================================
+let usersArr = [
+
+]
 
 const MainBrowser = async (dataProxy, countFolder) => {
     try {
@@ -196,15 +197,15 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
                 '--ignore-certificate-errors',
                 '--mute-audio',
-                '--window-size=700,400',
-                `--window-position=0,0`,
-                // '--start-maximized'
+                // '--window-size=700,400',
+                // `--window-position=0,0`,
+                '--start-maximized'
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
@@ -218,33 +219,44 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
+        if (usersArr.length > 0) {
+            await checkIframeAndClick(page);
 
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
-        // browser.close()
+            const iframeSrc = await page.evaluate(() => {
+                const iframeElement = document.querySelector('iframe');
+                if (iframeElement) {
+                    return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+                }
+            },);
+            // browser.close()
+            if (iframeSrc) {
+                let token = iframeSrc;
+                await fetchClaimFarm(token, dataProxy);
+                await fetchLoginBonuses(token, dataProxy);
+                let worms = await fetchInfoWorms(token, dataProxy);
+                let infoLeader = await fetchInfoLeader(token, dataProxy);
 
-        if (iframeSrc) {
-            let token = iframeSrc;
-            await fetchClaimFarm(token, dataProxy);
-            await fetchLoginBonuses(token, dataProxy);
-            let worms = await fetchInfoWorms(token, dataProxy);
-            let infoLeader = await fetchInfoLeader(token, dataProxy);
 
-
-            if (infoLeader) {
-                let { id, status, hunt_end_at } = infoLeader;
-                let date = Date.now();
-                let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
-                console.log(Date.now(hunt_end_at), date);
-                if (status == 'hunting') {
-                    let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
-                    await sleep(2000);
-                    if (checkHunting) {
+                if (infoLeader) {
+                    let { id, status, hunt_end_at } = infoLeader;
+                    let date = Date.now();
+                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
+                    console.log(Date.now(hunt_end_at), date);
+                    if (status == 'hunting') {
+                        let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
+                        await sleep(2000);
+                        if (checkHunting) {
+                            if (worms.length > 0) {
+                                await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
+                                await sleep(2000);
+                            }
+                            await fetchHappyBrith(token, id, dataProxy);
+                            await sleep(2000);
+                            await fetchBirthStartHunting(token, id, dataProxy);
+                            await sleep(2000);
+                        }
+                    }
+                    if (status == 'in-inventory') {
                         if (worms.length > 0) {
                             await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
                             await sleep(2000);
@@ -255,26 +267,63 @@ const MainBrowser = async (dataProxy, countFolder) => {
                         await sleep(2000);
                     }
                 }
-                if (status == 'in-inventory') {
-                    if (worms.length > 0) {
-                        await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
-                        await sleep(2000);
+
+                let tasks = await fetchMissions(token, dataProxy);
+                console.log("========================================");
+                console.log("               claim")
+                console.log("========================================");
+                for (let x of tasks) {
+                    for (let i = 0; i <= x.repeats; i++) {
+                        await fetchClaimTask(token, x.id, dataProxy);
+                        await sleep(1000);
                     }
-                    await fetchHappyBrith(token, id, dataProxy);
-                    await sleep(2000);
-                    await fetchBirthStartHunting(token, id, dataProxy);
-                    await sleep(2000);
                 }
             }
+        } else {
+            for (let token of usersArr) {
+                await fetchClaimFarm(token, dataProxy);
+                await fetchLoginBonuses(token, dataProxy);
+                let worms = await fetchInfoWorms(token, dataProxy);
+                let infoLeader = await fetchInfoLeader(token, dataProxy);
 
-            let tasks = await fetchMissions(token, dataProxy);
-            console.log("========================================");
-            console.log("               claim")
-            console.log("========================================");
-            for (let x of tasks) {
-                for (let i = 0; i <= x.repeats; i++) {
-                    await fetchClaimTask(token, x.id, dataProxy);
-                    await sleep(1000);
+                if (infoLeader) {
+                    let { id, status, hunt_end_at } = infoLeader;
+                    let date = Date.now();
+                    let worm_ids = worms.splice(0, 2).map(v => { if (v?.id) { return v.id } });
+                    console.log(Date.now(hunt_end_at), date);
+                    if (status == 'hunting') {
+                        let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
+                        await sleep(2000);
+                        if (checkHunting) {
+                            if (worms.length > 0) {
+                                await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
+                                await sleep(2000);
+                            }
+                            await fetchHappyBrith(token, id, dataProxy);
+                            await sleep(2000);
+                            await fetchBirthStartHunting(token, id, dataProxy);
+                            await sleep(2000);
+                        }
+                    }
+                    if (status == 'in-inventory') {
+                        if (worms.length > 0) {
+                            await fetchBirthFeed(token, { bird_id: id, worm_ids }, dataProxy);
+                            await sleep(2000);
+                        }
+                        await fetchHappyBrith(token, id, dataProxy);
+                        await sleep(2000);
+                        await fetchBirthStartHunting(token, id, dataProxy);
+                        await sleep(2000);
+                    }
+                }
+
+                let tasks = await fetchMissions(token, dataProxy);
+                printFormattedTitle(`Claim`, "yellow")
+                for (let x of tasks) {
+                    for (let i = 0; i <= x.repeats; i++) {
+                        await fetchClaimTask(token, x.id, dataProxy);
+                        await sleep(1000);
+                    }
                 }
             }
         }
@@ -290,9 +339,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await waitForInput()
     }
-    process.ex
     process.exit(1)
 })();
 
