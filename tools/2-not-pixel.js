@@ -9,14 +9,13 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, userAgent, printFormattedTitle } = require('./utils/utils.js')
+const { sleep, readLinesToArray, userAgent, printFormattedTitle, randomNumber } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 
 const headers = {
     "accept": "application/json, text/plain, */*",
     "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-    "authorization": `initData ${decodeURIComponent(authorization)}`,
     "priority": "u=1, i",
     "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
     "sec-ch-ua-mobile": "?0",
