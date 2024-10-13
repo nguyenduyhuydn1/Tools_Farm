@@ -200,7 +200,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         console.log("========================================");
         for (let x of tasks) {
             await fetchClaim(x.id, authorization, dataProxy);
-            await sleep(1000)
+            await sleep(2000)
         }
     } catch (error) {
         console.error("Error:", error.message);

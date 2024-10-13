@@ -241,14 +241,14 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 }
             }
 
-            let tasks = await fetchMissions(token)
-            printFormattedTitle(`Claim`, "yellow")
-            for (let x of tasks) {
-                for (let i = 0; i <= x.repeats; i++) {
-                    await fetchClaimTask(token, x.id)
-                    await sleep(1000);
-                }
-            }
+            // let tasks = await fetchMissions(token)
+            // printFormattedTitle(`Claim`, "yellow")
+            // for (let x of tasks) {
+            //     for (let i = 0; i <= x.repeats; i++) {
+            //         await fetchClaimTask(token, x.id)
+            //         await sleep(1000);
+            //     }
+            // }
         }
     } catch (error) {
         console.error("Error:", error.message);

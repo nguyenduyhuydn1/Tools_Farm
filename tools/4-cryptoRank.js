@@ -91,7 +91,6 @@ const fetchClaimEndFarming = async (auth) => {
     console.log("               claim farm")
     console.log("========================================");
 
-    let headers = { "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"", }
     let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, auth, 'POST', {})
 
     if (data) {
@@ -114,11 +113,11 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                '--disable-video',                 // Vô hiệu hóa video decoding
-                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+                // '--disable-video',                 // Vô hiệu hóa video decoding
+                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                // '--disable-gpu',
+                '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',

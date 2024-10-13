@@ -151,16 +151,16 @@ let fetchMissions = async (token) => {
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
-            let mergedArray = [];
+            // let mergedArray = [];
 
-            for (let key in data.tasks) {
-                if (Array.isArray(data.tasks[key])) {
-                    mergedArray = mergedArray.concat(data.tasks[key]);
-                }
-            }
+            // for (let key in data.tasks) {
+            //     if (Array.isArray(data.tasks[key])) {
+            //         mergedArray = mergedArray.concat(data.tasks[key]);
+            //     }
+            // }
 
-            const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
-            // const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
+            // const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
+            const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
             return combinedMissions;
         }
     }
@@ -201,11 +201,11 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                '--disable-video',                 // Vô hiệu hóa video decoding
-                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+                // '--disable-video',                 // Vô hiệu hóa video decoding
+                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                // '--disable-gpu',
+                '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',

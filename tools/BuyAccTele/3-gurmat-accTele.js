@@ -151,16 +151,16 @@ let fetchMissions = async (token, dataProxy) => {
     if (status_code || status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
-            let mergedArray = [];
+            // let mergedArray = [];
 
-            for (let key in data.tasks) {
-                if (Array.isArray(data.tasks[key])) {
-                    mergedArray = mergedArray.concat(data.tasks[key]);
-                }
-            }
+            // for (let key in data.tasks) {
+            //     if (Array.isArray(data.tasks[key])) {
+            //         mergedArray = mergedArray.concat(data.tasks[key]);
+            //     }
+            // }
 
-            const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
-            // const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
+            // const combinedMissions = mergedArray.filter(v => v.status !== 'finished');
+            const combinedMissions = data.tasks.gumart.filter(v => v.status !== 'finished');
             return combinedMissions;
         }
     }
@@ -293,7 +293,7 @@ let promiseTasks = [];
 
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 20; i < 30; i++) {
         console.log("========================================");
         console.log(`           tài khoản ${i} `);
         console.log("========================================");

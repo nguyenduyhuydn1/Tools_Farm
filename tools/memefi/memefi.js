@@ -61,13 +61,32 @@ let MainBrowser = (async (countFolder) => {
         //     }
         // });
 
-        const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
+        // const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
         const [page] = await browser.pages();
-        await page.setUserAgent(userAgent);
+        // await page.setUserAgent(userAgent);
+        // await page.setExtraHTTPHeaders({
+        //     "accept": "*/*",
+        //     "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+        //     "cache-control": "no-cache",
+        //     "content-type": "application/json",
+        //     "pragma": "no-cache",
+        //     "user-agent": "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36",
+        //     "sec-ch-ua": "\"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\", \";Not A Brand\";v=\"8\"",
+        //     "sec-ch-ua-mobile": "?1",
+        //     "sec-ch-ua-platform": "\"Android\"",
+        //     "sec-fetch-dest": "empty",
+        //     "sec-fetch-mode": "cors",
+        //     "sec-fetch-site": "cross-site",
+        //     "Referrer-Policy": "strict-origin-when-cross-origin"
+        // });
+        // // let pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
+        // // const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
+        // // await page.evaluateOnNewDocument(preloadFile);
+        // await page.goto('https://httpbin.org/headers');
 
-        // let pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
-        // const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
-        // await page.evaluateOnNewDocument(preloadFile);
+        // // Lấy nội dung của trang và in ra để kiểm tra
+        // const content = await page.content();
+        // console.log(content);
 
         let memescript = path.join(__dirname, '..', 'public', 'memefi.js');
         const preMemescript = fs.readFileSync(memescript, 'utf8');
@@ -144,7 +163,7 @@ function waitForInput() {
 // 2,4,5
 (async () => {
     const dataArray = readLinesToArray();
-    for (let i = 3; i < dataArray.length; i++) {
+    for (let i = 6; i < dataArray.length; i++) {
         await MainBrowser(i);
         await waitForInput();
     }

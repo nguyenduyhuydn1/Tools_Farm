@@ -187,7 +187,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                // '--disable-gpu',
+                '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -232,7 +232,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 let { id, status, hunt_end_at } = infoLeader;
                 let date = Date.now();
                 let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } });
-                console.log(Date.now(hunt_end_at), date);
                 if (status == 'hunting') {
                     let checkHunting = await fetchCompleteHunting(token, id, dataProxy);
                     await sleep(2000);
@@ -259,14 +258,14 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 }
             }
 
-            let tasks = await fetchMissions(token, dataProxy);
-            printFormattedTitle(`Claim`, "green")
-            for (let x of tasks) {
-                for (let i = 0; i <= x.repeats; i++) {
-                    await fetchClaimTask(token, x.id, dataProxy);
-                    await sleep(2000);
-                }
-            }
+            // let tasks = await fetchMissions(token, dataProxy);
+            // printFormattedTitle(`Claim`, "green")
+            // for (let x of tasks) {
+            //     for (let i = 0; i <= x.repeats; i++) {
+            //         await fetchClaimTask(token, x.id, dataProxy);
+            //         await sleep(2000);
+            //     }
+            // }
         }
     } catch (error) {
         console.error("Error:", error.message);
@@ -274,7 +273,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 12; i < 30; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red")
 
         if (i == 1) continue

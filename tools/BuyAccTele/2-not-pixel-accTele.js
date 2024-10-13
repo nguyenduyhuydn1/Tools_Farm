@@ -161,8 +161,9 @@ const MainBrowser = async (dataProxy, countFolder) => {
             }
             return match;
         });
+        // await waitForInput()
         browser.close()
-        // await waitForInput();
+
         let arrNumber = randomNumber();
         await getInfo(iframe, countFolder, dataProxy);
         let { charges } = await getStatus(iframe, dataProxy)
@@ -177,7 +178,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 11; i < 30; i++) {
         console.log("========================================");
         console.log(`           tài khoản ${i} `);
         console.log("========================================");
@@ -185,7 +186,6 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await sleep(1000)
     }
     process.exit(1)
 })();

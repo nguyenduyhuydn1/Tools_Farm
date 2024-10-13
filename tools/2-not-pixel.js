@@ -102,11 +102,11 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 // '--disable-3d-apis',               // Vô hiệu hóa WebGL
                 // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
                 // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                '--disable-video',                 // Vô hiệu hóa video decoding
-                '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+                // '--disable-video',                 // Vô hiệu hóa video decoding
+                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                // '--disable-gpu',
+                '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
