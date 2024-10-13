@@ -9,12 +9,12 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const axios = require('axios');
-
-const { sleep, readLinesToArray, userAgent } = require('./utils/utils.js')
+const { sleep, readLinesToArray, userAgent, printFormattedTitle } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
+const { fetchData } = require('./utils/axios.js')
 
-axios.defaults.headers.common = {
+
+const headers = {
     "accept": "*/*",
     "accept-language": "en-US,en;q=0.9",
     "content-type": "application/json",
@@ -24,75 +24,37 @@ axios.defaults.headers.common = {
     "sec-fetch-site": "same-site",
     "Referer": "https://tma.cryptorank.io/",
     "Referrer-Policy": "strict-origin-when-cross-origin"
-};
-
-// =====================================================================
-// =====================================================================
-// =====================================================================
-
-async function fetchData(url, authorization, method, body = null) {
-    try {
-        const options = {
-            headers: {
-                "authorization": authorization,
-            },
-            method,
-        };
-
-        if (method.toUpperCase() === "POST" && body) {
-            options.data = body;
-        }
-
-        const response = await axios(url, options);
-        return response.data;
-    } catch (error) {
-        if (error.response) {
-            if (error.response.status === 409) {
-                console.error("Đã Farm");
-            } else {
-                console.error(`Error ${error.response.status}:`, error.response.data);
-            }
-        } else {
-            // Error without response (like network issues)
-            console.error("Error fetching data:", error.message);
-        }
-    }
 }
+// =====================================================================
+// =====================================================================
+// =====================================================================
+
 
 const fetchFarming = async (auth) => {
-    console.log("========================================");
-    console.log("               start farning")
-    console.log("========================================");
-    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', auth, 'POST', {})
+    printFormattedTitle('start farning', "blue")
+    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', 'POST', { authKey: 'authorization', authValue: auth, headers, body: {} })
     if (data) console.log(`balance hiện tại ${data.balance}`);
 }
 
 const fetchTask = async (auth) => {
-    console.log("========================================");
-    console.log("               lấy tasks")
-    console.log("========================================");
-    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/tasks', auth, 'GET', {})
-    let arr;
+    printFormattedTitle('lấy tasks', "blue")
+    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/tasks', 'GET', { authKey: 'authorization', authValue: auth, headers, body: {} })
     if (data) {
-        arr = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
-        arr.map(v => console.log(`nhiệm vụ: ${v.name}`))
+        data = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
+        data.map(v => console.log(`nhiệm vụ: ${v.name}`))
+        return arr;
     }
-    return arr;
+    return false;
 }
 
 const fetchClaim = async (id, auth) => {
-    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, auth, 'POST', {})
-
+    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, 'POST', { authKey: 'authorization', authValue: auth, headers, body: {} })
     if (data) console.log(`đã hoàn thành nv, ${data.balance}`);
 }
 
 const fetchClaimEndFarming = async (auth) => {
-    console.log("========================================");
-    console.log("               claim farm")
-    console.log("========================================");
-
-    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, auth, 'POST', {})
-
+    printFormattedTitle('claim farm', "blue")
+    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, 'POST', { authKey: 'authorization', authValue: auth, headers, body: {} })
     if (data) {
         console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
         return data;
@@ -151,7 +113,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await checkIframeAndClick(page);
 
         let authorization = await getAuthorization
-        browser.close()
 
         let check1 = await fetchClaimEndFarming(authorization);
         await sleep("5000")
@@ -162,13 +123,14 @@ const MainBrowser = async (localStorageData, countFolder) => {
             await sleep("5000")
             await fetchFarming(authorization);
         }
+        browser.close()
 
         let tasks = await fetchTask(authorization);
-        console.log("========================================");
-        console.log("               làm nhiệm vụ")
-        console.log("========================================");
-        for (let x of tasks) {
-            await fetchClaim(x.id, authorization)
+        if (tasks) {
+            printFormattedTitle('làm nhiệm vụ', "blue")
+            for (let x of tasks) {
+                await fetchClaim(x.id, authorization)
+            }
         }
     } catch (error) {
         console.error("Error:", error.message);
@@ -180,9 +142,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
-        console.log("========================================");
-        console.log(`               tài khoản ${i}`)
-        console.log("========================================");
+        printFormattedTitle(`tài khoản ${i}`, "blue")
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }

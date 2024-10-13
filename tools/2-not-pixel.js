@@ -8,84 +8,54 @@ stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
-const { sleep, randomNumber, readLinesToArray, userAgent, waitForInput } = require('./utils/utils.js')
-const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 
+const { sleep, readLinesToArray, userAgent, printFormattedTitle } = require('./utils/utils.js')
+const { checkIframeAndClick } = require('./utils/selector.js')
+const { fetchData } = require('./utils/axios.js')
 
-
-async function fetchData(url, authorization, method, body = null) {
-    try {
-        const options = {
-            headers: {
-                "accept": "application/json, text/plain, */*",
-                "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-                "authorization": `initData ${decodeURIComponent(authorization)}`,
-                "priority": "u=1, i",
-                "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-site",
-                "Referer": `https://app.notpx.app/`,
-                "Referrer-Policy": "strict-origin-when-cross-origin"
-            },
-            method
-        };
-
-        if (method.toUpperCase() === "POST" && body) {
-            options.headers["Content-Type"] = "application/json";
-            options.body = JSON.stringify(body);
-        }
-
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
-    }
+const headers = {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "authorization": `initData ${decodeURIComponent(authorization)}`,
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "Referer": `https://app.notpx.app/`,
+    "Referrer-Policy": "strict-origin-when-cross-origin"
 }
 
 // =====================================================================
 // =====================================================================
 // =====================================================================
 
-
-
-const getInfo = async (user, count) => {
-    let info = await fetchData("https://notpx.app/api/v1/users/me", user, "GET");
-    console.log(`=============== tài khoản ${count + 1}------- ${info?.lastName} ${info?.firstName} ===================`);
+const getInfo = async (user) => {
+    let info = await fetchData("https://notpx.app/api/v1/users/me", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
+    printFormattedTitle(`${info?.lastName} ${info?.firstName}`, 'blue')
     console.log(`balance: ${info?.balance}, id: ${info?.id}`);
-    console.log("============================================================================");
     return info
 }
 
 const getStatus = async (user) => {
-    let status = await fetchData("https://notpx.app/api/v1/mining/status", user, "GET");
+    let status = await fetchData("https://notpx.app/api/v1/mining/status", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
     console.log(`status: ${JSON.stringify(status)}`);
-    console.log("============================================================================");
     return status;
 }
 
 const getClaim = async (user) => {
-    let claim = await fetchData("https://notpx.app/api/v1/mining/claim", user, "GET");
+    let claim = await fetchData("https://notpx.app/api/v1/mining/claim", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
     console.log(`claimed: ${JSON.stringify(claim)}`);
-    console.log("============================================================================");
     return claim;
 }
 
 const postStart = async (user, pixelId) => {
-    let start = await fetchData("https://notpx.app/api/v1/repaint/start", user, "POST", { pixelId, newColor: "#2450A4" });
+    let start = await fetchData("https://notpx.app/api/v1/repaint/start", "POST", { authKey: 'authorization', authValue: `initData ${user}`, headers, body: { pixelId, newColor: "#2450A4" } });
     console.log(`balance:${JSON.stringify(start)}`);
     return start;
 }
-
 
 // =====================================================================
 // =====================================================================
@@ -125,24 +95,19 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        // await page.waitForSelector("#column-center .bubbles-group-last .reply-markup a").then(e => e.click());
-        // await page.waitForSelector(".popup-confirmation.active .popup-buttons button:nth-child(1)").then(e => e.click());
-        // await page.waitForSelector('iframe');
-        let iframe = await page.evaluate(() => {
-            let match;
-            let iframeElement = document.querySelector("iframe");
+
+        const iframe = await page.evaluate(() => {
+            const iframeElement = document.querySelector('iframe');
             if (iframeElement) {
-                const src = iframeElement.src;
-                match = src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
             }
-            return match;
-        });
+        },);
         // await waitForInput()
         browser.close()
 
         await sleep(5000)
         let arrNumber = randomNumber();
-        await getInfo(iframe, countFolder);
+        await getInfo(iframe);
         await sleep(1000)
         let { charges = 10 } = await getStatus(iframe)
         await sleep(1000)
@@ -160,7 +125,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
-        console.log(i, "------------------");
+        printFormattedTitle(`tài khoản ${i}`, 'red')
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }

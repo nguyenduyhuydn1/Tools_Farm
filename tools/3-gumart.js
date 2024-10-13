@@ -9,119 +9,46 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, userAgent, waitForInput } = require('./utils/utils.js')
+const { sleep, readLinesToArray, userAgent, waitForInput, printFormattedTitle } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
+const { fetchData } = require('./utils/axios.js')
 
 
 // =====================================================================
 // =====================================================================
 // =====================================================================
-
-
-async function fetchData(url, authorization, method, body = null) {
-    try {
-        const options = {
-            headers: {
-                "accept": "application/json, text/plain, */*",
-                "accept-language": "en-US,en;q=0.9",
-                "access-control-allow-origin": "*",
-                "authorization": `Bearer ${authorization}`,
-                "priority": "u=1, i",
-                "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "cross-site",
-                "Referer": "https://d2kpeuq6fthlg5.cloudfront.net/",
-                "Referrer-Policy": "strict-origin-when-cross-origin"
-            },
-            method
-        };
-
-        if (method.toUpperCase() === "POST" && body) {
-            options.headers["Content-Type"] = "application/json";
-            options.body = JSON.stringify(body);
-        }
-
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
-    }
+const headers = {
+    "accept": "application/json, text/plain, */*",
+    "accept-language": "en-US,en;q=0.9",
+    "access-control-allow-origin": "*",
+    "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://d2kpeuq6fthlg5.cloudfront.net/",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
 }
 
-
-const verifyAndLogin = async (url, method, body = null) => {
-    try {
-        const options = {
-            headers: {
-                "accept": "application/json, text/plain, */*",
-                "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-                "access-control-allow-origin": "*",
-                "content-type": "application/json",
-                "priority": "u=1, i",
-                "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "cross-site",
-                "Referer": "https://d2kpeuq6fthlg5.cloudfront.net/",
-                "Referrer-Policy": "strict-origin-when-cross-origin"
-            },
-            method
-        };
-
-        if (method.toUpperCase() === "POST" && body) {
-            options.headers["Content-Type"] = "application/json";
-            options.body = JSON.stringify(body);
-        }
-
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
-    }
-}
-
-
 // =====================================================================
 // =====================================================================
 // =====================================================================
-
-
 
 let takeToken = async (iframeSrc) => {
-    console.log("=====================================================================");
-    console.log("                           đang login và xác thực");
-    console.log("=====================================================================");
-
-    let { message, data: { is_verify = null } = {} } = await verifyAndLogin("https://api.gumart.click/api/verify", "post", { telegram_data: decodeURIComponent(iframeSrc), ref_id: null })
+    printFormattedTitle('đang login và xác thực', 'blue')
+    let { message, data: { is_verify = null } = {} } = await fetchData("https://api.gumart.click/api/verify", "post", { body: { telegram_data: decodeURIComponent(iframeSrc), ref_id: null } })
     console.log(message);
     if (is_verify == 1) {
-        let { errors, data: { access_token = null } = {} } = await verifyAndLogin("https://api.gumart.click/api/login", "post", { telegram_data: decodeURIComponent(iframeSrc), ref_id: null, mode: 2, g_recaptcha_response: null })
+        let { errors, data: { access_token = null } = {} } = await fetchData("https://api.gumart.click/api/login", "post", { body: { telegram_data: decodeURIComponent(iframeSrc), ref_id: null, mode: 2, g_recaptcha_response: null } })
         if (errors) console.log(errors);
         return access_token;
     }
 }
 
 let fetchInfo = async (token) => {
-    let { status_code, errors, data: { balance } } = await fetchData("https://api.gumart.click/api/home", token, "GET");
+    let { status_code, errors, data: { balance } } = await fetchData("https://api.gumart.click/api/home", "GET", { authKey: 'authorization', authValue: `Bearer ${token}`, headers });
     if (status_code == 200) {
         if (errors) console.log(errors);
         console.log(balance);
@@ -129,15 +56,16 @@ let fetchInfo = async (token) => {
 }
 
 let fetchClaim = async (token) => {
-    let { status_code, errors, data: { claim_value = null } = {} } = await fetchData("https://api.gumart.click/api/claim", token, "POST", {});
+    let { status_code, errors, data: { claim_value = null } = {} } = await fetchData("https://api.gumart.click/api/claim", "POST", { authKey: 'authorization', authValue: `Bearer ${token}`, body: {}, headers });
     if (status_code == 200) {
         if (errors) console.log(errors);
         console.log(`Đã lấy ${claim_value}`);
     }
 }
 
+
 let fetchBoost = async (token) => {
-    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/boost", token, "POST", {});
+    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/boost", "POST", { authKey: 'authorization', authValue: `Bearer ${token}`, body: {}, headers });
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
@@ -147,7 +75,7 @@ let fetchBoost = async (token) => {
 }
 
 let fetchMissions = async (token) => {
-    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/missions", token, "get");
+    let { status_code, errors, data } = await fetchData("https://api.gumart.click/api/missions", "get", { authKey: 'authorization', authValue: `Bearer ${token}`, headers });
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (data) {
@@ -166,9 +94,8 @@ let fetchMissions = async (token) => {
     }
 }
 
-
 let fetchStartTask = async (token, id) => {
-    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/start`, token, "POST");
+    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/start`, "POST", { authKey: 'authorization', authValue: `Bearer ${token}`, headers });
     if (status_code == 200) {
         if (errors) console.log(errors);
         if (message) console.log(message);
@@ -177,7 +104,7 @@ let fetchStartTask = async (token, id) => {
 }
 
 let fetchClaimTask = async (token, id) => {
-    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/claim`, token, "POST");
+    let { status_code, message, errors, data } = await fetchData(`https://api.gumart.click/api/missions/${id}/claim`, "POST", { authKey: 'authorization', authValue: `Bearer ${token}`, headers });
     console.log(status_code);
 
     if (status_code == 200) {
@@ -224,11 +151,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        // await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)")
-        // await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)")
-        // await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-
-        // await page.waitForSelector('iframe');
         const iframeSrc = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
             if (iframeElement) {
@@ -238,9 +160,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
         browser.close()
 
         if (iframeSrc) {
-            console.log("=====================================================================");
-            console.log(`                           tài khoản ${countFolder}`);
-            console.log("=====================================================================");
             let token = await takeToken(iframeSrc);
             await fetchInfo(token);
             await fetchClaim(token);
@@ -282,6 +201,7 @@ let promiseTasks = [];
 (async () => {
     const dataArray = readLinesToArray();
     for (let i = 0; i < dataArray.length; i++) {
+        printFormattedTitle(`tài khoản ${i}`, 'blue')
         await MainBrowser(dataArray[i], i);
         await sleep(1000)
     }
