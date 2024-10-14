@@ -64,50 +64,50 @@ let MainBrowser = (async (localStorageData, countFolder) => {
         });
 
         await page.goto("https://web.telegram.org/k/#@memefi_coin_bot");
-        await sleep(5000);
-        await page.click("#column-center .rows-wrapper-row.has-offset > div.new-message-bot-commands.is-view");
-        await clickIfExists(page, "body > div.popup.popup-peer.popup-confirmation.active > div > div.popup-buttons > button:nth-child(1)")
+        // await sleep(5000);
+        // await page.click("#column-center .rows-wrapper-row.has-offset > div.new-message-bot-commands.is-view");
+        // await clickIfExists(page, "body > div.popup.popup-peer.popup-confirmation.active > div > div.popup-buttons > button:nth-child(1)")
 
-        await page.waitForSelector('iframe');
-        let iframe = await page.evaluate(() => document.querySelector("iframe")?.getAttribute('src'));
-        if (iframe) await page.goto(iframe);
-        await sleep(1000)
-        await page.goto("https://tg-app.memefi.club/earn");
-        await sleep(2000)
+        // await page.waitForSelector('iframe');
+        // let iframe = await page.evaluate(() => document.querySelector("iframe")?.getAttribute('src'));
+        // if (iframe) await page.goto(iframe);
+        // await sleep(1000)
+        // await page.goto("https://tg-app.memefi.club/earn");
+        // await sleep(2000)
 
-        let arr = await page.evaluate(() => {
-            let a = document.querySelectorAll("#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div");
-            return a.length;
-        });
+        // let arr = await page.evaluate(() => {
+        //     let a = document.querySelectorAll("#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div");
+        //     return a.length;
+        // });
 
-        await page.goto("https://tg-app.memefi.club/earn");
-        await sleep(3000)
+        // await page.goto("https://tg-app.memefi.club/earn");
+        // await sleep(3000)
 
-        while (true) {
-            for (let i = 6; i < arr; i++) {
-                try {
-                    console.log(i);
-                    await page.click(`#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div:nth-child(${i})`);
-                    await sleep(2000)
-                    await page.click("#root > main > div > div > div.MuiBox-root.css-89r8mz > div.MuiBox-root.css-0 > div > div > div")
-                    await sleep(2000)
-                    await page.click("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-4q3rnc > button")
-                    await sleep(2000)
-                    await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.MuiBox-root > div > div.MuiBox-root.css-16xrt4i > button")
-                    await sleep(2000)
-                    await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.sc-gJhJTp.braGIf.MuiBox-root.css-1daa1cd > button")
-                    await sleep(2000)
-                    await page.goto("https://tg-app.memefi.club/earn");
-                    await sleep(2000)
-                    i--
-                } catch (error) {
-                    await clickIfExists(page, `body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-1xnhpp1 > div > div.MuiBox-root.css-16xrt4i > div > div:nth-child(1) > div.MuiStack-root.css-xhed8o > a`)
-                    console.log("error");
-                    await page.goto("https://tg-app.memefi.club/earn");
-                    await sleep(3000)
-                }
-            }
-        }
+        // while (true) {
+        //     for (let i = 6; i < arr; i++) {
+        //         try {
+        //             console.log(i);
+        //             await page.click(`#root > main > div > div > div.MuiBox-root.css-q4ok0g > div:nth-child(2) > div.MuiBox-root.css-4jsa2g > div:nth-child(${i})`);
+        //             await sleep(2000)
+        //             await page.click("#root > main > div > div > div.MuiBox-root.css-89r8mz > div.MuiBox-root.css-0 > div > div > div")
+        //             await sleep(2000)
+        //             await page.click("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-4q3rnc > button")
+        //             await sleep(2000)
+        //             await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.MuiBox-root > div > div.MuiBox-root.css-16xrt4i > button")
+        //             await sleep(2000)
+        //             await page.click("body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.sc-gJhJTp.braGIf.MuiBox-root.css-1daa1cd > button")
+        //             await sleep(2000)
+        //             await page.goto("https://tg-app.memefi.club/earn");
+        //             await sleep(2000)
+        //             i--
+        //         } catch (error) {
+        //             await clickIfExists(page, `body .MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.MuiBox-root.css-1xnhpp1 > div > div.MuiBox-root.css-16xrt4i > div > div:nth-child(1) > div.MuiStack-root.css-xhed8o > a`)
+        //             console.log("error");
+        //             await page.goto("https://tg-app.memefi.club/earn");
+        //             await sleep(3000)
+        //         }
+        //     }
+        // }
     } catch (error) {
         console.log("---------------------error------------------------");
         console.error(error.message);

@@ -122,7 +122,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -130,6 +130,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 '--mute-audio',
                 '--window-size=700,600',
                 `--window-position=0,0`,
+                // '--start-maximized'
             ],
             ignoreDefaultArgs: ["--enable-automation"],
         });
@@ -158,8 +159,8 @@ const MainBrowser = async (dataProxy, countFolder) => {
 
         await checkIframeAndClick(page);
         let authorization = await getAuthorization
+        browser.close()
         // await waitForInput()
-        // browser.close()
 
         let info = await fetchInfo(authorization, dataProxy);
         if (info) {
@@ -173,14 +174,13 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 await fetchFarmingStart(authorization, dataProxy);
             }
         }
-
     } catch (error) {
         console.error("Error:", error.message);
     }
 };
 
 (async () => {
-    for (let i = 11; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red")
 
         if (i == 1) continue

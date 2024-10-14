@@ -187,7 +187,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
                 '--test-type',
-                '--disable-gpu',
+                // '--disable-gpu',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-sync',
@@ -273,7 +273,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 12; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red")
 
         if (i == 1) continue

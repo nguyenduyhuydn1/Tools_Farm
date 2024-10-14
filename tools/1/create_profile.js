@@ -2,6 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
 
 const stealth = StealthPlugin();
 stealth.enabledEvasions.delete('iframe.contentWindow');
@@ -21,6 +22,17 @@ const { sleep, readLinesToArray, waitForInput, clickIfExists } = require('./../u
 
 const MainBrowser = async (localStorageData, count) => {
     try {
+        puppeteer.use(
+            ProxyPlugin({
+                address: dataProxy.ip,
+                port: dataProxy.port,
+                credentials: {
+                    username: dataProxy.username,
+                    password: dataProxy.password,
+                }
+            })
+        );
+
         const browser = await puppeteer.launch({
             headless: false,
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',

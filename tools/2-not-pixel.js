@@ -9,7 +9,7 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-const { sleep, readLinesToArray, userAgent, printFormattedTitle, randomNumber } = require('./utils/utils.js')
+const { sleep, readLinesToArray, userAgent, printFormattedTitle, randomNumber, waitForInput } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 
@@ -106,7 +106,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
 
         await sleep(5000)
         let arrNumber = randomNumber();
-        await getInfo(iframe);
+        // await getInfo(iframe);
         await sleep(1000)
         let { charges = 10 } = await getStatus(iframe)
         await sleep(1000)
@@ -114,7 +114,7 @@ const MainBrowser = async (localStorageData, countFolder) => {
         await sleep(1000)
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
-            await sleep(1000)
+            await sleep(1500)
         }
     } catch (error) {
         console.error("Error:", error.message);

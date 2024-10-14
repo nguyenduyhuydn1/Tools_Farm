@@ -153,6 +153,8 @@ const MainBrowser = async (localStorageData, countFolder) => {
                 await fetchFarmingStart(authorization);
             }
         }
+        // browser.close()
+        // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -165,7 +167,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
     for (let i = 0; i < dataArray.length; i++) {
         printFormattedTitle(`tài khoản ${i}`, "red");
         await MainBrowser(dataArray[i], i);
-        await sleep(1000)
     }
     // if (promiseTasks.length > 0) {
     //     await Promise.all(promiseTasks).then(() => {

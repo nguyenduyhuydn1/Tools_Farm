@@ -75,8 +75,9 @@ const fetchFarming = async (auth, dataProxy) => {
     let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', auth, 'POST', {}, dataProxy)
     if (data) {
         console.log(`balance hiện tại ${JSON.stringify(data)}`);
-        return data;
+        return true;
     }
+    return false;
 }
 
 const fetchTask = async (auth, dataProxy) => {
@@ -108,8 +109,9 @@ const fetchClaimEndFarming = async (auth, dataProxy) => {
 
     if (data) {
         console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
-        return data;
+        return true;
     }
+    return false;
 }
 
 

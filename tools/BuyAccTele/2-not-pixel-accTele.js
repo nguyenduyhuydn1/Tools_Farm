@@ -165,7 +165,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
         browser.close()
 
         let arrNumber = randomNumber();
-        await getInfo(iframe, countFolder, dataProxy);
+        // await getInfo(iframe, countFolder, dataProxy);
         let { charges } = await getStatus(iframe, dataProxy)
         await getClaim(iframe, dataProxy);
         for (let i = 0; i < charges; i++) {
@@ -178,7 +178,7 @@ const MainBrowser = async (dataProxy, countFolder) => {
 };
 
 (async () => {
-    for (let i = 11; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
         console.log("========================================");
         console.log(`           tài khoản ${i} `);
         console.log("========================================");

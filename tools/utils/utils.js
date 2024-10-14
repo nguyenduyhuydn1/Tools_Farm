@@ -70,9 +70,13 @@ function printFormattedTitle(title, colorName = "blue") {
     // Lấy mã màu từ object theo tên màu, mặc định là màu xanh dương (blue)
     const color = colors[colorName] || colors.blue;
 
-    console.log(color + "========================================" + reset);
-    console.log(color + `               ${title}` + reset);
-    console.log(color + "========================================" + reset);
+    const lineLength = 40; // Độ dài của dòng kẻ
+    const paddingLength = Math.max(0, Math.floor((lineLength - title.length) / 2));
+    const padding = ' '.repeat(paddingLength);
+
+    console.log(color + "=".repeat(lineLength) + reset);
+    console.log(color + padding + title + padding + reset);
+    console.log(color + "=".repeat(lineLength) + reset);
 }
 
 

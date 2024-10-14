@@ -33,7 +33,11 @@ const headers = {
 const fetchFarming = async (auth) => {
     printFormattedTitle('start farning', "blue")
     let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', 'POST', { authKey: 'authorization', authValue: auth, headers, body: {} })
-    if (data) console.log(`balance hiện tại ${data.balance}`);
+    if (data) {
+        console.log(`balance hiện tại ${data.balance}`);
+        return true;
+    }
+    return false;
 }
 
 const fetchTask = async (auth) => {
@@ -42,7 +46,7 @@ const fetchTask = async (auth) => {
     if (data) {
         data = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
         data.map(v => console.log(`nhiệm vụ: ${v.name}`))
-        return arr;
+        return data;
     }
     return false;
 }
@@ -57,8 +61,9 @@ const fetchClaimEndFarming = async (auth) => {
     let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, 'POST', { authKey: 'authorization', authValue: auth, headers, body: {} })
     if (data) {
         console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
-        return data;
+        return true;
     }
+    return false;
 }
 
 // =====================================================================
@@ -144,7 +149,6 @@ const MainBrowser = async (localStorageData, countFolder) => {
     for (let i = 0; i < dataArray.length; i++) {
         printFormattedTitle(`tài khoản ${i}`, "blue")
         await MainBrowser(dataArray[i], i);
-        await sleep(1000)
     }
     process.exit(1)
 })();
