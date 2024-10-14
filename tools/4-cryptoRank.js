@@ -31,7 +31,7 @@ const fetchAccount = async (auth) => {
         const endTime = new Date(startTime.getTime() + 6 * 60 * 60 * 1000 + (2 * 60 * 1000));
         const endTimeTimestamp = endTime.getTime();
 
-        console.log(`bắt đầu lúc: ${log(formatTime(data.farming.timestamp))} và kết thúc lúc: ${log(formatTime(endTimeTimestamp))}`);
+        log(`bắt đầu lúc: [${formatTime(data.farming.timestamp)}] và kết thúc lúc: [${formatTime(endTimeTimestamp)}]`, 'yellow')
         return endTimeTimestamp;
     }
     return false;
@@ -110,25 +110,20 @@ const MainBrowser = async (countFolder) => {
         let now = Date.now();
 
         if (timestamp < now) {
-            let check1 = await fetchClaimEndFarming(authorization);
+            await fetchClaimEndFarming(authorization);
             await sleep("5000")
-            let check2 = await fetchFarming(authorization);
-            if (!(check1 && check2)) {
-                await sleep("5000")
-                await fetchClaimEndFarming(authorization);
-                await sleep("5000")
-                await fetchFarming(authorization);
-            }
+            await fetchFarming(authorization);
 
             let tasks = await fetchTask(authorization);
-            if (tasks) {
+            if (tasks.length > 0) {
                 printFormattedTitle('làm nhiệm vụ', "blue")
                 for (let x of tasks) {
                     await fetchClaim(x.id, authorization)
                 }
             }
         }
-        // await waitForInput()
+
+        await waitForInput()
         browser.close();
     } catch (error) {
         console.error("Error:", error.message);

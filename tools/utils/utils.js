@@ -79,8 +79,7 @@ function printFormattedTitle(title, colorName = "blue") {
     console.log(color + "=".repeat(lineLength) + reset);
 }
 
-function log(message, colorName = "red") {
-    // Định nghĩa object chứa tên màu và mã màu ANSI tương ứng
+function log(message, colorName = 'red') {
     const colors = {
         red: "\x1b[31m",
         green: "\x1b[32m",
@@ -102,11 +101,19 @@ function log(message, colorName = "red") {
 
     const reset = "\x1b[0m"; // Mã để reset về màu mặc định
 
-    // Lấy mã màu từ object theo tên màu, mặc định là màu trắng (white)
+    // Lấy mã màu từ object theo tên màu
     const color = colors[colorName] || colors.white;
 
-    return `${color}${message}${reset}`;
+    // Tìm các chuỗi trong ngoặc vuông và tô màu chúng
+    const regex = /\[(.*?)\]/g;
+    let formattedMessage = message.replace(regex, (_, group) => {
+        // Tô màu cho nội dung trong ngoặc vuông và bỏ ngoặc
+        return `${color}${group}${reset}`;
+    });
+
+    console.log(formattedMessage);
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      format time                                           //                                  
 ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -151,7 +151,7 @@ let proxyUrl = null;
 let promiseTasks = [];
 
 (async () => {
-    for (let i = 20; i < 39; i++) {
+    for (let i = 0; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
