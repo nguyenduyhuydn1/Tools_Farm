@@ -14,7 +14,7 @@ async function checkIframeAndClick(page) {
     let iframeExists = false;
     let check = true;
     while (!iframeExists) {
-        printFormattedTitle(`đang tìm và click`, 'red')
+        printFormattedTitle(`Waiting...`, 'red')
         if (check == true) {
             check = false;
             await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")

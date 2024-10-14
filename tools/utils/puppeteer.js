@@ -40,8 +40,8 @@ async function runPuppeteer(userDataDir, args = [], dataProxy = null) {
         '--disable-sync',
         '--ignore-certificate-errors',
         '--mute-audio',
-        '--window-size=700,600',
-        `--window-position=0,0`,
+        '--window-size=1300,1000',
+        // `--window-position=0,0`,
         // '--start-maximized'
         // --disable-blink-features=AutomationControlled
         // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
