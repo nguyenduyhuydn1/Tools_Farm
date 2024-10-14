@@ -54,7 +54,8 @@ const postStart = async (user, pixelId) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu']);
+        // `--window-position=${countFolder * 400},0`
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu',]);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -78,7 +79,7 @@ const MainBrowser = async (countFolder) => {
         let arrNumber = randomNumber();
         // await getInfo(iframe);
         let { charges } = await getStatus(iframe)
-        log(`[${charges}] charges`)
+        log(`[${charges} charges]`)
 
         await getClaim(iframe);
         for (let i = 0; i < charges; i++) {

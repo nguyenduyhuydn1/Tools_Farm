@@ -161,6 +161,16 @@ const randomNumber = () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+function decodeUrl(encodedStr) {
+    let decodedStr = encodedStr;
+
+    while (decodedStr !== decodeURIComponent(decodedStr)) {
+        decodedStr = decodeURIComponent(decodedStr);
+    }
+
+    return decodedStr;
+}
+
 module.exports = {
     sleep,
     readLinesToArray,
@@ -169,5 +179,6 @@ module.exports = {
     waitForInput,
     formatTime,
     printFormattedTitle,
-    log
+    log,
+    decodeUrl,
 }

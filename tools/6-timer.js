@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, decodeUrl } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
@@ -93,7 +93,7 @@ const fetchFarmingStart = async (auth) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu', '--start-maximized']);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -116,12 +116,32 @@ const MainBrowser = async (countFolder) => {
             });
         });
 
-        await page.goto("https://web.telegram.org/k");
-        // await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
-        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        // await checkIframeAndClick(page);
+        await checkIframeAndClick(page);
         // let authorization = await getAuthorization
+
+
+        const iframeSrc = await page.evaluate(() => {
+            const iframeElement = document.querySelector('iframe');
+            if (iframeElement) {
+                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            }
+        },);
+        const decodeString = decodeUrl(iframeSrc);
+        const jsonData = JSON.parse(decodedData);
+
+        fs.appendFileSync('user_id.txt', `${jsonData.id}\n`, 'utf-8');
+
+
+
+
+
+
+
+
+
 
         // let info = await fetchInfo(authorization);
         // if (info) {

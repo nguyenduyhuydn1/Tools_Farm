@@ -60,10 +60,10 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await page.bringToFront();
 
 
-        await page.goto('https://httpbin.org/headers', { waitUntil: 'networkidle2' });
+        // await page.goto('https://httpbin.org/headers', { waitUntil: 'networkidle2' });
 
 
-        // await page.goto("https://web.telegram.org/k/");
+        await page.goto("https://web.telegram.org/k/");
 
         // await checkIframeAndClick(page)
         // const iframeSrc = await page.evaluate(() => {
