@@ -61,7 +61,6 @@ let fetchMissions = async (token) => {
 
         let tasks = res.data.tasks;
         const combinedMissions = tasks.gumart.filter(v => v.status !== 'finished');
-        console.log(JSON.stringify(combinedMissions));
         return combinedMissions;
     }
 }
