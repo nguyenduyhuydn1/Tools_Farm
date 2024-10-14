@@ -137,7 +137,7 @@ const MainBrowser = async (countFolder) => {
             }
         }
         Promise.all(promiseTasks).then(() => {
-            console.log(`Tất cả các task của ${log(`tài khoản ${countFolder}`, 'yellow')} đã hoàn thành`);
+            log(`Tất cả các task của [tài khoản ${countFolder}] đã hoàn thành`, 'yellow');
         });
 
         // await waitForInput()

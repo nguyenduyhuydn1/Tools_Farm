@@ -10,6 +10,7 @@ const headers = {
     "Referer": "https://timefarm.app/",
     "Referrer-Policy": "strict-origin-when-cross-origin"
 };
+
 (async () => {
     let data = await fetchData('https://api.adsgram.ai/adv?blockId=2994&tg_id=7743327554&tg_platform=web&platform=Win32&language=en', 'get', { headers });
     if (data) {

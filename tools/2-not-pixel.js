@@ -1,17 +1,12 @@
 const fs = require("fs-extra");
 const path = require("path");
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
-const stealth = StealthPlugin();
-stealth.enabledEvasions.delete('iframe.contentWindow');
-stealth.enabledEvasions.delete('navigator.plugins');
-stealth.enabledEvasions.delete('media.codecs');
-puppeteer.use(stealth);
-
-const { sleep, readLinesToArray, userAgent, printFormattedTitle, randomNumber, waitForInput } = require('./utils/utils.js')
+const { runPuppeteer } = require('./utils/puppeteer.js')
+const { sleep, formatTime, userAgent, randomNumber, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
+const proxyFile = require("./data/proxy.js");
+
 
 const headers = {
     "accept": "application/json, text/plain, */*",
@@ -26,107 +21,118 @@ const headers = {
     "Referer": `https://app.notpx.app/`,
     "Referrer-Policy": "strict-origin-when-cross-origin"
 }
-
 // =====================================================================
 // =====================================================================
 // =====================================================================
-
 const getInfo = async (user) => {
-    let info = await fetchData("https://notpx.app/api/v1/users/me", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
-    printFormattedTitle(`${info?.lastName} ${info?.firstName}`, 'blue')
-    console.log(`balance: ${info?.balance}, id: ${info?.id}`);
+    let info = await fetchData("https://notpx.app/api/v1/users/me", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers, proxyUrl });
+    printFormattedTitle(`${info?.lastName} ${info?.firstName}`)
+    log(`balance: [${info?.balance}], id: [${info?.id}]`, 'yellow');
     return info
 }
 
 const getStatus = async (user) => {
-    let status = await fetchData("https://notpx.app/api/v1/mining/status", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
+    let status = await fetchData("https://notpx.app/api/v1/mining/status", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers, proxyUrl });
     console.log(`status: ${JSON.stringify(status)}`);
     return status;
 }
 
 const getClaim = async (user) => {
-    let claim = await fetchData("https://notpx.app/api/v1/mining/claim", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers });
-    console.log(`claimed: ${JSON.stringify(claim)}`);
+    let claim = await fetchData("https://notpx.app/api/v1/mining/claim", "GET", { authKey: 'authorization', authValue: `initData ${user}`, headers, proxyUrl });
+    console.log(`claimed: [${JSON.stringify(claim)}]`);
     return claim;
 }
 
 const postStart = async (user, pixelId) => {
-    let start = await fetchData("https://notpx.app/api/v1/repaint/start", "POST", { authKey: 'authorization', authValue: `initData ${user}`, headers, body: { pixelId, newColor: "#2450A4" } });
-    console.log(`balance:${JSON.stringify(start)}`);
+    let start = await fetchData("https://notpx.app/api/v1/repaint/start", "POST", { authKey: 'authorization', authValue: `initData ${user}`, headers, body: { pixelId, newColor: "#2450A4" }, proxyUrl });
+    log(`balance: [${JSON.stringify(start)}]`, 'yellow');
     return start;
 }
-
 // =====================================================================
 // =====================================================================
 // =====================================================================
 
-
-const MainBrowser = async (localStorageData, countFolder) => {
+const MainBrowser = async (countFolder) => {
     try {
-        const browser = await puppeteer.launch({
-            headless: false,
-            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${countFolder + 500}`,
-            args: [
-                // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-                // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-                // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                // '--disable-video',                 // Vô hiệu hóa video decoding
-                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
-
-                '--test-type',
-                '--disable-gpu',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-sync',
-                '--ignore-certificate-errors',
-                '--mute-audio',
-                '--window-size=700,400',
-                `--window-position=0,0`,
-            ],
-            ignoreDefaultArgs: ["--enable-automation"],
-        });
-
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu']);
         const [page] = await browser.pages();
-        await page.setUserAgent(userAgent);
+        if (proxyUrl != null) {
+            const page2 = await browser.newPage();
+            await page2.goto("https://google.com");
+            await sleep(3000);
+            await page.bringToFront();
+        }
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-
         const iframe = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
             if (iframeElement) {
                 return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
             }
         },);
-        // await waitForInput()
-        browser.close()
+        browser.close();
 
-        await sleep(5000)
         let arrNumber = randomNumber();
         // await getInfo(iframe);
-        await sleep(1000)
-        let { charges = 10 } = await getStatus(iframe)
-        await sleep(1000)
+        let { charges } = await getStatus(iframe)
+        log(`[${charges}] charges`)
+
         await getClaim(iframe);
-        await sleep(1000)
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
-            await sleep(1500)
         }
+        // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
     }
 };
 
+let proxyUrl = null;
+
 (async () => {
-    const dataArray = readLinesToArray();
-    for (let i = 0; i < dataArray.length; i++) {
-        printFormattedTitle(`tài khoản ${i}`, 'red')
-        await MainBrowser(dataArray[i], i);
-        await sleep(1000)
+    for (let i = 0; i < 39; i++) {
+        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
+        if (i > 9) {
+            let proxyIndex = Math.floor((i - 10) / 10);
+            proxyUrl = proxyFile[proxyIndex];
+            await MainBrowser(i);
+        } else {
+            await MainBrowser(i);
+        }
     }
     process.exit(1)
 })();
+
+
+// (async () => {
+//     for (let i = 0; i < 39; i += 2) {
+//         const promises = [];
+
+//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
+//         if (i > 9) {
+//             let proxyIndex = Math.floor((i - 10) / 10);
+//             proxyUrl = proxyFile[proxyIndex];
+//             promises.push(MainBrowser(i));
+//         } else {
+//             promises.push(MainBrowser(i));
+//         }
+
+//         if (i + 1 < 39) {
+//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
+//             if (i + 1 > 9) {
+//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
+//                 proxyUrl = proxyFile[proxyIndex];
+//                 promises.push(MainBrowser(i + 1));
+//             } else {
+//                 promises.push(MainBrowser(i + 1));
+//             }
+//         }
+
+//         await Promise.all(promises);
+//         await sleep(1000);
+//     }
+//     process.exit(1);
+// })();

@@ -34,12 +34,13 @@ async function runPuppeteer(userDataDir, args = [], dataProxy = null) {
         // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
         '--test-type',
-        // '--disable-gpu',
+        '--disable-gpu',
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-sync',
         '--ignore-certificate-errors',
         '--mute-audio',
+        '--disable-notifications',
         // '--window-size=1300,1000',
         '--window-size=400,700',
         `--window-position=0,0`,
