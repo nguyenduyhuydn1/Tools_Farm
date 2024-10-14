@@ -79,7 +79,34 @@ function printFormattedTitle(title, colorName = "blue") {
     console.log(color + "=".repeat(lineLength) + reset);
 }
 
+function log(message, colorName = "red") {
+    // Định nghĩa object chứa tên màu và mã màu ANSI tương ứng
+    const colors = {
+        red: "\x1b[31m",
+        green: "\x1b[32m",
+        yellow: "\x1b[33m",
+        blue: "\x1b[34m",
+        magenta: "\x1b[35m",
+        cyan: "\x1b[36m",
+        brightRed: "\x1b[91m",
+        brightGreen: "\x1b[92m",
+        brightYellow: "\x1b[93m",
+        brightBlue: "\x1b[94m",
+        brightMagenta: "\x1b[95m",
+        brightCyan: "\x1b[96m",
+        white: "\x1b[97m",
+        black: "\x1b[30m",
+        gray: "\x1b[90m",
+        brightGray: "\x1b[37m"
+    };
 
+    const reset = "\x1b[0m"; // Mã để reset về màu mặc định
+
+    // Lấy mã màu từ object theo tên màu, mặc định là màu trắng (white)
+    const color = colors[colorName] || colors.white;
+
+    return `${color}${message}${reset}`;
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      format time                                           //                                  
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,5 +161,6 @@ module.exports = {
     randomNumber,   // not-pixel
     waitForInput,
     formatTime,
-    printFormattedTitle
+    printFormattedTitle,
+    log
 }

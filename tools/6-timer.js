@@ -1,20 +1,13 @@
 const fs = require("fs-extra");
 const path = require("path");
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
 
-const stealth = StealthPlugin();
-stealth.enabledEvasions.delete('iframe.contentWindow');
-stealth.enabledEvasions.delete('navigator.plugins');
-stealth.enabledEvasions.delete('media.codecs');
-puppeteer.use(stealth);
+const { runPuppeteer } = require('./utils/puppeteer.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
+const { checkIframeAndClick } = require('./utils/selector.js')
+const { fetchData } = require('./utils/axios.js')
+const proxyFile = require("./data/proxy.js");
 
 
-const { sleep, readLinesToArray, printFormattedTitle, waitForInput } = require('../utils/utils.js')
-const { checkIframeAndClick, clickIfExists } = require('../utils/selector.js')
-const { fetchData } = require('../utils/axios.js')
-const proxyFile = require("../data/proxy.js");
 
 const headers = {
     "accept": "*/*",
@@ -35,14 +28,14 @@ const headers = {
 // =====================================================================
 // =====================================================================
 
-const fetchInfo = async (auth, proxyUrl) => {
+const fetchInfo = async (auth) => {
     printFormattedTitle('Info', 'blue')
     let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/info', 'GET', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, proxyUrl })
     if (data) return data;
     return false;
 }
 
-const fetchFarmingFinish = async (auth, proxyUrl) => {
+const fetchFarmingFinish = async (auth) => {
     printFormattedTitle('farming is finished', 'blue')
     let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/finish', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxyUrl })
     if (data) {
@@ -52,7 +45,7 @@ const fetchFarmingFinish = async (auth, proxyUrl) => {
     return false;
 }
 
-const fetchFarmingStart = async (auth, proxyUrl) => {
+const fetchFarmingStart = async (auth) => {
     printFormattedTitle('farming is Started', 'blue')
     let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/start', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxyUrl })
     if (data) {
@@ -97,49 +90,17 @@ const fetchFarmingStart = async (auth, proxyUrl) => {
 // =====================================================================
 // =====================================================================
 
-const MainBrowser = async (dataProxy, countFolder) => {
+
+const MainBrowser = async (countFolder) => {
     try {
-        puppeteer.use(
-            ProxyPlugin({
-                address: dataProxy.ip,
-                port: dataProxy.port,
-                credentials: {
-                    username: dataProxy.username,
-                    password: dataProxy.password,
-                }
-            })
-        );
-
-        const browser = await puppeteer.launch({
-            headless: false,
-            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
-            args: [
-                // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-                // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-                // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-                // '--disable-video',                 // Vô hiệu hóa video decoding
-                // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
-
-                '--test-type',
-                // '--disable-gpu',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-sync',
-                '--ignore-certificate-errors',
-                '--mute-audio',
-                '--window-size=700,600',
-                `--window-position=0,0`,
-                // '--start-maximized'
-            ],
-            ignoreDefaultArgs: ["--enable-automation"],
-        });
-
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu', `--window-position=${countFolder * 400},0`, '--start-maximized']);
         const [page] = await browser.pages();
-        const page2 = await browser.newPage();
-        await page2.goto("https://google.com");
-        await sleep(3000);
-        await page.bringToFront();
+        if (proxyUrl != null) {
+            const page2 = await browser.newPage();
+            await page2.goto("https://google.com");
+            await sleep(3000);
+            await page.bringToFront();
+        }
 
         const getAuthorization = new Promise((resolve) => {
             page.on('response', async (response) => {
@@ -154,38 +115,76 @@ const MainBrowser = async (dataProxy, countFolder) => {
                 }
             });
         });
-        await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
-        await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        let authorization = await getAuthorization
-        browser.close()
-        // await waitForInput()
+        await page.goto("https://web.telegram.org/k");
+        // await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
+        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        let info = await fetchInfo(authorization, dataProxy);
-        if (info) {
-            const startTime = new Date(info.activeFarmingStartedAt);
-            const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-            const endTimeTimestamp = endTime.getTime();
-            let now = Date.now()
-            if (now > endTimeTimestamp) {
-                await fetchFarmingFinish(authorization, dataProxy);
-                await sleep(5000);
-                await fetchFarmingStart(authorization, dataProxy);
-            }
-        }
+        // await checkIframeAndClick(page);
+        // let authorization = await getAuthorization
+
+        // let info = await fetchInfo(authorization);
+        // if (info) {
+        //     const startTime = new Date(info.activeFarmingStartedAt);
+        //     const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
+        //     const endTimeTimestamp = endTime.getTime();
+        //     let now = Date.now()
+
+        //     if (now > endTimeTimestamp) {
+        //         await fetchFarmingFinish(authorization);
+        //         await sleep(5000);
+        //         await fetchFarmingStart(authorization);
+        //     }
+        // }
+        await waitForInput()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
 };
 
-(async () => {
-    for (let i = 0; i < 30; i++) {
-        printFormattedTitle(`tài khoản ${i}`, "red")
+let proxyUrl = null;
 
-        if (i == 1) continue
-        let proxyIndex = Math.floor(i / 10);
-        await MainBrowser(proxyFile[proxyIndex], i);
+(async () => {
+    for (let i = 0; i < 39; i++) {
+        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
+        if (i > 9) {
+            let proxyIndex = Math.floor((i - 10) / 10);
+            proxyUrl = proxyFile[proxyIndex];
+            await MainBrowser(i);
+        } else {
+            await MainBrowser(i);
+        }
     }
     process.exit(1)
 })();
+
+// (async () => {
+//     for (let i = 0; i < 39; i += 2) {
+//         const promises = [];
+
+//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
+//         if (i > 9) {
+//             let proxyIndex = Math.floor((i - 10) / 10);
+//             proxyUrl = proxyFile[proxyIndex];
+//             promises.push(MainBrowser(i));
+//         } else {
+//             promises.push(MainBrowser(i));
+//         }
+
+//         if (i + 1 < 39) {
+//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
+//             if (i + 1 > 9) {
+//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
+//                 proxyUrl = proxyFile[proxyIndex];
+//                 promises.push(MainBrowser(i + 1));
+//             } else {
+//                 promises.push(MainBrowser(i + 1));
+//             }
+//         }
+
+//         await Promise.all(promises);
+//         await sleep(1000);
+//     }
+//     process.exit(1);
+// })();

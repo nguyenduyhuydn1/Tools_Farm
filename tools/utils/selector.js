@@ -15,20 +15,17 @@ async function checkIframeAndClick(page) {
     let check = true;
     while (!iframeExists) {
         printFormattedTitle(`đang tìm và click`, 'red')
-        iframeExists = await page.$('iframe') !== null;
-        if (!iframeExists) {
-            if (check == true) {
-                check = false;
-                await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
-                await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
-            } else {
-                check = true;
-                await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)");
-                await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)");
-            }
+        if (check == true) {
+            check = false;
+            await clickIfExists(page, "#column-center .new-message-bot-commands.is-view")
+            await clickIfExists(page, ".popup-confirmation.active .popup-buttons > *")
+        } else {
+            check = true;
+            await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)");
+            await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)");
         }
-        iframeExists = await page.$('iframe') !== null;
         await sleep(5000);
+        iframeExists = await page.$('iframe') !== null;
     }
 }
 
