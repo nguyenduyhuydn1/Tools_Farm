@@ -90,6 +90,7 @@ const fetchFarmingStart = async (auth) => {
 // =====================================================================
 // =====================================================================
 
+const { KnownDevices } = require('puppeteer');
 
 const MainBrowser = async (countFolder) => {
     try {
@@ -101,6 +102,8 @@ const MainBrowser = async (countFolder) => {
             await sleep(3000);
             await page.bringToFront();
         }
+        // const iPhone = KnownDevices['iPhone 15 Pro'];
+        // await page.emulate(iPhone);
 
         const getAuthorization = new Promise((resolve) => {
             page.on('response', async (response) => {
@@ -116,48 +119,28 @@ const MainBrowser = async (countFolder) => {
             });
         });
 
+        // await page.goto("https://web.telegram.org/k/");
         await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        // let authorization = await getAuthorization
+        let authorization = await getAuthorization
 
+        let info = await fetchInfo(authorization);
+        if (info) {
+            const startTime = new Date(info.activeFarmingStartedAt);
+            const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
+            const endTimeTimestamp = endTime.getTime();
+            let now = Date.now()
 
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+            if (now > endTimeTimestamp) {
+                await fetchFarmingFinish(authorization);
+                await sleep(5000);
+                await fetchFarmingStart(authorization);
             }
-        },);
-        const decodeString = decodeUrl(iframeSrc);
-        const jsonData = JSON.parse(decodedData);
-
-        fs.appendFileSync('user_id.txt', `${jsonData.id}\n`, 'utf-8');
-
-
-
-
-
-
-
-
-
-
-        // let info = await fetchInfo(authorization);
-        // if (info) {
-        //     const startTime = new Date(info.activeFarmingStartedAt);
-        //     const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-        //     const endTimeTimestamp = endTime.getTime();
-        //     let now = Date.now()
-
-        //     if (now > endTimeTimestamp) {
-        //         await fetchFarmingFinish(authorization);
-        //         await sleep(5000);
-        //         await fetchFarmingStart(authorization);
-        //     }
-        // }
-        await waitForInput()
-        // browser.close()
+        }
+        // await waitForInput()
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

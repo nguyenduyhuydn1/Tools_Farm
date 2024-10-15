@@ -123,7 +123,7 @@ const MainBrowser = async (countFolder) => {
             }
         }
 
-        await waitForInput()
+        // await waitForInput()
         browser.close();
     } catch (error) {
         console.error("Error:", error.message);

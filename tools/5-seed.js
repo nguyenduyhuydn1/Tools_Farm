@@ -147,7 +147,7 @@ const fetchMissions = async (auth) => {
 }
 
 const fetchClaimTask = async (auth, idTask) => {
-    let { data } = await fetchData(`https://elb.seeddao.org/api/v1/tasks/${idTask}`, 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
+    let data = await fetchData(`https://elb.seeddao.org/api/v1/tasks/${idTask}`, 'POST', { authKey: 'telegram-data', authValue: auth, headers, proxyUrl });
     if (data) {
         console.log(JSON.stringify(data));
         return data
