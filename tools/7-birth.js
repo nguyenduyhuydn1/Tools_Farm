@@ -130,7 +130,8 @@ const MainBrowser = async (countFolder) => {
             await fetchEggClaim(iframe)
         }
         // await waitForInput()
-        // browser.close()
+        await sleep(5000)
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -149,11 +150,6 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
-    const startTime = new Date(Date.now());
-    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
-    const endTimeTimestamp = endTime.getTime();
-
-    log(`thời gian đập trứng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./time/7-birth.txt', formatTime(endTimeTimestamp));
+    writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();

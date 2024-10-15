@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
@@ -166,12 +166,6 @@ let promiseTasks = [];
             console.log('Tất cả các task đã hoàn thành');
         });
     }
-
-    const startTime = new Date(Date.now());
-    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
-    const endTimeTimestamp = endTime.getTime();
-
-    log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./time/3-gumart.txt', formatTime(endTimeTimestamp));
+    writeTimeToFile('thời gian claim tiếp theo', '3-gumart.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();

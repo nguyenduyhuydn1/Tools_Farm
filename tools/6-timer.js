@@ -162,12 +162,7 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
-    const startTime = new Date(Date.now());
-    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
-    const endTimeTimestamp = endTime.getTime();
-
-    log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./time/6-timer.txt', formatTime(endTimeTimestamp));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();
 

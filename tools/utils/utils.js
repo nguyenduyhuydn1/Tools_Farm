@@ -162,13 +162,13 @@ const randomNumber = () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-function writeTimeToFile() {
+async function writeTimeToFile(content, nameFile, time = 4) {
     const startTime = new Date(Date.now());
-    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
+    const endTime = new Date(startTime.getTime() + time * 60 * 60 * 1000);
     const endTimeTimestamp = endTime.getTime();
 
-    log(`thời gian đập trứng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./time/7-birth.txt', formatTime(endTimeTimestamp));
+    log(`${content}: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync(path.join(__dirname, '..', 'time', nameFile), formatTime(endTimeTimestamp), 'utf-8');
 }
 
 module.exports = {
