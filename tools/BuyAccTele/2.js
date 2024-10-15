@@ -34,15 +34,15 @@ const MainBrowser = async (dataProxy, countFolder) => {
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${countFolder + 1000}`,          //BuyAccTele
             args: [
-                '--test-type',
-                '--disable-gpu',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-sync',
-                '--ignore-certificate-errors',
-                '--mute-audio',
-                '--window-size=1400,1000',
-                `--window-position=0,0`,
+                // '--test-type',
+                // // '--disable-gpu',
+                // '--no-sandbox',
+                // '--disable-setuid-sandbox',
+                // '--disable-sync',
+                // '--ignore-certificate-errors',
+                // '--mute-audio',
+                // '--window-size=1400,1000',
+                // `--window-position=0,0`,
                 // '--start-maximized'
             ],
             devtools: true,
@@ -59,27 +59,23 @@ const MainBrowser = async (dataProxy, countFolder) => {
         await sleep(3000);
         await page.bringToFront();
 
-
-        // await page.goto('https://httpbin.org/headers', { waitUntil: 'networkidle2' });
-        // await page.goto("https://web.telegram.org/k/#@fastmintapp_bot");
-
-
-        await page.goto("https://web.telegram.org/k/");
-
-        // await checkIframeAndClick(page)
-        // const iframeSrc = await page.evaluate(() => {
-        //     const iframeElement = document.querySelector('iframe');
-        //     if (iframeElement) {
-        //         return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+        // const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
+        // await page.setRequestInterception(true);
+        // page.on('request', request => {
+        //     if (request.url().endsWith('telegram-web-app.js')) {
+        //         request.respond({
+        //             status: 200,
+        //             contentType: 'application/javascript',
+        //             body: modifiedJs
+        //         });
+        //     } else {
+        //         request.continue();
         //     }
-        // },);
+        // });
 
-        // fs.appendFileSync(path.join(__dirname, 'data', 'Blum.txt'), `${iframeSrc}\n`, 'utf-8');
-        // // await sleep(3000);
-        // // await sleep(3000);
-        // // await sleep(3000);
-        // // await sleep(3000);
-        // browser.close()
+        await page.goto("https://web.telegram.org/k/#@fastmintapp_bot");
+
+        await waitForInput();
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -95,7 +91,5 @@ const MainBrowser = async (dataProxy, countFolder) => {
         if (i == 1) continue
         let proxyIndex = Math.floor(i / 10);
         await MainBrowser(proxyFile[proxyIndex], i);
-        await waitForInput();
-
     }
 })();

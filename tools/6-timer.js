@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, decodeUrl } = require('./utils/utils.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
@@ -94,7 +94,7 @@ const { KnownDevices } = require('puppeteer');
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, _, proxyUrl);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -130,12 +130,18 @@ const MainBrowser = async (countFolder) => {
             const endTimeTimestamp = endTime.getTime();
             let now = Date.now()
 
+            console.log(JSON.stringify(info));
+            log(`time: [${now > endTimeTimestamp}]`, 'yellow')
             if (now > endTimeTimestamp) {
                 await fetchFarmingFinish(authorization);
                 await sleep(5000);
                 await fetchFarmingStart(authorization);
             }
         }
+
+        // await sleep(5000)
+        // await sleep(5000)
+        // await sleep(5000)
         // await waitForInput()
         browser.close()
     } catch (error) {

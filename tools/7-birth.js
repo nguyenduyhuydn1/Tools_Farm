@@ -3,7 +3,7 @@ const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, decodeUrl } = require('./utils/utils.js')
-const { checkIframeAndClick } = require('./utils/selector.js')
+const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
 
@@ -45,14 +45,10 @@ let headers = {
 
 const fetchEggPlay = async (auth) => {
     await fetchData('https://api.birds.dog/minigame/egg/play', 'OPTIONS', { headers: options, proxyUrl })
-    await fetchData('https://api.birds.dog/minigame/egg/play', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
-    await fetchData('https://api.birds.dog/minigame/egg/join', 'OPTIONS', { headers: options, proxyUrl })
-    await fetchData('https://api.birds.dog/minigame/egg/turn', 'OPTIONS', { headers: options, proxyUrl })
-    await fetchData('https://api.birds.dog/minigame/egg/join', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
-    let turn = await fetchData('https://api.birds.dog/minigame/egg/turn', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
-    if (turn) {
-        log(`BIRDS: [${turn.total}]`, 'yellow')
-        return turn.turn;
+    let data = await fetchData('https://api.birds.dog/minigame/egg/play', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
+    if (data) {
+        log(`[${JSON.stringify(data)}]`);
+        return data;
     }
     else {
         log(`[error fetchEggPlay()]`)
@@ -73,6 +69,7 @@ const fetchMintStatusWorms = async () => {
         "access-control-request-headers": "authorization,csrf-token",
     }
     await fetchData('https://worm.birds.dog/worms/mint-status', 'OPTIONS', { headers: { ...options, ...options2 }, proxyUrl })
+    await sleep(2000)
     let status = await fetchData('https://worm.birds.dog/worms/mint-status', 'GET', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxyUrl })
     if (status) {
         log(`Sâu sẽ xuất hiện lúc: [${formatTime(status.data.nextMintTime)}]`, 'yellow')
@@ -86,7 +83,7 @@ const fetchMintStatusWorms = async () => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, _, proxyUrl);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -102,23 +99,25 @@ const MainBrowser = async (countFolder) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        const iframe = await page.evaluate(() => {
+        const [src, iframe] = await page.evaluate(() => {
             const iframeElement = document.querySelector('iframe');
             if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
+                return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0]];
             }
         },);
-
-        let turn = await fetchEggPlay(iframe);
-        if (turn) {
-            for (let i = 0; i < turn; i++) {
+        await page.goto(src);
+        await page.goto('https://birdx.birds.dog/mini-game');
+        await sleep(3000)
+        // await clickIfExists(page, "#root button");
+        let data = await fetchEggPlay(iframe);
+        if (data) {
+            for (let i = 0; i < data.turn; i++) {
                 await fetchEggPlay(iframe);
             }
-            await fetchEggClaim(iframe)
+            // await fetchEggClaim(iframe)
         }
-
         // await waitForInput()
-        // browser.close()
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -137,5 +136,11 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
+    const startTime = new Date(Date.now());
+    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
+    const endTimeTimestamp = endTime.getTime();
+
+    log(`thời gian đập trứng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync('./time/7-birth.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();
