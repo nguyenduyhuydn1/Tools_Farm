@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, decodeUrl } = require('./utils/utils.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
 const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
@@ -64,22 +64,33 @@ const fetchEggClaim = async (auth) => {
 }
 
 // check worms có xuất hiện k để bắt
-const fetchMintStatusWorms = async () => {
+const fetchMintStatusWorms = async (auth) => {
     let options2 = {
         "access-control-request-headers": "authorization,csrf-token",
+    }
+    let options3 = {
+        "access-control-request-headers": "authorization,csrf-token",
+        "access-control-request-method": "POST",
+        'Content-Type': 'application/x-www-form-urlencoded'
     }
     await fetchData('https://worm.birds.dog/worms/mint-status', 'OPTIONS', { headers: { ...options, ...options2 }, proxyUrl })
     await sleep(2000)
     let status = await fetchData('https://worm.birds.dog/worms/mint-status', 'GET', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxyUrl })
     if (status) {
+        if (status.data.status == 'MINT_OPEN') {
+            await fetchData('https://worm.birds.dog/worms/mint', 'OPTIONS', { headers: { ...options, ...options3 }, proxyUrl });
+            let mint = await fetchData('https://worm.birds.dog/worms/mint', 'POST', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxyUrl, body: null })
+            console.log(JSON.stringify(mint));
+        }
         log(`Sâu sẽ xuất hiện lúc: [${formatTime(status.data.nextMintTime)}]`, 'yellow')
     }
     else log(`[error fetchMintStatusWorms()]`)
 }
+
 // =====================================================================
 // =====================================================================
 // =====================================================================
-// const { KnownDevices } = require('puppeteer');
+
 
 const MainBrowser = async (countFolder) => {
     try {
@@ -109,15 +120,17 @@ const MainBrowser = async (countFolder) => {
         await page.goto('https://birdx.birds.dog/mini-game');
         await sleep(3000)
         // await clickIfExists(page, "#root button");
+        // await fetchMintStatusWorms(iframe)
+
         let data = await fetchEggPlay(iframe);
         if (data) {
             for (let i = 0; i < data.turn; i++) {
                 await fetchEggPlay(iframe);
             }
-            // await fetchEggClaim(iframe)
+            await fetchEggClaim(iframe)
         }
         // await waitForInput()
-        browser.close()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

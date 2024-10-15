@@ -1,4 +1,5 @@
 const fs = require("fs-extra");
+const path = require("path");
 
 const randomUseragent = require('random-useragent');
 const userAgent = randomUseragent.getRandom(ua => ua.osName === 'Android');
@@ -161,14 +162,13 @@ const randomNumber = () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-function decodeUrl(encodedStr) {
-    let decodedStr = encodedStr;
+function writeTimeToFile() {
+    const startTime = new Date(Date.now());
+    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
+    const endTimeTimestamp = endTime.getTime();
 
-    while (decodedStr !== decodeURIComponent(decodedStr)) {
-        decodedStr = decodeURIComponent(decodedStr);
-    }
-
-    return decodedStr;
+    log(`thời gian đập trứng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync('./time/7-birth.txt', formatTime(endTimeTimestamp));
 }
 
 module.exports = {
@@ -180,5 +180,5 @@ module.exports = {
     formatTime,
     printFormattedTitle,
     log,
-    decodeUrl,
+    writeTimeToFile
 }
