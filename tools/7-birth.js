@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 const proxyFile = require("./data/proxy.js");
