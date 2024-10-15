@@ -83,7 +83,7 @@ let fetchClaimTask = async (token, id) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu']);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu'], proxyUrl);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -151,7 +151,7 @@ let proxyUrl = null;
 let promiseTasks = [];
 
 (async () => {
-    for (let i = 6; i < 39; i++) {
+    for (let i = 4; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
@@ -172,6 +172,6 @@ let promiseTasks = [];
     const endTimeTimestamp = endTime.getTime();
 
     log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./3-gumart.txt', formatTime(endTimeTimestamp));
+    fs.writeFileSync('./time/3-gumart.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();

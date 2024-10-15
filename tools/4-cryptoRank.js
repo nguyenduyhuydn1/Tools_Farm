@@ -79,7 +79,7 @@ const fetchClaimEndFarming = async (auth) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu']);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu'], proxyUrl);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -149,6 +149,6 @@ let proxyUrl = null;
     const endTimeTimestamp = endTime.getTime();
 
     log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
-    fs.writeFileSync('./4-cryptoRank.txt', formatTime(endTimeTimestamp));
+    fs.writeFileSync('./time/4-cryptoRank.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();
