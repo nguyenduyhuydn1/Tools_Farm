@@ -111,6 +111,7 @@ const MainBrowser = async (countFolder) => {
 
         await checkIframeAndClick(page);
         let token = await getAuthorization;
+        browser.close();
 
         await fetchInfo(token);
         await fetchClaim(token);
@@ -141,7 +142,6 @@ const MainBrowser = async (countFolder) => {
         });
 
         // await waitForInput()
-        browser.close();
     } catch (error) {
         console.error("Error:", error.message);
     }

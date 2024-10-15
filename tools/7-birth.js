@@ -1,5 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
+const { KnownDevices } = require('puppeteer');
 
 const { runPuppeteer } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
