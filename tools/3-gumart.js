@@ -166,5 +166,12 @@ let promiseTasks = [];
             console.log('Tất cả các task đã hoàn thành');
         });
     }
+
+    const startTime = new Date(Date.now());
+    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
+    const endTimeTimestamp = endTime.getTime();
+
+    log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync('./3-gumart.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();

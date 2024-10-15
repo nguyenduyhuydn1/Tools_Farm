@@ -124,23 +124,23 @@ const MainBrowser = async (countFolder) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        let authorization = await getAuthorization
+        // let authorization = await getAuthorization
 
-        let info = await fetchInfo(authorization);
-        if (info) {
-            const startTime = new Date(info.activeFarmingStartedAt);
-            const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-            const endTimeTimestamp = endTime.getTime();
-            let now = Date.now()
+        // let info = await fetchInfo(authorization);
+        // if (info) {
+        //     const startTime = new Date(info.activeFarmingStartedAt);
+        //     const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
+        //     const endTimeTimestamp = endTime.getTime();
+        //     let now = Date.now()
 
-            if (now > endTimeTimestamp) {
-                await fetchFarmingFinish(authorization);
-                await sleep(5000);
-                await fetchFarmingStart(authorization);
-            }
-        }
-        // await waitForInput()
-        browser.close()
+        //     if (now > endTimeTimestamp) {
+        //         await fetchFarmingFinish(authorization);
+        //         await sleep(5000);
+        //         await fetchFarmingStart(authorization);
+        //     }
+        // }
+        await waitForInput()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -159,6 +159,12 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
+    const startTime = new Date(Date.now());
+    const endTime = new Date(startTime.getTime() + 4 * 60 * 60 * 1000);
+    const endTimeTimestamp = endTime.getTime();
+
+    log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync('./6-timer.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();
 

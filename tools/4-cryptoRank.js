@@ -143,5 +143,12 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
+
+    const startTime = new Date(Date.now());
+    const endTime = new Date(startTime.getTime() + 6 * 60 * 60 * 1000);
+    const endTimeTimestamp = endTime.getTime();
+
+    log(`thời gian nhận thưởng tiếp theo: [${formatTime(endTimeTimestamp)}]`, 'blue');
+    fs.writeFileSync('./4-cryptoRank.txt', formatTime(endTimeTimestamp));
     process.exit(1)
 })();
