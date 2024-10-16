@@ -106,6 +106,8 @@ const MainBrowser = async (countFolder) => {
         const [src, iframe] = await checkIframeAndClick(page);
         let authorization = await getAuthorization
 
+        await waitForInput()
+
         let timestamp = await fetchAccount(authorization);
         let now = Date.now();
 
