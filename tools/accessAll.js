@@ -38,9 +38,12 @@ const MainBrowser = async (countFolder) => {
         // const iPhone = KnownDevices['iPhone 15 Pro'];
         // await page.emulate(iPhone);
 
-        // let memescript = path.join(__dirname, '..', 'public', 'memefi.js');
-        // const preMemescript = fs.readFileSync(memescript, 'utf8');
-        // await page.evaluateOnNewDocument(preMemescript);
+        // const addFunc = async (page) => {
+        //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
+        //     const preloadFile = fs.readFileSync(pathPreloadFile, 'utf8');
+        //     await page.evaluateOnNewDocument(preloadFile);
+        // };
+        // await addFunc(page);
 
         // const modifiedJs = fs.readFileSync('../public/telegram-web-app.js', 'utf8');
         // await page.setRequestInterception(true);
@@ -57,6 +60,14 @@ const MainBrowser = async (countFolder) => {
         //     }
         // });
 
+        // set localstorage
+        // await page.goto("https://web.telegram.org/");
+        // await page.evaluate((data) => {
+        //     for (const [key, value] of Object.entries(data)) {
+        //         localStorage.setItem(key, value);
+        //     }
+        // }, localStorageData);
+        // await page.reload();
 
         await page.goto("https://web.telegram.org/k/#@birdx2_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -78,7 +89,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 39; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
@@ -88,6 +99,5 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();

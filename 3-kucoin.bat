@@ -1,0 +1,1 @@
+node C:\Users\huy\Desktop\Tool_Farm\tools\1-kucoin.js

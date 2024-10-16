@@ -72,7 +72,9 @@ const fetchMintStatusWorms = async (auth) => {
     let options3 = {
         "access-control-request-headers": "authorization,csrf-token",
         "access-control-request-method": "POST",
-        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    let options4 = {
+        "content-type": "application/json",
     }
     await fetchData('https://worm.birds.dog/worms/mint-status', 'OPTIONS', { headers: { ...options, ...options2 }, proxyUrl })
     await sleep(2000)
@@ -80,7 +82,7 @@ const fetchMintStatusWorms = async (auth) => {
     if (status) {
         if (status.data.status == 'MINT_OPEN') {
             await fetchData('https://worm.birds.dog/worms/mint', 'OPTIONS', { headers: { ...options, ...options3 }, proxyUrl });
-            let mint = await fetchData('https://worm.birds.dog/worms/mint', 'POST', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxyUrl, body: null })
+            let mint = await fetchData('https://worm.birds.dog/worms/mint', 'POST', { authKey: 'authorization', authValue: `tma ${auth}`, headers: { ...options, ...options4 }, proxyUrl, body: JSON.stringify({}) })
             console.log(JSON.stringify(mint));
         }
         log(`Sâu sẽ xuất hiện lúc: [${formatTime(status.data.nextMintTime)}]`, 'yellow')
@@ -103,10 +105,7 @@ const MainBrowser = async (countFolder) => {
             await sleep(3000);
             await page.bringToFront();
         }
-        // const iPhone = KnownDevices['iPhone 15 Pro'];
-        // await page.emulate(iPhone);
 
-        // await page.goto("https://web.telegram.org/k/");
         await page.goto("https://web.telegram.org/k/#@birdx2_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
@@ -116,8 +115,8 @@ const MainBrowser = async (countFolder) => {
         await page.goto('https://birdx.birds.dog/mini-game');
         await sleep(3000)
         // await clickIfExists(page, "#root button");
-        // await fetchMintStatusWorms(iframe)
 
+        await fetchMintStatusWorms(iframe)
         let data = await fetchEggPlay(iframe);
         if (data) {
             for (let i = 0; i < data.turn; i++) {
@@ -126,7 +125,7 @@ const MainBrowser = async (countFolder) => {
             await fetchEggClaim(iframe)
         }
         // await waitForInput()
-        await sleep(5000)
+        // await sleep(5000)
         browser.close()
     } catch (error) {
         console.error("Error:", error.message);

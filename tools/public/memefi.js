@@ -1,25 +1,3 @@
-// setInterval(() => {
-//   try {
-//     if (window.location.href == "https://tg-app.memefi.club/earn" || window.location.href == "https://tg-app.memefi.club") {
-//       document.querySelector("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root.css-1a288y6 > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom.css-dsgero > div.css-1dbsckc > button")?.click()
-//       document.querySelector("html > body > div:nth-of-type(5) > div:nth-of-type(2) > .css-1dbsckc > button")?.click();
-//       document.querySelector(`#root > div.MuiBackdrop-root > div > button`)?.click();
-//       document.querySelector("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.css-1dbsckc > button")?.click()
-//       document.querySelector("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div > button")?.click()
-//       document.querySelector("body > div.MuiDrawer-root.MuiDrawer-modal.MuiModal-root > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorBottom > div.MuiBox-root > button")?.click()
-
-//     }
-//   } catch (error) {
-//     console.log("xx");
-//   }
-// }, 200)
-
-
-
-
-
-
-
 
 let GAME_SETTINGS = {
   minClickDelay: 30,
