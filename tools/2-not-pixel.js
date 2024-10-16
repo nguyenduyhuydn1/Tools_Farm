@@ -56,7 +56,8 @@ const MainBrowser = async (countFolder) => {
     try {
         // `--window-position=${countFolder * 400},0`
         const browser = await runPuppeteer({
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, dataProxy: proxyUrl,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            dataProxy: proxyUrl,
         });
 
         const [page] = await browser.pages();

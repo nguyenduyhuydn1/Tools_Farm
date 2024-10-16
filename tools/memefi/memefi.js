@@ -9,7 +9,9 @@ const { fetchData } = require('../utils/axios.js')
 
 let MainBrowser = (async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`, ['--window-size=400,800'], null);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`,
+        });
 
         // browser.on('targetcreated', async (target) => {
         //     if (target.type() === 'page') {

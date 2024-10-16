@@ -80,7 +80,8 @@ const fetchClaimEndFarming = async (auth) => {
 const MainBrowser = async (countFolder) => {
     try {
         const browser = await runPuppeteer({
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, dataProxy: proxyUrl,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            dataProxy: proxyUrl,
         });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
