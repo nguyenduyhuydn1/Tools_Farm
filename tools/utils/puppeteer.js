@@ -27,24 +27,24 @@ async function runPuppeteer(userDataDir, args = [], dataProxy = null) {
     }
 
     const defaultArgs = [
-        // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-        // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-        // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-        // '--disable-video',                 // Vô hiệu hóa video decoding
-        // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
+        '--disable-3d-apis',               // Vô hiệu hóa WebGL
+        '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
+        '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+        '--disable-video',                 // Vô hiệu hóa video decoding
+        '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
 
-        // '--test-type',
-        // '--disable-gpu',
-        // '--no-sandbox',
-        // '--disable-setuid-sandbox',
-        // '--disable-sync',
-        // '--ignore-certificate-errors',
-        // '--mute-audio',
-        // '--disable-notifications',
-        // // '--window-size=1300,1000',
-        // '--window-size=400,700',
-        // `--window-position=0,0`,
-        '--start-maximized'
+        '--test-type',
+        '--disable-gpu',
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-sync',
+        '--ignore-certificate-errors',
+        '--mute-audio',
+        '--disable-notifications',
+        // '--window-size=1300,1000',
+        '--window-size=400,700',
+        `--window-position=0,0`,
+        // '--start-maximized'
         // --disable-blink-features=AutomationControlled
         // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
         // được sử dụng để vô hiệu hóa một tính năng đặc biệt của Chromium gọi là "AutomationControlled"

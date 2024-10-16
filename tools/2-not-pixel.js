@@ -77,7 +77,7 @@ const MainBrowser = async (countFolder) => {
         let { charges } = await getStatus(iframe)
         log(`[${charges} charges]`)
 
-        await getClaim(iframe);
+        // await getClaim(iframe);
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
             await sleep(500)
