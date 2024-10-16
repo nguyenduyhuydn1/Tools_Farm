@@ -12,6 +12,7 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
+
 async function runPuppeteer({ userDataDir = null, args = [], dataProxy = null }) {
     if (dataProxy) {
         puppeteer.use(
@@ -42,8 +43,8 @@ async function runPuppeteer({ userDataDir = null, args = [], dataProxy = null })
         '--mute-audio',
         '--disable-notifications',
         // '--window-size=1300,1000',
-        '--window-size=400,700',
-        `--window-position=0,0`,
+        // '--window-size=400,700',
+        // `--window-position=0,0`,
         // '--start-maximized'
         // --disable-blink-features=AutomationControlled
         // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
@@ -64,6 +65,12 @@ async function runPuppeteer({ userDataDir = null, args = [], dataProxy = null })
     return browser;
 }
 
+const setupMobile = async (page) => {
+    const iPhone = KnownDevices['iPhone 15 Pro'];
+    await page.emulate(iPhone);
+}
+
 module.exports = {
     runPuppeteer,
+    setupMobile,
 }

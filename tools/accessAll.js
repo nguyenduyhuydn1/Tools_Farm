@@ -2,9 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
-const { KnownDevices } = require('puppeteer');
-
-const { runPuppeteer } = require('./utils/puppeteer.js')
+const { runPuppeteer, setupMobile } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
@@ -29,7 +27,9 @@ const proxyFile = require("./data/proxy.js");
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${count + 1000}`,        //BuyAccTele
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+        });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -37,8 +37,8 @@ const MainBrowser = async (countFolder) => {
             await sleep(3000);
             await page.bringToFront();
         }
-        // const iPhone = KnownDevices['iPhone 15 Pro'];
-        // await page.emulate(iPhone);
+
+        // await setupMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -91,7 +91,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 39; i < 39; i++) {
+    for (let i = 0; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
@@ -100,6 +100,7 @@ let proxyUrl = null;
         } else {
             await MainBrowser(i);
         }
+        await waitForInput()
     }
     process.exit(1)
 })();
