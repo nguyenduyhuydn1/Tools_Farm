@@ -109,7 +109,7 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@gumart_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
+        const [src, iframe] = await checkIframeAndClick(page);
         let token = await getAuthorization;
         browser.close();
 

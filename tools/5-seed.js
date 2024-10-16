@@ -172,17 +172,10 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@seed_coin_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
+        const [src, iframe] = await checkIframeAndClick(page);
 
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
-
-        if (iframeSrc) {
-            let token = iframeSrc;
+        if (iframe) {
+            let token = iframe;
             await fetchClaimFarm(token)
             await fetchCatchWorms(token)
             await fetchLoginBonuses(token)

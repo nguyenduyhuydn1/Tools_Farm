@@ -138,10 +138,7 @@ function formatTime(isoString) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const randomNumber = () => {
     const ranges = [
-        { start: 496496, end: 496501 },
-        { start: 497496, end: 497501 },
-        { start: 498496, end: 498501 },
-        { start: 499496, end: 499501 },
+        { start: 113440, end: 113563 },
     ];
 
     function getRandomInRange(min, max) {

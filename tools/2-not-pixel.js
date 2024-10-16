@@ -44,7 +44,7 @@ const getClaim = async (user) => {
 }
 
 const postStart = async (user, pixelId) => {
-    let start = await fetchData("https://notpx.app/api/v1/repaint/start", "POST", { authKey: 'authorization', authValue: `initData ${user}`, headers, body: { pixelId, newColor: "#2450A4" }, proxyUrl });
+    let start = await fetchData("https://notpx.app/api/v1/repaint/start", "POST", { authKey: 'authorization', authValue: `initData ${user}`, headers, body: { pixelId, newColor: "#000000" }, proxyUrl });
     log(`balance: [${JSON.stringify(start)}]`, 'yellow');
     return start;
 }
@@ -55,7 +55,7 @@ const postStart = async (user, pixelId) => {
 const MainBrowser = async (countFolder) => {
     try {
         // `--window-position=${countFolder * 400},0`
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu'], proxyUrl);
+        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -67,13 +67,9 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        const iframe = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
+        const [src, iframe] = await checkIframeAndClick(page);
+
+        // await page.goto(src);
         browser.close();
 
         let arrNumber = randomNumber();
@@ -84,7 +80,9 @@ const MainBrowser = async (countFolder) => {
         await getClaim(iframe);
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
+            await sleep(500)
         }
+
         // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
@@ -94,7 +92,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 38; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);

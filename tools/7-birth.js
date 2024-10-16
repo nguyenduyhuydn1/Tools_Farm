@@ -110,13 +110,8 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@birdx2_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        const [src, iframe] = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0]];
-            }
-        },);
+        const [src, iframe] = await checkIframeAndClick(page);
+
         await page.goto(src);
         await page.goto('https://birdx.birds.dog/mini-game');
         await sleep(3000)
@@ -151,6 +146,6 @@ let proxyUrl = null;
             await MainBrowser(i);
         }
     }
-    writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 4).then(() => process.exit(1));
+    writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 3).then(() => process.exit(1));
     process.exit(1)
 })();

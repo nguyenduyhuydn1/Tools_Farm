@@ -58,23 +58,18 @@ const MainBrowser = async (countFolder) => {
         // });
 
 
-        await page.goto("https://web.telegram.org/k/");
+        await page.goto("https://web.telegram.org/k/#@birdx2_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        const iframeSrc = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0];
-            }
-        },);
+        const [src, iframe] = await checkIframeAndClick(page);
+        // await page.goto(src);
+        // await sleep(5000)
 
-        fs.appendFileSync(path.join(__dirname, 'data', 'major.txt'), `${iframeSrc}\n`, 'utf-8');
+        // fs.appendFileSync(path.join(__dirname, 'data', 'major.txt'), `${iframeSrc}\n`, 'utf-8');
         // await sleep(5000)
         // await sleep(5000)
-        // await sleep(5000)
-        // await waitForInput()
-        browser.close()
+        await waitForInput()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

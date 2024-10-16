@@ -103,7 +103,7 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
+        const [src, iframe] = await checkIframeAndClick(page);
         let authorization = await getAuthorization
 
         let timestamp = await fetchAccount(authorization);

@@ -46,13 +46,7 @@ const MainBrowser = async (countFolder) => {
         await page.goto("https://web.telegram.org/k/#@fastmintapp_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        const [src, iframe] = await page.evaluate(() => {
-            const iframeElement = document.querySelector('iframe');
-            if (iframeElement) {
-                return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0]];
-            }
-        },);
+        const [src, iframe] = await checkIframeAndClick(page);
         await page.goto(src);
         // await sleep(3000)
         // // await clickIfExists(page, "#root button");

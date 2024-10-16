@@ -27,6 +27,15 @@ async function checkIframeAndClick(page) {
         await sleep(5000);
         iframeExists = await page.$('iframe') !== null;
     }
+
+    const [src, iframe] = await page.evaluate(() => {
+        const iframeElement = document.querySelector('iframe');
+        if (iframeElement) {
+            return [iframeElement.src, iframeElement.src.match(/(?<=#tgWebAppData=).*?(?=&tgWebAppVersion=7\.10)/g)[0]];
+        }
+    },);
+
+    return [src, iframe];
 }
 
 async function navigateToIframe(page, regex = false) {
