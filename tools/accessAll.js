@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
-const { runPuppeteer, setupMobile } = require('./utils/puppeteer.js')
+const { runPuppeteer, setMobile } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
@@ -38,7 +38,7 @@ const MainBrowser = async (countFolder) => {
             await page.bringToFront();
         }
 
-        // await setupMobile(page);
+        // await setMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -71,12 +71,12 @@ const MainBrowser = async (countFolder) => {
         // }, localStorageData);
         // await page.reload();
 
-        await page.goto("https://web.telegram.org/k/#@birdx2_bot");
+        await page.goto("https://web.telegram.org/a/#6986655472");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         const [src, iframe] = await checkIframeAndClick(page);
-        // await page.goto(src);
-        // await sleep(5000)
+        await page.goto(src);
+        await sleep(5000)
 
         // fs.appendFileSync(path.join(__dirname, 'data', 'major.txt'), `${iframeSrc}\n`, 'utf-8');
         // await sleep(5000)

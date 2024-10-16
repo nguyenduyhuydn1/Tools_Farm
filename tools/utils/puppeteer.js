@@ -65,12 +65,12 @@ async function runPuppeteer({ userDataDir = null, args = [], dataProxy = null })
     return browser;
 }
 
-const setupMobile = async (page) => {
+const setMobile = async (page) => {
     const iPhone = KnownDevices['iPhone 15 Pro'];
     await page.emulate(iPhone);
 }
 
 module.exports = {
     runPuppeteer,
-    setupMobile,
+    setMobile,
 }
