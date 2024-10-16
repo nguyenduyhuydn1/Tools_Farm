@@ -123,27 +123,27 @@ const MainBrowser = async (countFolder) => {
         const [src, iframe] = await checkIframeAndClick(page);
         let authorization = await getAuthorization
 
-        // let info = await fetchInfo(authorization);
-        // if (info) {
-        //     const startTime = new Date(info.activeFarmingStartedAt);
-        //     const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-        //     const endTimeTimestamp = endTime.getTime();
-        //     let now = Date.now()
+        let info = await fetchInfo(authorization);
+        if (info) {
+            const startTime = new Date(info.activeFarmingStartedAt);
+            const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
+            const endTimeTimestamp = endTime.getTime();
+            let now = Date.now()
 
-        //     console.log(JSON.stringify(info));
-        //     log(`time: [${now > endTimeTimestamp}]`, 'yellow')
-        //     if (now > endTimeTimestamp) {
-        //         await fetchFarmingFinish(authorization);
-        //         await sleep(5000);
-        //         await fetchFarmingStart(authorization);
-        //     }
-        // }
+            console.log(JSON.stringify(info));
+            log(`time: [${now > endTimeTimestamp}]`, 'yellow')
+            if (now > endTimeTimestamp) {
+                await fetchFarmingFinish(authorization);
+                await sleep(5000);
+                await fetchFarmingStart(authorization);
+            }
+        }
 
         // await sleep(5000)
         // await sleep(5000)
         // await sleep(5000)
-        await waitForInput()
-        // browser.close()
+        // await waitForInput()
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

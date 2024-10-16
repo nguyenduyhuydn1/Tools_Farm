@@ -13,7 +13,7 @@ let xPosition = 0;
 let yPosition = 0;
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`, ['--window-size=400,300', `--window-position=${xPosition},${yPosition}`], proxyUrl);
+        const browser = await runPuppeteer({ userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`, args: ['--window-size=400,300', `--window-position=${xPosition},${yPosition}`], dataProxy: proxyUrl });
         xPosition += 300;
         if (xPosition + 300 > 1920) {
             xPosition = 0;

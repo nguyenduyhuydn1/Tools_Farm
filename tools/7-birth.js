@@ -97,7 +97,10 @@ const fetchMintStatusWorms = async (auth) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            dataProxy: proxyUrl,
+        });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -114,6 +117,8 @@ const MainBrowser = async (countFolder) => {
         await page.goto(src);
         await page.goto('https://birdx.birds.dog/mini-game');
         await sleep(3000)
+        // await waitForInput()
+        browser.close()
         // await clickIfExists(page, "#root button");
 
         await fetchMintStatusWorms(iframe)
@@ -124,9 +129,6 @@ const MainBrowser = async (countFolder) => {
             }
             await fetchEggClaim(iframe)
         }
-        // await waitForInput()
-        // await sleep(5000)
-        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

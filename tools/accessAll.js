@@ -1,5 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
+
+// https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
 const { KnownDevices } = require('puppeteer');
 
 const { runPuppeteer } = require('./utils/puppeteer.js')

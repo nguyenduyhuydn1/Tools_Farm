@@ -55,7 +55,10 @@ const postStart = async (user, pixelId) => {
 const MainBrowser = async (countFolder) => {
     try {
         // `--window-position=${countFolder * 400},0`
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, dataProxy: proxyUrl,
+        });
+
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -77,7 +80,7 @@ const MainBrowser = async (countFolder) => {
         let { charges } = await getStatus(iframe)
         log(`[${charges} charges]`)
 
-        // await getClaim(iframe);
+        await getClaim(iframe);
         for (let i = 0; i < charges; i++) {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
             await sleep(500)
@@ -92,7 +95,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 37; i < 39; i++) {
+    for (let i = 0; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);

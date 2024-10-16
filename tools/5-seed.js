@@ -160,7 +160,9 @@ const fetchClaimTask = async (auth, idTask) => {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, ['--disable-gpu'], proxyUrl);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, dataProxy: proxyUrl,
+        });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
@@ -184,10 +186,10 @@ const MainBrowser = async (countFolder) => {
 
             if (infoLeader) {
                 let { id, status, hunt_end_at } = infoLeader;
-                let date = Date.now();
+                let check_hunt_end = Date.now() > Date.now(hunt_end_at);
                 let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
 
-                if (status == 'hunting') {
+                if (status == 'hunting' && check_hunt_end) {
                     let checkHunting = await fetchCompleteHunting(token, id);
                     await sleep(2000);
                     if (checkHunting) {

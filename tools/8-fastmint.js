@@ -34,7 +34,10 @@ let headers = {
 
 const MainBrowser = async (countFolder) => {
     try {
-        const browser = await runPuppeteer(`C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`, [], proxyUrl);
+        const browser = await runPuppeteer({
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            dataProxy: proxyUrl,
+        });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
             const page2 = await browser.newPage();
