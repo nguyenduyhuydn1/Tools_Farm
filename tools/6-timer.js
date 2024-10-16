@@ -139,9 +139,6 @@ const MainBrowser = async (countFolder) => {
             }
         }
 
-        // await sleep(5000)
-        // await sleep(5000)
-        // await sleep(5000)
         // await waitForInput()
         browser.close()
     } catch (error) {
