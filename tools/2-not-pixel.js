@@ -92,7 +92,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 38; i < 39; i++) {
+    for (let i = 0; i < 39; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
