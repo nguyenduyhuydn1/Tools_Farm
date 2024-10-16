@@ -155,7 +155,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 0; i < 10; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
@@ -196,5 +196,6 @@ let proxyUrl = null;
 //         await Promise.all(promises);
 //         await sleep(1000);
 //     }
+//     writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
 //     process.exit(1);
 // })();

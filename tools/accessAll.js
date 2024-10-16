@@ -25,10 +25,20 @@ const proxyFile = require("./data/proxy.js");
 
 // 30acc
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${count + 1000}`,        //BuyAccTele
+
+
+// set localstorage
+// await page.goto("https://web.telegram.org/");
+// await page.evaluate((data) => {
+//     for (const [key, value] of Object.entries(data)) {
+//         localStorage.setItem(key, value);
+//     }
+// }, localStorageData);
+// await page.reload();
 const MainBrowser = async (countFolder) => {
     try {
         const browser = await runPuppeteer({
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`,
         });
         const [page] = await browser.pages();
         if (proxyUrl != null) {
@@ -38,7 +48,7 @@ const MainBrowser = async (countFolder) => {
             await page.bringToFront();
         }
 
-        // await setMobile(page);
+        await setMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -47,36 +57,27 @@ const MainBrowser = async (countFolder) => {
         // };
         // await addFunc(page);
 
-        // const modifiedJs = fs.readFileSync('../public/telegram-web-app.js', 'utf8');
-        // await page.setRequestInterception(true);
+        const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
+        await page.setRequestInterception(true);
 
-        // page.on('request', request => {
-        //     if (request.url().endsWith('telegram-web-app.js')) {
-        //         request.respond({
-        //             status: 200,
-        //             contentType: 'application/javascript',
-        //             body: modifiedJs
-        //         });
-        //     } else {
-        //         request.continue();
-        //     }
-        // });
+        page.on('request', request => {
+            if (request.url().endsWith('telegram-web-app.js')) {
+                request.respond({
+                    status: 200,
+                    contentType: 'application/javascript',
+                    body: modifiedJs
+                });
+            } else {
+                request.continue();
+            }
+        });
 
-        // set localstorage
-        // await page.goto("https://web.telegram.org/");
-        // await page.evaluate((data) => {
-        //     for (const [key, value] of Object.entries(data)) {
-        //         localStorage.setItem(key, value);
-        //     }
-        // }, localStorageData);
-        // await page.reload();
-
-        await page.goto("https://web.telegram.org/a/#6986655472");
+        await page.goto("https://web.telegram.org/k/");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        const [src, iframe] = await checkIframeAndClick(page);
-        await page.goto(src);
-        await sleep(5000)
+        // const [src, iframe] = await checkIframeAndClick(page);
+        // await page.goto(src);
+        // await sleep(5000)
 
         // fs.appendFileSync(path.join(__dirname, 'data', 'major.txt'), `${iframeSrc}\n`, 'utf-8');
         // await sleep(5000)
@@ -91,7 +92,7 @@ const MainBrowser = async (countFolder) => {
 let proxyUrl = null;
 
 (async () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 0; i < 10; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);

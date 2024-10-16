@@ -154,7 +154,7 @@ let proxyUrl = null;
 let promiseTasks = [];
 
 (async () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 0; i < 10; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
         if (i > 9) {
             let proxyIndex = Math.floor((i - 10) / 10);
@@ -169,6 +169,41 @@ let promiseTasks = [];
             console.log('Tất cả các task đã hoàn thành');
         });
     }
-    writeTimeToFile('thời gian claim tiếp theo', '3-gumart.txt', 4).then(() => process.exit(1));
+    writeTimeToFile('thời gian claim tiếp theo', '3-gumart.txt', 2).then(() => process.exit(1));
     process.exit(1)
 })();
+
+
+
+
+// (async () => {
+//     for (let i = 0; i < 39; i += 2) {
+//         const promises = [];
+
+//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
+//         if (i > 9) {
+//             let proxyIndex = Math.floor((i - 10) / 10);
+//             proxyUrl = proxyFile[proxyIndex];
+//             promises.push(MainBrowser(i));
+//         } else {
+//             promises.push(MainBrowser(i));
+//         }
+
+//         if (i + 1 < 39) {
+//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
+//             await sleep(3000);
+//             if (i + 1 > 9) {
+//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
+//                 proxyUrl = proxyFile[proxyIndex];
+//                 promises.push(MainBrowser(i + 1));
+//             } else {
+//                 promises.push(MainBrowser(i + 1));
+//             }
+//         }
+
+//         await Promise.all(promises);
+//         await sleep(1000);
+//     }
+//     writeTimeToFile('thời gian claim tiếp theo', '3-gumart.txt', 2).then(() => process.exit(1));
+//     process.exit(1);
+// })();
