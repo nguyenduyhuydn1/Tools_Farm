@@ -118,7 +118,7 @@ const MainBrowser = async (countFolder) => {
         await page.goto('https://birdx.birds.dog/mini-game');
         await sleep(3000)
         // await waitForInput()
-        // browser.close()
+        browser.close()
         // await clickIfExists(page, "#root button");
 
         await fetchMintStatusWorms(iframe)
@@ -152,34 +152,3 @@ let proxyUrl = null;
 })();
 
 
-// (async () => {
-//     for (let i = 0; i < 39; i += 2) {
-//         const promises = [];
-
-//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
-//         if (i > 9) {
-//             let proxyIndex = Math.floor((i - 10) / 10);
-//             proxyUrl = proxyFile[proxyIndex];
-//             promises.push(MainBrowser(i));
-//         } else {
-//             promises.push(MainBrowser(i));
-//         }
-
-//         if (i + 1 < 39) {
-//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
-//             await sleep(3000);
-//             if (i + 1 > 9) {
-//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
-//                 proxyUrl = proxyFile[proxyIndex];
-//                 promises.push(MainBrowser(i + 1));
-//             } else {
-//                 promises.push(MainBrowser(i + 1));
-//             }
-//         }
-
-//         await Promise.all(promises);
-//         await sleep(1000);
-//     }
-//     writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 3).then(() => process.exit(1));
-//     process.exit(1);
-// })();

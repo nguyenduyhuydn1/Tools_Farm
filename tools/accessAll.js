@@ -82,7 +82,7 @@ const MainBrowser = async (countFolder) => {
         // fs.appendFileSync(path.join(__dirname, 'data', 'major.txt'), `${iframeSrc}\n`, 'utf-8');
         // await sleep(5000)
         // await sleep(5000)
-        await waitForInput()
+        // await waitForInput()
         // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
@@ -105,3 +105,22 @@ let proxyUrl = null;
     }
     process.exit(1)
 })();
+
+
+// const proxies = ["proxy1", "proxy2", "proxy3"];
+// const totalElements = 25;
+// const distance = 5
+
+// function getProxy(index) {
+//     if (index >= 10 && index < 15) return proxies[0];
+//     if (index >= 15 && index < 20) return proxies[1];
+//     if (index >= 20 && index < 25) return proxies[2];
+//     return null;
+// }
+
+// for (let offset = 0; offset < distance; offset++) {
+//     for (let i = offset; i < totalElements; i += distance) {
+//         const proxy = getProxy(i);
+//         console.log(`Phần tử: ${i}, Sử dụng: ${proxy}`);
+//     }
+// }

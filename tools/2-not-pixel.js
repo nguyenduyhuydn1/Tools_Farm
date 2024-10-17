@@ -48,6 +48,7 @@ const postStart = async (user, pixelId) => {
     log(`balance: [${JSON.stringify(start)}]`, 'yellow');
     return start;
 }
+
 // =====================================================================
 // =====================================================================
 // =====================================================================
@@ -72,8 +73,8 @@ const MainBrowser = async (countFolder) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         const [src, iframe] = await checkIframeAndClick(page);
-
         // await page.goto(src);
+        // await waitForInput()
         browser.close();
 
         let arrNumber = randomNumber();
@@ -86,8 +87,6 @@ const MainBrowser = async (countFolder) => {
             await postStart(iframe, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)])
             await sleep(500)
         }
-
-        // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -108,34 +107,3 @@ let proxyUrl = null;
     }
     process.exit(1)
 })();
-
-
-// (async () => {
-//     for (let i = 0; i < 39; i += 2) {
-//         const promises = [];
-
-//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
-//         if (i > 9) {
-//             let proxyIndex = Math.floor((i - 10) / 10);
-//             proxyUrl = proxyFile[proxyIndex];
-//             promises.push(MainBrowser(i));
-//         } else {
-//             promises.push(MainBrowser(i));
-//         }
-
-//         if (i + 1 < 39) {
-//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
-//             if (i + 1 > 9) {
-//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
-//                 proxyUrl = proxyFile[proxyIndex];
-//                 promises.push(MainBrowser(i + 1));
-//             } else {
-//                 promises.push(MainBrowser(i + 1));
-//             }
-//         }
-
-//         await Promise.all(promises);
-//         await sleep(1000);
-//     }
-//     process.exit(1);
-// })();
