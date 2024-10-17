@@ -6,7 +6,7 @@ const { runPuppeteer } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick, clickIfExists } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
-const proxyFile = require("./data/proxy.js");
+// const proxies = require("./../data/proxy.js");
 
 
 
@@ -44,9 +44,9 @@ let headers = {
 // =====================================================================
 // =====================================================================
 
-const fetchEggPlay = async (auth) => {
-    await fetchData('https://api.birds.dog/minigame/egg/play', 'OPTIONS', { headers: options, proxyUrl })
-    let data = await fetchData('https://api.birds.dog/minigame/egg/play', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
+const fetchEggPlay = async (auth, proxy) => {
+    await fetchData('https://api.birds.dog/minigame/egg/play', 'OPTIONS', { headers: options, proxy })
+    let data = await fetchData('https://api.birds.dog/minigame/egg/play', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxy })
     if (data) {
         log(`[${JSON.stringify(data)}]`);
         return data;
@@ -57,15 +57,15 @@ const fetchEggPlay = async (auth) => {
     }
 }
 
-const fetchEggClaim = async (auth) => {
-    await fetchData('https://api.birds.dog/minigame/egg/claim', 'OPTIONS', { headers: options, proxyUrl })
-    let claim = await fetchData('https://api.birds.dog/minigame/egg/claim', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxyUrl })
+const fetchEggClaim = async (auth, proxy) => {
+    await fetchData('https://api.birds.dog/minigame/egg/claim', 'OPTIONS', { headers: options, proxy })
+    let claim = await fetchData('https://api.birds.dog/minigame/egg/claim', 'GET', { authKey: 'telegramauth', authValue: `tma ${auth}`, headers, proxy })
     if (claim) log(`claim: [${claim}]`, 'yellow')
     else log(`[error fetchEggClaim()]`)
 }
 
 // check worms có xuất hiện k để bắt
-const fetchMintStatusWorms = async (auth) => {
+const fetchMintStatusWorms = async (auth, proxy) => {
     let options2 = {
         "access-control-request-headers": "authorization,csrf-token",
     }
@@ -76,13 +76,13 @@ const fetchMintStatusWorms = async (auth) => {
     let options4 = {
         "content-type": "application/json",
     }
-    await fetchData('https://worm.birds.dog/worms/mint-status', 'OPTIONS', { headers: { ...options, ...options2 }, proxyUrl })
+    await fetchData('https://worm.birds.dog/worms/mint-status', 'OPTIONS', { headers: { ...options, ...options2 }, proxy })
     await sleep(2000)
-    let status = await fetchData('https://worm.birds.dog/worms/mint-status', 'GET', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxyUrl })
+    let status = await fetchData('https://worm.birds.dog/worms/mint-status', 'GET', { authKey: 'authorization', authValue: `tma ${auth}`, headers, proxy })
     if (status) {
         if (status.data.status == 'MINT_OPEN') {
-            await fetchData('https://worm.birds.dog/worms/mint', 'OPTIONS', { headers: { ...options, ...options3 }, proxyUrl });
-            let mint = await fetchData('https://worm.birds.dog/worms/mint', 'POST', { authKey: 'authorization', authValue: `tma ${auth}`, headers: { ...options, ...options4 }, proxyUrl, body: JSON.stringify({}) })
+            await fetchData('https://worm.birds.dog/worms/mint', 'OPTIONS', { headers: { ...options, ...options3 }, proxy });
+            let mint = await fetchData('https://worm.birds.dog/worms/mint', 'POST', { authKey: 'authorization', authValue: `tma ${auth}`, headers: { ...options, ...options4 }, proxy, body: JSON.stringify({}) })
             console.log(JSON.stringify(mint));
         }
         log(`Sâu sẽ xuất hiện lúc: [${formatTime(status.data.nextMintTime)}]`, 'yellow')
@@ -95,14 +95,14 @@ const fetchMintStatusWorms = async (auth) => {
 // =====================================================================
 
 
-const MainBrowser = async (countFolder) => {
+const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
-            dataProxy: proxyUrl,
+            proxy,
         });
         const [page] = await browser.pages();
-        if (proxyUrl != null) {
+        if (proxy != null) {
             const page2 = await browser.newPage();
             await page2.goto("https://google.com");
             await sleep(3000);
@@ -119,36 +119,31 @@ const MainBrowser = async (countFolder) => {
         await sleep(3000)
         // await waitForInput()
         browser.close()
-        // await clickIfExists(page, "#root button");
 
-        await fetchMintStatusWorms(iframe)
-        let data = await fetchEggPlay(iframe);
+        await fetchMintStatusWorms(iframe, proxy);
+        let data = await fetchEggPlay(iframe, proxy);
         if (data) {
             for (let i = 0; i < data.turn; i++) {
-                await fetchEggPlay(iframe);
+                await fetchEggPlay(iframe, proxy);
             }
-            await fetchEggClaim(iframe)
+            await fetchEggClaim(iframe, proxy);
         }
     } catch (error) {
         console.error("Error:", error.message);
     }
 };
 
-let proxyUrl = null;
-
 (async () => {
-    for (let i = 0; i < 10; i++) {
+    const totalElements = 10;
+    let proxies = ['x', 'y', 'z'];
+
+    for (let i = 0; i < totalElements; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        if (i > 9) {
-            let proxyIndex = Math.floor((i - 10) / 10);
-            proxyUrl = proxyFile[proxyIndex];
-            await MainBrowser(i);
-        } else {
-            await MainBrowser(i);
-        }
+        let proxy = (i > 10) ? proxies[i % proxies.length] : null;
+
+        await MainBrowser(proxy, i);
+        await sleep(2000);
     }
     writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 3).then(() => process.exit(1));
     process.exit(1)
 })();
-
-

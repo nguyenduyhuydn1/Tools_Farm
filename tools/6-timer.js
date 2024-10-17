@@ -6,7 +6,7 @@ const { runPuppeteer } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
-const proxyFile = require("./data/proxy.js");
+// const proxies = require("./../data/proxy.js");
 
 
 
@@ -29,16 +29,16 @@ const headers = {
 // =====================================================================
 // =====================================================================
 
-const fetchInfo = async (auth) => {
+const fetchInfo = async (auth, proxy) => {
     printFormattedTitle('Info', 'blue')
-    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/info', 'GET', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, proxyUrl })
+    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/info', 'GET', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, proxy })
     if (data) return data;
     return false;
 }
 
-const fetchFarmingFinish = async (auth) => {
+const fetchFarmingFinish = async (auth, proxy) => {
     printFormattedTitle('farming is finished', 'blue')
-    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/finish', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxyUrl })
+    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/finish', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxy })
     if (data) {
         console.log(JSON.stringify(data));
         return true;
@@ -46,9 +46,9 @@ const fetchFarmingFinish = async (auth) => {
     return false;
 }
 
-const fetchFarmingStart = async (auth) => {
+const fetchFarmingStart = async (auth, proxy) => {
     printFormattedTitle('farming is Started', 'blue')
-    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/start', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxyUrl })
+    let data = await fetchData('https://tg-bot-tap.laborx.io/api/v1/farming/start', 'POST', { authKey: 'authorization', authValue: `Bearer ${auth}`, headers, body: {}, proxy })
     if (data) {
         console.log(JSON.stringify(data));
         return true;
@@ -92,14 +92,37 @@ const fetchFarmingStart = async (auth) => {
 // =====================================================================
 
 
-const MainBrowser = async (countFolder) => {
+const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
+        const reuse = async (reuseToken, reuseProxy) => {
+            let info = await fetchInfo(reuseToken, reuseProxy);
+            if (info) {
+                const startTime = new Date(info.activeFarmingStartedAt);
+                const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
+                const endTimeTimestamp = endTime.getTime();
+                let now = Date.now()
+
+                console.log(JSON.stringify(info));
+                log(`time: [${now > endTimeTimestamp}]`, 'yellow')
+                if (now > endTimeTimestamp) {
+                    await fetchFarmingFinish(reuseToken, reuseProxy);
+                    await sleep(5000);
+                    await fetchFarmingStart(reuseToken, reuseProxy);
+                }
+            }
+        }
+
+        if (existToken != null && existToken.length > 2) {
+            await reuse(existToken, proxy);
+            return;
+        }
+
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
-            dataProxy: proxyUrl,
+            proxy,
         });
         const [page] = await browser.pages();
-        if (proxyUrl != null) {
+        if (proxy != null) {
             const page2 = await browser.newPage();
             await page2.goto("https://google.com");
             await sleep(3000);
@@ -122,80 +145,35 @@ const MainBrowser = async (countFolder) => {
 
         await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
-        const [src, iframe] = await checkIframeAndClick(page);
+        await checkIframeAndClick(page);
         let authorization = await getAuthorization
 
-        let info = await fetchInfo(authorization);
-        if (info) {
-            const startTime = new Date(info.activeFarmingStartedAt);
-            const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-            const endTimeTimestamp = endTime.getTime();
-            let now = Date.now()
-
-            console.log(JSON.stringify(info));
-            log(`time: [${now > endTimeTimestamp}]`, 'yellow')
-            if (now > endTimeTimestamp) {
-                await fetchFarmingFinish(authorization);
-                await sleep(5000);
-                await fetchFarmingStart(authorization);
-            }
-        }
-
-        // await sleep(5000)
-        // await sleep(5000)
-        // await sleep(5000)
         // await waitForInput()
-        browser.close()
+        fs.appendFileSync(pathFile, `${authorization}\n`, 'utf-8');
+        browser.close();
+
+        await reuse(authorization, proxy);
     } catch (error) {
         console.error("Error:", error.message);
+        await waitForInput()
     }
 };
 
-let proxyUrl = null;
+let pathFile = path.join(__dirname, 'data', 'token', 'timer.txt');
+(async (check = true) => {
+    let data = fs.readFileSync(pathFile, 'utf8');
+    const lines = data.split('\n');
+    const totalElements = 10;
+    let proxies = ['x', 'y', 'z'];
 
-(async () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < totalElements; i++) {
         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        if (i > 9) {
-            let proxyIndex = Math.floor((i - 10) / 10);
-            proxyUrl = proxyFile[proxyIndex];
-            await MainBrowser(i);
-        } else {
-            await MainBrowser(i);
-        }
+        let proxy = (i > 10) ? proxies[i % proxies.length] : null;
+
+        if (check) await MainBrowser(proxy, i, lines[i]);
+        else await MainBrowser(proxy, i);
+        await sleep(2000);
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();
-
-// (async () => {
-//     for (let i = 0; i < 39; i += 2) {
-//         const promises = [];
-
-//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red");
-//         if (i > 9) {
-//             let proxyIndex = Math.floor((i - 10) / 10);
-//             proxyUrl = proxyFile[proxyIndex];
-//             promises.push(MainBrowser(i));
-//         } else {
-//             promises.push(MainBrowser(i));
-//         }
-
-//         if (i + 1 < 39) {
-//             printFormattedTitle(`tài khoản ${i + 1} - Profile ${i + 101}`, "red");
-//             if (i + 1 > 9) {
-//                 let proxyIndex = Math.floor((i + 1 - 10) / 10);
-//                 proxyUrl = proxyFile[proxyIndex];
-//                 promises.push(MainBrowser(i + 1));
-//             } else {
-//                 promises.push(MainBrowser(i + 1));
-//             }
-//         }
-
-//         await Promise.all(promises);
-//         await sleep(1000);
-//     }
-//     writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
-//     process.exit(1);
-// })();

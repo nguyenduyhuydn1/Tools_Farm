@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
-const { runPuppeteer, setMobile } = require('./utils/puppeteer.js')
+const { runPuppeteer, setMobile, executeWithOffset } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
@@ -35,13 +35,13 @@ const proxyFile = require("./data/proxy.js");
 //     }
 // }, localStorageData);
 // await page.reload();
-const MainBrowser = async (countFolder) => {
+const MainBrowser = async ({ proxy = null, countFolder }) => {
     try {
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`,
         });
         const [page] = await browser.pages();
-        if (proxyUrl != null) {
+        if (proxy != null) {
             const page2 = await browser.newPage();
             await page2.goto("https://google.com");
             await sleep(3000);
@@ -89,38 +89,26 @@ const MainBrowser = async (countFolder) => {
     }
 };
 
-let proxyUrl = null;
+
+
+// let proxyUrl = null;
+
+// (async () => {
+//     for (let i = 0; i < 10; i++) {
+//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
+//         if (i > 9) {
+//             let proxyIndex = Math.floor((i - 10) / 10);
+//             proxyUrl = proxyFile[proxyIndex];
+//             await MainBrowser(i);
+//         } else {
+//             await MainBrowser(i);
+//         }
+//     }
+//     process.exit(1)
+// })();
 
 (async () => {
-    for (let i = 0; i < 10; i++) {
-        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        if (i > 9) {
-            let proxyIndex = Math.floor((i - 10) / 10);
-            proxyUrl = proxyFile[proxyIndex];
-            await MainBrowser(i);
-        } else {
-            await MainBrowser(i);
-        }
-        await waitForInput()
-    }
+    executeWithOffset(MainBrowser)
     process.exit(1)
 })();
 
-
-// const proxies = ["proxy1", "proxy2", "proxy3"];
-// const totalElements = 25;
-// const distance = 5
-
-// function getProxy(index) {
-//     if (index >= 10 && index < 15) return proxies[0];
-//     if (index >= 15 && index < 20) return proxies[1];
-//     if (index >= 20 && index < 25) return proxies[2];
-//     return null;
-// }
-
-// for (let offset = 0; offset < distance; offset++) {
-//     for (let i = offset; i < totalElements; i += distance) {
-//         const proxy = getProxy(i);
-//         console.log(`Phần tử: ${i}, Sử dụng: ${proxy}`);
-//     }
-// }

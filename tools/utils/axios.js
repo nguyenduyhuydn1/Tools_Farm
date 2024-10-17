@@ -2,7 +2,7 @@ const axios = require('axios');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 
 
-async function fetchData(url, method, { authKey = null, authValue = null, headers = {}, body = null, proxyUrl = null, timeout = 5000 } = {}) {
+async function fetchData(url, method, { authKey = null, authValue = null, headers = {}, body = null, proxy = null, timeout = 5000 } = {}) {
     try {
         const requestOptions = {
             method,
@@ -18,9 +18,9 @@ async function fetchData(url, method, { authKey = null, authValue = null, header
             requestOptions.headers[authKey] = decodeURIComponent(authValue);
         }
 
-        // Thêm proxy nếu có proxyUrl
-        if (proxyUrl) {
-            const { username, password, ip, port } = proxyUrl;
+        // Thêm proxy nếu có
+        if (proxy) {
+            const { username, password, ip, port } = proxy;
             const agent = new HttpsProxyAgent(`http://${username}:${password}@${ip.substring(7)}:${port}`);
             requestOptions.httpsAgent = agent;
             requestOptions.httpAgent = agent;
