@@ -109,6 +109,14 @@ function formatTime(isoString) {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
+const takeTimeEnd = (timeStart, addTime = 4 * 60 * 60 * 1000) => {
+    const startTime = new Date(timeStart);
+    const endTime = new Date(startTime.getTime() + addTime);
+    const endTimeTimestamp = endTime.getTime();
+    let now = Date.now()
+
+    return [now, endTimeTimestamp]
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                       not-pixel                                            //                                  
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,6 +159,7 @@ module.exports = {
     randomNumber,   // not-pixel
     waitForInput,
     formatTime,
+    takeTimeEnd,
     printFormattedTitle,
     log,
     writeTimeToFile

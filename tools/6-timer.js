@@ -3,7 +3,7 @@ const path = require("path");
 const { KnownDevices } = require('puppeteer');
 
 const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
+const { sleep, formatTime, takeTimeEnd, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 
@@ -96,10 +96,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const reuse = async (reuseToken, reuseProxy) => {
             let info = await fetchInfo(reuseToken, reuseProxy);
             if (info) {
-                const startTime = new Date(info.activeFarmingStartedAt);
-                const endTime = new Date(startTime.getTime() + 3 * 60 * 60 * 1000);
-                const endTimeTimestamp = endTime.getTime();
-                let now = Date.now()
+                let [now, endTimeTimestamp] = takeTimeEnd(info.activeFarmingStartedAt, 3 * 60 * 60 * 1000);
 
                 console.log(JSON.stringify(info));
                 log(`time: [${now > endTimeTimestamp}]`, 'yellow')

@@ -1,30 +1,11 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js');
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');
+const { runPuppeteer, setMobile, proxies, totalElements, distance } = require('./utils/puppeteer.js');
+const { sleep, formatTime, takeTimeEnd, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');
 const { checkIframeAndClick } = require('./utils/selector.js');
 const { fetchData } = require('./utils/axios.js');
 
-// fetch("https://api.wuko.app/wuko-miniapp/v2/user/user", {
-//     "headers": {
-//       "accept": "application/json, text/plain, */*",
-//       "accept-language": "en-US,en;q=0.9",
-//       "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwNjY0IiwiaWF0IjoxNzI5MjMzMTk2LCJleHAiOjE3MjkyNDAzOTZ9.bhLYOtdg9xxBgz_yfkCLsVuvp3R0E8dWJuzMDmO2d_c",
-//       "if-none-match": "W/\"2b1-Hz9otQ72NjFShO98uMouZNb9low\"",
-//       "priority": "u=1, i",
-//       "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
-//       "sec-ch-ua-mobile": "?0",
-//       "sec-ch-ua-platform": "\"Windows\"",
-//       "sec-fetch-dest": "empty",
-//       "sec-fetch-mode": "cors",
-//       "sec-fetch-site": "cross-site",
-//       "Referer": "https://wukong-miniapp-sigma.vercel.app/",
-//       "Referrer-Policy": "strict-origin-when-cross-origin"
-//     },
-//     "body": null,
-//     "method": "GET"
-//   });
 const headers = {
     "accept": "application/json, text/plain, */*",
     "accept-language": "en-US,en;q=0.9",
@@ -44,7 +25,7 @@ const headers = {
 // =====================================================================
 
 const fetchMine = async (token) => {
-    await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/mine', 'POST', { authKey: 'authorization', authValue: `Bearer ${token}` })
+    await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/mine', 'POST', { authKey: 'authorization', authValue: token })
 }
 
 // =====================================================================
@@ -74,6 +55,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             await page.bringToFront();
         }
 
+        await setMobile(page);
+
         await page.goto("https://web.telegram.org/k/#@wukobot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
@@ -89,18 +72,15 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
             return localStorageContent;
         });
+        await waitForInput()
 
-        // fs.appendFileSync(pathFile, `${dataLocalStorage.WUKONG_FE_TOKEN}\n`, 'utf-8');
+        fs.appendFileSync(pathFile, `${dataLocalStorage.WUKONG_FE_TOKEN}\n`, 'utf-8');
         // browser.close();
         // await waitForInput()
         let wuKongToken = dataLocalStorage.WUKONG_FE_TOKEN;
         let dataUser = JSON.parse(dataLocalStorage.WUKONG_FE_USER);
 
-        const startTime = new Date(dataUser.mineStartTimestamp * 1000);
-        const endTime = new Date(startTime.getTime() + 8 * 60 * 60 * 1000);
-        const endTimeTimestamp = endTime.getTime();
-        let now = Date.now()
-
+        let [now, endTimeTimestamp] = takeTimeEnd(dataUser.mineStartTimestamp * 1000, 8 * 60 * 60 * 1000);
         log(`farm xong lúc: [${formatTime(endTimeTimestamp)}]`, 'yellow');
         if (now > endTimeTimestamp) {
             await reuse(wuKongToken, proxy);

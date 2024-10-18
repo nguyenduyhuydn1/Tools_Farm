@@ -2,11 +2,10 @@ const fs = require("fs-extra");
 const path = require("path");
 
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
-const { runPuppeteer, setMobile } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
-const { checkIframeAndClick } = require('./utils/selector.js')
-const { fetchData } = require('./utils/axios.js')
-const proxyFile = require("./data/proxy.js");
+const { runPuppeteer, setMobile, proxies, totalElements, distance } = require('./utils/puppeteer.js');
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');
+const { checkIframeAndClick } = require('./utils/selector.js');
+const { fetchData } = require('./utils/axios.js');
 
 
 // =====================================================================
@@ -33,9 +32,9 @@ const proxyFile = require("./data/proxy.js");
 // set localstorage
 // await page.goto("https://web.telegram.org/");
 // await page.evaluate((data) => {
-    // for (const [key, value] of Object.entries(data)) {
-    //     localStorage.setItem(key, value);
-    // }
+// for (const [key, value] of Object.entries(data)) {
+//     localStorage.setItem(key, value);
+// }
 // }, localStorageData);
 // await page.reload();
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
@@ -94,8 +93,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 (async () => {
-    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
-    for (let i = 3; i < 51; i++) {
+    for (let i = 10; i < 20; i++) {
         let proxy = (i > 9) ? proxies[i] : null;
         printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
         await MainBrowser(proxy, i);
