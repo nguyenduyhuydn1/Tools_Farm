@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
-const { runPuppeteer, setMobile, executeWithOffset } = require('./utils/puppeteer.js')
+const { runPuppeteer, setMobile } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
@@ -23,9 +23,6 @@ const proxyFile = require("./data/proxy.js");
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
 
-// 30acc
-// userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\BuyAccTele ${count + 1000}`,        //BuyAccTele
-
 
 // set localstorage
 // await page.goto("https://web.telegram.org/");
@@ -35,10 +32,11 @@ const proxyFile = require("./data/proxy.js");
 //     }
 // }, localStorageData);
 // await page.reload();
-const MainBrowser = async ({ proxy = null, countFolder }) => {
+const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const browser = await runPuppeteer({
-            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\memefi ${countFolder + 300}`,
+            userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            proxy,
         });
         const [page] = await browser.pages();
         if (proxy != null) {
@@ -48,7 +46,7 @@ const MainBrowser = async ({ proxy = null, countFolder }) => {
             await page.bringToFront();
         }
 
-        await setMobile(page);
+        // await setMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -57,20 +55,20 @@ const MainBrowser = async ({ proxy = null, countFolder }) => {
         // };
         // await addFunc(page);
 
-        const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
-        await page.setRequestInterception(true);
+        // const modifiedJs = fs.readFileSync('./public/telegram-web-app.js', 'utf8');
+        // await page.setRequestInterception(true);
 
-        page.on('request', request => {
-            if (request.url().endsWith('telegram-web-app.js')) {
-                request.respond({
-                    status: 200,
-                    contentType: 'application/javascript',
-                    body: modifiedJs
-                });
-            } else {
-                request.continue();
-            }
-        });
+        // page.on('request', request => {
+        //     if (request.url().endsWith('telegram-web-app.js')) {
+        //         request.respond({
+        //             status: 200,
+        //             contentType: 'application/javascript',
+        //             body: modifiedJs
+        //         });
+        //     } else {
+        //         request.continue();
+        //     }
+        // });
 
         await page.goto("https://web.telegram.org/k/");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -89,26 +87,14 @@ const MainBrowser = async ({ proxy = null, countFolder }) => {
     }
 };
 
-
-
-// let proxyUrl = null;
-
-// (async () => {
-//     for (let i = 0; i < 10; i++) {
-//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-//         if (i > 9) {
-//             let proxyIndex = Math.floor((i - 10) / 10);
-//             proxyUrl = proxyFile[proxyIndex];
-//             await MainBrowser(i);
-//         } else {
-//             await MainBrowser(i);
-//         }
-//     }
-//     process.exit(1)
-// })();
-
 (async () => {
-    executeWithOffset(MainBrowser)
-    process.exit(1)
+    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    for (let i = 3; i < 51; i++) {
+        let proxy = (i > 9) ? proxies[i] : null;
+        printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+        await MainBrowser(proxy, i);
+        await waitForInput();
+    }
+    process.exit(1);
 })();
 

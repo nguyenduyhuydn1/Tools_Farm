@@ -163,23 +163,28 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 let promiseTasks = [];
-
 let pathFile = path.join(__dirname, 'data', 'token', 'gumart.txt');
+
 (async (check = true) => {
     let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n');
-    const totalElements = 10;
-    let proxies = ['x', 'y', 'z'];
+    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
-    for (let i = 0; i < totalElements; i++) {
-        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        let proxy = (i > 10) ? proxies[i % proxies.length] : null;
+    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
-        if (check) await MainBrowser(proxy, i, lines[i]);
-        else await MainBrowser(proxy, i);
-        await sleep(2000);
+    let totalElements = 10;
+    // trong đó 3 là số proxy
+    const distance = Math.floor(totalElements / 3);
+    for (let offset = 0; offset < distance; offset++) {
+        for (let i = offset; i < totalElements; i += distance) {
+            let proxy = (i > 9) ? proxies[i] : null;
+            proxy = proxies[i] == 'null' ? null : proxies[i];
+            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+
+            if (check) await MainBrowser(proxy, i, lines[i]);
+            else await MainBrowser(proxy, i);
+            await sleep(1000);
+        }
     }
-
     if (promiseTasks.length > 0) {
         await Promise.all(promiseTasks).then(() => {
             console.log('Tất cả các task đã hoàn thành');

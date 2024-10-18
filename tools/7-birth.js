@@ -133,17 +133,25 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     }
 };
 
+
+
+// khong co token
 (async () => {
-    const totalElements = 10;
-    let proxies = ['x', 'y', 'z'];
+    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
-    for (let i = 0; i < totalElements; i++) {
-        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        let proxy = (i > 10) ? proxies[i % proxies.length] : null;
+    let totalElements = 10;
+    // trong đó 3 là số proxy
+    const distance = Math.floor(totalElements / 3);
+    for (let offset = 0; offset < distance; offset++) {
+        for (let i = offset; i < totalElements; i += distance) {
+            let proxy = (i > 9) ? proxies[i] : null;
+            proxy = proxies[i] == 'null' ? null : proxies[i];
+            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-        await MainBrowser(proxy, i);
-        await sleep(2000);
+            await MainBrowser(proxy, i);
+            await sleep(1000);
+        }
     }
-    writeTimeToFile('thời gian đập trứng tiếp theo', '7-birth.txt', 3).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();

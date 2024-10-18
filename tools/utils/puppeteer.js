@@ -16,27 +16,41 @@ puppeteer.use(stealth);
 
 async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
     if (proxy) {
-        puppeteer.use(
-            ProxyPlugin({
-                address: proxy.ip,
-                port: proxy.port,
-                credentials: {
-                    username: proxy.username,
-                    password: proxy.password,
-                },
-            })
-        );
+        const regex = /http:\/\/(?<username>[^:]+):(?<password>[^@]+)@(?<ip>[\d.]+):(?<port>\d+)/;
+        const match = proxy.match(regex);
+
+        if (match && match.groups) {
+            const { username, password, ip, port } = match.groups;
+            // console.log('Username:', username);
+            // console.log('Password:', password);
+            // console.log('IP Address:', ip);
+            // console.log('Port:', port);
+            puppeteer.use(
+                ProxyPlugin({
+                    address: ip,
+                    port: port,
+                    credentials: {
+                        username: username,
+                        password: password,
+                    },
+                })
+            );
+        } else {
+            console.log('Invalid URL format');
+        }
     }
 
     const defaultArgs = [
-        // '--disable-3d-apis',               // Vô hiệu hóa WebGL
-        // '--disable-accelerated-2d-canvas', // Vô hiệu hóa Canvas hardware acceleration
-        // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-        // '--disable-video',                 // Vô hiệu hóa video decoding
-        // '--disable-software-rasterizer',    // Vô hiệu hóa software rasterization
-
+        '--disable-3d-apis',               // Vô hiệu hóa WebGL
+        '--disable-video',                 // Vô hiệu hóa video decoding
         '--test-type',
-        '--disable-gpu',
+        '--disable-gpu',               // Vô hiệu hóa GPU
+        '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+        '--disable-software-rasterizer', // Tắt rasterizer dự phòng bằng phần mềm
+        '--no-sandbox',                 // Bỏ sandbox để tăng tính ổn định
+        '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
+        '--disable-gl-drawing-for-tests',
+        '--disable-dev-shm-usage', // Hạn chế bộ nhớ dùng cho shared memory
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-sync',
@@ -45,9 +59,9 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--disable-notifications',
         // '--window-size=1300,1000',
         '--window-size=400,700',
-        // `--window-position=0,0`,
+        `--window-position=0,0`,
         // '--start-maximized'
-        // --disable-blink-features=AutomationControlled
+        '--disable-blink-features=AutomationControlled'
         // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
         // được sử dụng để vô hiệu hóa một tính năng đặc biệt của Chromium gọi là "AutomationControlled"
     ];
@@ -60,6 +74,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
             ...defaultArgs,
             ...args
         ],
+        // devtools: true,
         ignoreDefaultArgs: ["--enable-automation"],
     });
 
@@ -135,8 +150,30 @@ module.exports = {
 
 
 
+// const totalElements = 10;
+// let proxies = ['x', 'y', 'z']
 
+// // chạy bao nhiêu acc trên 1 proxy
+// const distance = proxies.length;
 
+// const getProxy = (index) => {
+//     if (index >= 0 && index < 3) return proxies[0];
+//     if (index >= 3 && index < 6) return proxies[1];
+//     if (index >= 6 && index < 9) return proxies[2];
+//     return null;
+// }
+
+// const executeWithOffset = async (callback) => {
+//     for (let offset = 0; offset < distance; offset++) {
+//         for (let i = offset; i < totalElements; i += distance) {
+//             const proxy = getProxy(i);
+//             // await callback(proxy = null, i);
+//             console.log(i, proxy);
+
+//         }
+//     }
+// }
+// executeWithOffset(() => { })
 
 
 
@@ -159,3 +196,51 @@ module.exports = {
 // //     process.exit(1)
 // // })();
 
+
+
+// cach moi nhung da bi loai
+// let pathFile = path.join(__dirname, 'data', 'token', 'not-pixel.txt');
+// (async (check = false) => {
+//     let data = fs.readFileSync(pathFile, 'utf8');
+//     const lines = data.split('\n');
+//     const totalElements = 10;
+//     let proxies = ['x', 'y', 'z'];
+
+//     for (let i = 0; i < totalElements; i++) {
+//         printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
+//         let proxy = (i > 10) ? proxies[i % proxies.length] : null;
+
+//         if (check) await MainBrowser(proxy, i, lines[i]);
+//         else await MainBrowser(proxy, i);
+//         await sleep(1000);
+//     }
+//     process.exit(1)
+// })();
+
+
+
+
+
+
+
+
+
+// (async () => {
+//     let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n')
+//         .map(line => line.trim())
+//         .filter(line => line.length > 0);
+
+//     let totalElements = 10;
+//     // trong đó 3 là số proxy
+//     const distance = Math.floor(totalElements / 3);
+//     for (let offset = 0; offset < distance; offset++) {
+//         for (let i = offset; i < totalElements; i += distance) {
+//             let proxy = proxies[i];
+//             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+//             if (i > 10) await MainBrowser(proxy, i);
+//             else await MainBrowser(null, i);
+//             await sleep(1000);
+//         }
+//     }
+//     process.exit(1)
+// })();

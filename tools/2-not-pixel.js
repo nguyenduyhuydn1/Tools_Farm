@@ -56,7 +56,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const reuse = async (reuseToken, reuseProxy) => {
             let arrNumber = randomNumber();
-            let { charges } = await getStatus(reuseToken, reuseProxy);
+            let { charges = 5 } = await getStatus(reuseToken, reuseProxy);
             log(`[${charges} charges]`)
 
             await getClaim(reuseToken, reuseProxy);
@@ -94,7 +94,6 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [src, isToken] = await checkIframeAndClick(page);
         // await page.goto(src);
         // await waitForInput()
-        fs.appendFileSync(pathFile, `${isToken}\n`, 'utf-8');
         browser.close();
 
         await reuse(isToken, proxy);
@@ -104,20 +103,27 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     }
 };
 
-let pathFile = path.join(__dirname, 'data', 'token', 'not-pixel.txt');
-(async (check = false) => {
-    let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n');
-    const totalElements = 10;
-    let proxies = ['x', 'y', 'z'];
 
-    for (let i = 0; i < totalElements; i++) {
-        printFormattedTitle(`tài khoản ${i} - Profile ${i + 100}`, "red")
-        let proxy = (i > 10) ? proxies[i % proxies.length] : null;
 
-        if (check) await MainBrowser(proxy, i, lines[i]);
-        else await MainBrowser(proxy, i);
-        await sleep(2000);
+
+// khong the tai su dung lai token cua thang not-pixel
+(async () => {
+    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
+
+    let totalElements = 10;
+    // trong đó 3 là số proxy
+    const distance = Math.floor(totalElements / 3);
+    for (let offset = 0; offset < distance; offset++) {
+        for (let i = offset; i < totalElements; i += distance) {
+            let proxy = (i > 9) ? proxies[i] : null;
+            proxy = proxies[i] == 'null' ? null : proxies[i];
+            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+
+            await MainBrowser(proxy, i);
+            await sleep(1000);
+        }
     }
     process.exit(1)
 })();

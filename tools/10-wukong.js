@@ -7,70 +7,45 @@ const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
 // const proxies = require("./../data/proxy.js");
 
-
+// fetch("https://api.wuko.app/wuko-miniapp/v2/user/user", {
+//     "headers": {
+//       "accept": "application/json, text/plain, */*",
+//       "accept-language": "en-US,en;q=0.9",
+//       "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwNjY0IiwiaWF0IjoxNzI5MjMzMTk2LCJleHAiOjE3MjkyNDAzOTZ9.bhLYOtdg9xxBgz_yfkCLsVuvp3R0E8dWJuzMDmO2d_c",
+//       "if-none-match": "W/\"2b1-Hz9otQ72NjFShO98uMouZNb9low\"",
+//       "priority": "u=1, i",
+//       "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+//       "sec-ch-ua-mobile": "?0",
+//       "sec-ch-ua-platform": "\"Windows\"",
+//       "sec-fetch-dest": "empty",
+//       "sec-fetch-mode": "cors",
+//       "sec-fetch-site": "cross-site",
+//       "Referer": "https://wukong-miniapp-sigma.vercel.app/",
+//       "Referrer-Policy": "strict-origin-when-cross-origin"
+//     },
+//     "body": null,
+//     "method": "GET"
+//   });
 const headers = {
-    "accept": "*/*",
+    "accept": "application/json, text/plain, */*",
     "accept-language": "en-US,en;q=0.9",
-    "content-type": "application/json",
     "priority": "u=1, i",
+    "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-site",
-    "Referer": "https://tma.cryptorank.io/",
+    "sec-fetch-site": "cross-site",
+    "Referer": "https://wukong-miniapp-sigma.vercel.app/",
     "Referrer-Policy": "strict-origin-when-cross-origin"
 }
 // =====================================================================
 // =====================================================================
 // =====================================================================
 
-const fetchAccount = async (auth, proxy) => {
-    printFormattedTitle('start farning', "blue")
-    let data = await fetchData('https://api.cryptorank.io/v0/tma/account', 'GET', { authKey: 'authorization', authValue: auth, headers, proxy })
-    if (data) {
-        const startTime = new Date(data.farming.timestamp);
-        const endTime = new Date(startTime.getTime() + 6 * 60 * 60 * 1000 + (2 * 60 * 1000));
-        const endTimeTimestamp = endTime.getTime();
-
-        log(`bắt đầu lúc: [${formatTime(data.farming.timestamp)}] và kết thúc lúc: [${formatTime(endTimeTimestamp)}]`, 'yellow')
-        return endTimeTimestamp;
-    }
-    return false;
-}
-
-const fetchFarming = async (auth, proxy) => {
-    printFormattedTitle('start farning', "blue")
-    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/start-farming', 'POST', { authKey: 'authorization', authValue: auth, headers, body: {}, proxy })
-    if (data) {
-        console.log(`balance hiện tại ${data.balance}`);
-        return true;
-    }
-    return false;
-}
-
-const fetchTask = async (auth, proxy) => {
-    printFormattedTitle('lấy tasks', "blue")
-    let data = await fetchData('https://api.cryptorank.io/v0/tma/account/tasks', 'GET', { authKey: 'authorization', authValue: auth, headers, body: {}, proxy })
-    if (data) {
-        data = data.filter(v => (v.type == 'daily' || v.name == '$1000 Solidus Ai Tech Raffle') && v.isDone == false)
-        data.map(v => console.log(`nhiệm vụ: ${v.name}`))
-        return data;
-    }
-    return false;
-}
-
-const fetchClaim = async (id, auth, proxy) => {
-    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/claim/task/${id}`, 'POST', { authKey: 'authorization', authValue: auth, headers, body: {}, proxy })
-    if (data) console.log(`đã hoàn thành nv, ${data.balance}`);
-}
-
-const fetchClaimEndFarming = async (auth, proxy) => {
-    printFormattedTitle('claim farm', "blue")
-    let data = await fetchData(`https://api.cryptorank.io/v0/tma/account/end-farming`, 'POST', { authKey: 'authorization', authValue: auth, headers, body: {}, proxy })
-    if (data) {
-        console.log(`đã hoàn thành nv, ${JSON.stringify(data)}`);
-        return true;
-    }
-    return false;
+const fetchMine = async (token) => {
+    await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/mine', 'POST', { authKey: 'authorization', authValue: `Bearer ${token}` })
+    await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/user', 'GET', { authKey: 'authorization', authValue: `Bearer ${token}` })
 }
 
 // =====================================================================
@@ -159,7 +134,6 @@ let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
             if (check) await MainBrowser(proxy, i, lines[i]);
