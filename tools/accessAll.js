@@ -93,7 +93,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 (async () => {
-    for (let i = 10; i < 20; i++) {
+    for (let i = 10; i < 51; i++) {
         let proxy = (i > 9) ? proxies[i] : null;
         printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
         await MainBrowser(proxy, i);

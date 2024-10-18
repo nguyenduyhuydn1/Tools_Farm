@@ -58,7 +58,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             let { charges = 5 } = await getStatus(reuseToken, reuseProxy);
             log(`[${charges} charges]`)
 
-            // await getClaim(reuseToken, reuseProxy);
+            await getClaim(reuseToken, reuseProxy);
             for (let i = 0; i < charges; i++) {
                 await postStart(reuseToken, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)], reuseProxy);
                 await sleep(500)
