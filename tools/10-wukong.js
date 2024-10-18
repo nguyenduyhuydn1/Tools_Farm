@@ -45,6 +45,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            args: ['--window-size=900,800'],
             proxy,
         });
         const [page] = await browser.pages();

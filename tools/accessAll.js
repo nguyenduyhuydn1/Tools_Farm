@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
-
+// https://en.wikipedia.org/wiki/List_of_Android_smartphones#G
 // https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
 const { runPuppeteer, setMobile, proxies, totalElements, distance } = require('./utils/puppeteer.js');
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');

@@ -21,10 +21,6 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
 
         if (match && match.groups) {
             const { username, password, ip, port } = match.groups;
-            // console.log('Username:', username);
-            // console.log('Password:', password);
-            // console.log('IP Address:', ip);
-            // console.log('Port:', port);
             puppeteer.use(
                 ProxyPlugin({
                     address: ip,
@@ -43,6 +39,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
     const defaultArgs = [
         '--disable-3d-apis',               // Vô hiệu hóa WebGL
         '--disable-video',                 // Vô hiệu hóa video decoding
+
         '--test-type',
         '--disable-gpu',               // Vô hiệu hóa GPU
         '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
@@ -58,7 +55,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--mute-audio',
         '--disable-notifications',
         // '--window-size=1300,1000',
-        '--window-size=400,700',
+        '--window-size=300,800',
         `--window-position=0,0`,
         // '--start-maximized'
         '--disable-blink-features=AutomationControlled'
@@ -82,7 +79,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
 }
 
 const setMobile = async (page) => {
-    const iPhone = KnownDevices['iPhone 15 Pro'];
+    const iPhone = KnownDevices['Galaxy S9+'];
     await page.emulate(iPhone);
 }
 
