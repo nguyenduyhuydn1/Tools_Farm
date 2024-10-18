@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { runPuppeteer } = require('./utils/puppeteer.js')
+const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js')
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
 const { checkIframeAndClick } = require('./utils/selector.js')
 const { fetchData } = require('./utils/axios.js')
@@ -248,11 +248,6 @@ let pathFile = path.join(__dirname, 'data', 'token', 'seed.txt');
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
-    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
-
-    let totalElements = 10;
-    // trong đó 3 là số proxy
-    const distance = Math.floor(totalElements / 3);
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             let proxy = (i > 9) ? proxies[i] : null;

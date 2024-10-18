@@ -1,11 +1,10 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js')
-const { checkIframeAndClick } = require('./utils/selector.js')
-const { fetchData } = require('./utils/axios.js')
-// const proxies = require("./../data/proxy.js");
+const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js');
+const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');
+const { checkIframeAndClick } = require('./utils/selector.js');
+const { fetchData } = require('./utils/axios.js');
 
 // fetch("https://api.wuko.app/wuko-miniapp/v2/user/user", {
 //     "headers": {
@@ -39,13 +38,13 @@ const headers = {
     "Referer": "https://wukong-miniapp-sigma.vercel.app/",
     "Referrer-Policy": "strict-origin-when-cross-origin"
 }
+
 // =====================================================================
 // =====================================================================
 // =====================================================================
 
 const fetchMine = async (token) => {
     await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/mine', 'POST', { authKey: 'authorization', authValue: `Bearer ${token}` })
-    await fetchData('https://api.wuko.app/wuko-miniapp/v2/user/user', 'GET', { authKey: 'authorization', authValue: `Bearer ${token}` })
 }
 
 // =====================================================================
@@ -55,22 +54,7 @@ const fetchMine = async (token) => {
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const reuse = async (reuseToken, reuseProxy) => {
-            let timestamp = await fetchAccount(reuseToken, reuseProxy);
-            let now = Date.now();
 
-            if (timestamp < now) {
-                await fetchClaimEndFarming(reuseToken, reuseProxy);
-                await sleep("5000")
-                await fetchFarming(reuseToken, reuseProxy);
-
-                let tasks = await fetchTask(reuseToken, reuseProxy);
-                if (tasks.length > 0) {
-                    printFormattedTitle('làm nhiệm vụ', "blue")
-                    for (let x of tasks) {
-                        await fetchClaim(x.id, reuseToken, reuseProxy);
-                    }
-                }
-            }
         }
 
         if (existToken != null && existToken.length > 2) {
@@ -90,29 +74,37 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             await page.bringToFront();
         }
 
-        await page.setRequestInterception(true);
-        const getAuthorization = new Promise((resolve) => {
-            page.on('request', request => {
-                if (request.url() == 'https://api.cryptorank.io/v0/tma/account') {
-                    if (request.headers().authorization) {
-                        let authorization = request.headers().authorization;
-                        resolve(authorization);
-                    }
-                }
-                request.continue();
-            });
-        });
-        await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
+        await page.goto("https://web.telegram.org/k/#@wukobot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-        await checkIframeAndClick(page);
-        let authorization = await getAuthorization
+        let [src, iframe] = await checkIframeAndClick(page);
+        await page.goto(src);
+        await sleep(3000);
 
+        let dataLocalStorage = await page.evaluate(() => {
+            let localStorageContent = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                localStorageContent[key] = localStorage.getItem(key);
+            }
+            return localStorageContent;
+        });
+
+        // fs.appendFileSync(pathFile, `${dataLocalStorage.WUKONG_FE_TOKEN}\n`, 'utf-8');
+        // browser.close();
         // await waitForInput()
-        fs.appendFileSync(pathFile, `${authorization}\n`, 'utf-8');
-        browser.close();
+        let wuKongToken = dataLocalStorage.WUKONG_FE_TOKEN;
+        let dataUser = JSON.parse(dataLocalStorage.WUKONG_FE_USER);
 
-        await reuse(authorization, proxy);
+        const startTime = new Date(dataUser.mineStartTimestamp * 1000);
+        const endTime = new Date(startTime.getTime() + 8 * 60 * 60 * 1000);
+        const endTimeTimestamp = endTime.getTime();
+        let now = Date.now()
+
+        log(`farm xong lúc: [${formatTime(endTimeTimestamp)}]`, 'yellow');
+        if (now > endTimeTimestamp) {
+            await reuse(wuKongToken, proxy);
+        }
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()
@@ -120,17 +112,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 
-let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
+let pathFile = path.join(__dirname, 'data', 'token', 'wukong.txt');
 
-(async (check = true) => {
+(async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
-    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
-
-    let totalElements = 10;
-    // trong đó 3 là số proxy
-    const distance = Math.floor(totalElements / 3);
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             let proxy = (i > 9) ? proxies[i] : null;
@@ -141,6 +128,6 @@ let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
             await sleep(1000);
         }
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '4-cryptoRank.txt', 6).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '10-wokong.txt', 8).then(() => process.exit(1));
     process.exit(1)
 })();

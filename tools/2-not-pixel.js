@@ -1,11 +1,10 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { runPuppeteer } = require('./utils/puppeteer.js')
-const { sleep, formatTime, userAgent, randomNumber, waitForInput, printFormattedTitle, log } = require('./utils/utils.js')
-const { checkIframeAndClick } = require('./utils/selector.js')
-const { fetchData } = require('./utils/axios.js')
-// const proxies = require("./../data/proxy.js");
+const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js');
+const { sleep, formatTime, userAgent, randomNumber, waitForInput, printFormattedTitle, log } = require('./utils/utils.js');
+const { checkIframeAndClick } = require('./utils/selector.js');
+const { fetchData } = require('./utils/axios.js');
 
 const headers = {
     "accept": "application/json, text/plain, */*",
@@ -108,13 +107,6 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 // khong the tai su dung lai token cua thang not-pixel
 (async () => {
-    let proxies = fs.readFileSync(path.join(__dirname, 'data', 'proxy.txt'), 'utf8').split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0);
-
-    let totalElements = 10;
-    // trong đó 3 là số proxy
-    const distance = Math.floor(totalElements / 3);
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             let proxy = (i > 9) ? proxies[i] : null;

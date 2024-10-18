@@ -102,9 +102,16 @@ const setMobile = async (page) => {
 //     }
 // };
 
+let proxies = fs.readFileSync(path.join(__dirname, '..', 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
+let totalElements = 10;
+let distance = 3;
+
 module.exports = {
     runPuppeteer,
     setMobile,
+    proxies,
+    totalElements,
+    distance,
 }
 
 

@@ -23,13 +23,19 @@ const proxyFile = require("./data/proxy.js");
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 500}`,          //not-pixel
 // userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\not_pixel ${count + 800}`,          //gumart
 
+// let localStorageContent = {};
+// for (let i = 0; i < localStorage.length; i++) {
+//     const key = localStorage.key(i);
+//     localStorageContent[key] = localStorage.getItem(key);
+// }
+// console.log(localStorageContent);
 
 // set localstorage
 // await page.goto("https://web.telegram.org/");
 // await page.evaluate((data) => {
-//     for (const [key, value] of Object.entries(data)) {
-//         localStorage.setItem(key, value);
-//     }
+    // for (const [key, value] of Object.entries(data)) {
+    //     localStorage.setItem(key, value);
+    // }
 // }, localStorageData);
 // await page.reload();
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
