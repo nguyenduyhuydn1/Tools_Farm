@@ -230,7 +230,6 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [src, isToken] = await checkIframeAndClick(page);
 
         // await waitForInput()
-        fs.appendFileSync(pathFile, `${isToken}\n`, 'utf-8');
         browser.close()
 
         await reuse(isToken, proxy);
@@ -241,21 +240,16 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 
-let pathFile = path.join(__dirname, 'data', 'token', 'seed.txt');
 
 // token het han rat nhanh
-(async (check = false) => {
-    let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
-
+(async () => {
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) await MainBrowser(proxy, i, lines[i]);
-            else await MainBrowser(proxy, i);
+            await MainBrowser(proxy, i);
             await sleep(1000);
         }
     }

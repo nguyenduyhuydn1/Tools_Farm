@@ -12,8 +12,6 @@ stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
-// const proxies = require("./../data/proxy.js");
-
 async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
     if (proxy) {
         const regex = /http:\/\/(?<username>[^:]+):(?<password>[^@]+)@(?<ip>[\d.]+):(?<port>\d+)/;

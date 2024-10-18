@@ -146,6 +146,6 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             await sleep(1000);
         }
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '7-birth.txt', 4).then(() => process.exit(1));
     process.exit(1)
 })();
