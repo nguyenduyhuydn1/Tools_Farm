@@ -160,59 +160,6 @@ const fetchClaimTask = async (auth, idTask, proxy) => {
 
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
-        const reuse = async (reuseToken, reuseProxy) => {
-            await fetchClaimFarm(reuseToken, reuseProxy)
-            await fetchCatchWorms(reuseToken, reuseProxy)
-            await fetchLoginBonuses(reuseToken, reuseProxy)
-            let worms = await fetchInfoWorms(reuseToken, reuseProxy)
-            let infoLeader = await fetchInfoLeader(reuseToken, reuseProxy)
-
-            if (infoLeader) {
-                let { id, status, hunt_end_at } = infoLeader;
-                let check_hunt_end = Date.now() > Date.now(hunt_end_at);
-                let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
-
-                if (status == 'hunting' && check_hunt_end) {
-                    let checkHunting = await fetchCompleteHunting(reuseToken, id, reuseProxy);
-                    await sleep(2000);
-                    if (checkHunting) {
-                        if (worms.length > 0) {
-                            await fetchBirthFeed(reuseToken, { bird_id: id, worm_ids }, reuseProxy);
-                            await sleep(2000);
-                        }
-                        await fetchHappyBrith(reuseToken, id, reuseProxy);
-                        await sleep(2000);
-                        await fetchBirthStartHunting(reuseToken, id, reuseProxy);
-                        await sleep(2000);
-                    }
-                }
-                if (status == 'in-inventory') {
-                    if (worms.length > 0) {
-                        await fetchBirthFeed(reuseToken, { bird_id: id, worm_ids }, reuseProxy);
-                        await sleep(2000);
-                    }
-                    await fetchHappyBrith(reuseToken, id, reuseProxy);
-                    await sleep(2000);
-                    await fetchBirthStartHunting(reuseToken, id, reuseProxy);
-                    await sleep(2000);
-                }
-            }
-
-            // let tasks = await fetchMissions(reuseToken, reuseProxy);
-            // printFormattedTitle(`Claim`, "yellow")
-            // for (let x of tasks) {
-            //     for (let i = 0; i <= x.repeats; i++) {
-            //         await fetchClaimTask(reuseToken, x.id, reuseProxy);
-            //         await sleep(1000);
-            //     }
-            // }
-        }
-
-        if (existToken != null && existToken.length > 2) {
-            await reuse(existToken, proxy);
-            return;
-        }
-
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
             proxy,
@@ -232,7 +179,52 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         // await waitForInput()
         browser.close()
 
-        await reuse(isToken, proxy);
+        await fetchClaimFarm(isToken, proxy)
+        await fetchCatchWorms(isToken, proxy)
+        await fetchLoginBonuses(isToken, proxy)
+        let worms = await fetchInfoWorms(isToken, proxy)
+        let infoLeader = await fetchInfoLeader(isToken, proxy)
+
+        if (infoLeader) {
+            let { id, status, hunt_end_at } = infoLeader;
+            let check_hunt_end = Date.now() > Date.now(hunt_end_at);
+            let worm_ids = worms.splice(0, 1).map(v => { if (v?.id) { return v.id } })
+
+            if (status == 'hunting' && check_hunt_end) {
+                let checkHunting = await fetchCompleteHunting(isToken, id, proxy);
+                await sleep(2000);
+                if (checkHunting) {
+                    if (worms.length > 0) {
+                        await fetchBirthFeed(isToken, { bird_id: id, worm_ids }, proxy);
+                        await sleep(2000);
+                    }
+                    await fetchHappyBrith(isToken, id, proxy);
+                    await sleep(2000);
+                    await fetchBirthStartHunting(isToken, id, proxy);
+                    await sleep(2000);
+                }
+            }
+            if (status == 'in-inventory') {
+                if (worms.length > 0) {
+                    await fetchBirthFeed(isToken, { bird_id: id, worm_ids }, proxy);
+                    await sleep(2000);
+                }
+                await fetchHappyBrith(isToken, id, proxy);
+                await sleep(2000);
+                await fetchBirthStartHunting(isToken, id, proxy);
+                await sleep(2000);
+            }
+        }
+
+        // let tasks = await fetchMissions(isToken, proxy);
+        // printFormattedTitle(`Claim`, "yellow")
+        // for (let x of tasks) {
+        //     for (let i = 0; i <= x.repeats; i++) {
+        //         await fetchClaimTask(isToken, x.id, proxy);
+        //         await sleep(1000);
+        //     }
+        // }
+        // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()

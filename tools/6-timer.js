@@ -158,7 +158,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 let pathFile = path.join(__dirname, 'data', 'token', 'timer.txt');
 
-(async (check = true) => {
+(async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 

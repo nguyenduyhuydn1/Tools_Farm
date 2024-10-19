@@ -89,15 +89,11 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
         const [src, isToken] = await checkIframeAndClick(page);
         // await page.goto(src);
         // await waitForInput()
-        // browser.close();
-        await sleep(5000)
-        await sleep(5000)
-
         await reuse(isToken, proxy);
+        browser.close();
     } catch (error) {
         console.error("Error:", error);
         await waitForInput()
@@ -122,3 +118,15 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     }
     process.exit(1)
 })();
+// (async () => {
+//     for (let i = 49; i < 50; i++) {
+//         if (i == 4) continue
+//         let proxy = (i > 9) ? proxies[i] : null;
+//         proxy = proxies[i] == 'null' ? null : proxies[i];
+//         printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+
+//         await MainBrowser(proxy, i);
+//         await waitForInput();
+//     }
+//     process.exit(1);
+// })();

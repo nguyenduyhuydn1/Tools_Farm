@@ -30,8 +30,8 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--ignore-certificate-errors',
         '--mute-audio',
         '--disable-notifications',
-        // '--window-size=1300,1000',
-        '--window-size=300,800',
+        '--window-size=1300,1000',
+        // '--window-size=300,800',
         `--window-position=0,0`,
         // '--start-maximized'
         '--disable-blink-features=AutomationControlled',

@@ -130,17 +130,16 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
-        await sleep(5000)
-        await sleep(5000)
-        await sleep(5000)
-        await sleep(5000)
         let authorization = await getAuthorization
+        browser.close()
 
-        // await waitForInput()
-        fs.appendFileSync(pathFile, `${authorization}\n`, 'utf-8');
-
+        fs.appendFileSync(pathFile, `${JSON.stringify({
+            authorization,
+            countFolder
+        })}\n`, 'utf-8');
 
         await reuse(authorization, proxy);
+        // await waitForInput()
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()

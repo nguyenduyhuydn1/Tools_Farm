@@ -150,10 +150,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         let isToken = await getAuthorization;
 
         // await waitForInput()
-        await sleep(5000)
-        await sleep(5000)
-        await sleep(5000)
-        await sleep(5000)
+        // await sleep(5000)
+        // await sleep(5000)
         fs.appendFileSync(pathFile, `${isToken}\n`, 'utf-8');
         // browser.close();
 
@@ -167,20 +165,26 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 let promiseTasks = [];
 let pathFile = path.join(__dirname, 'data', 'token', 'gumart.txt');
 
+// phan tu 26
 (async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
-
-    for (let offset = 1; offset < distance; offset++) {
+    let ok = false;
+    for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 26) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) await MainBrowser(proxy, i, lines[i]);
-            else await MainBrowser(proxy, i);
-            await sleep(1000);
+                if (check) await MainBrowser(proxy, i, lines[i]);
+                else await MainBrowser(proxy, i);
+                await sleep(1000);
+            }
         }
     }
     if (promiseTasks.length > 0) {
