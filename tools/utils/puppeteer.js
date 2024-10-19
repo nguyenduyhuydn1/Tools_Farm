@@ -13,40 +13,18 @@ stealth.enabledEvasions.delete('media.codecs');
 puppeteer.use(stealth);
 
 async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
-    if (proxy) {
-        const regex = /http:\/\/(?<username>[^:]+):(?<password>[^@]+)@(?<ip>[\d.]+):(?<port>\d+)/;
-        const match = proxy.match(regex);
-
-        if (match && match.groups) {
-            const { username, password, ip, port } = match.groups;
-            puppeteer.use(
-                ProxyPlugin({
-                    address: ip,
-                    port: port,
-                    credentials: {
-                        username: username,
-                        password: password,
-                    },
-                })
-            );
-        } else {
-            console.log('Invalid URL format');
-        }
-    }
-
     const defaultArgs = [
         '--disable-3d-apis',               // Vô hiệu hóa WebGL
         '--disable-video',                 // Vô hiệu hóa video decoding
+        '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
+        '--disable-gl-drawing-for-tests',
 
         '--test-type',
         '--disable-gpu',               // Vô hiệu hóa GPU
         '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
         '--disable-software-rasterizer', // Tắt rasterizer dự phòng bằng phần mềm
         '--no-sandbox',                 // Bỏ sandbox để tăng tính ổn định
-        '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
-        '--disable-gl-drawing-for-tests',
         '--disable-dev-shm-usage', // Hạn chế bộ nhớ dùng cho shared memory
-        '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-sync',
         '--ignore-certificate-errors',
@@ -56,24 +34,57 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--window-size=300,800',
         `--window-position=0,0`,
         // '--start-maximized'
-        '--disable-blink-features=AutomationControlled'
+        '--disable-blink-features=AutomationControlled',
         // Ẩn dấu vết cho thấy Chrome đang được điều khiển bởi một công cụ tự động hóa, điều này giúp tránh các trang web phát hiện và chặn bot tự động.
         // được sử dụng để vô hiệu hóa một tính năng đặc biệt của Chromium gọi là "AutomationControlled"
     ];
 
-    const browser = await puppeteer.launch({
-        headless: false,
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-        userDataDir,
-        args: [
-            ...defaultArgs,
-            ...args
-        ],
-        // devtools: true,
-        ignoreDefaultArgs: ["--enable-automation"],
-    });
+    if (proxy) {
+        const regex = /http:\/\/(?<username>[^:]+):(?<password>[^@]+)@(?<ip>[\d.]+):(?<port>\d+)/;
+        const match = proxy.match(regex);
 
-    return browser;
+        const { username, password, ip, port } = match.groups;
+        puppeteer.use(
+            ProxyPlugin({
+                address: ip,
+                port: port,
+                credentials: {
+                    username: username,
+                    password: password,
+                },
+            })
+        );
+
+        // phải fix lỗi ở puppeteer-extra-plugin-proxy nếu không là k chạy đc proxy
+        const browser = await puppeteer.launch({
+            headless: false,
+            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+            userDataDir,
+            args: [
+                ...defaultArgs,
+                ...args,
+                `--proxy-server=${ip}:${port}`
+            ],
+            // devtools: true,
+            ignoreDefaultArgs: ["--enable-automation"],
+        });
+
+        return browser;
+    } else {
+        const browser = await puppeteer.launch({
+            headless: false,
+            executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+            userDataDir,
+            args: [
+                ...defaultArgs,
+                ...args,
+            ],
+            // devtools: true,
+            ignoreDefaultArgs: ["--enable-automation"],
+        });
+
+        return browser;
+    }
 }
 
 const setMobile = async (page) => {
@@ -98,8 +109,8 @@ const setMobile = async (page) => {
 // };
 
 let proxies = fs.readFileSync(path.join(__dirname, '..', 'data', 'proxy.txt'), 'utf8').split('\n').map(line => line.trim()).filter(line => line.length > 0);
-let totalElements = 10;
-let distance = 3;
+let totalElements = 51;
+let distance = 5;
 
 module.exports = {
     runPuppeteer,

@@ -58,10 +58,10 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             let { charges = 5 } = await getStatus(reuseToken, reuseProxy);
             log(`[${charges} charges]`)
 
-            await getClaim(reuseToken, reuseProxy);
+            // await getClaim(reuseToken, reuseProxy);
             for (let i = 0; i < charges; i++) {
                 await postStart(reuseToken, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)], reuseProxy);
-                await sleep(500)
+                // await sleep(500)
             }
         }
 
@@ -82,8 +82,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [page] = await browser.pages();
         if (proxy != null) {
             const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
-            await sleep(3000);
+            await page2.goto("https://www.myip.com/");
+            await sleep(1000);
             await page.bringToFront();
         }
 
@@ -93,7 +93,9 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [src, isToken] = await checkIframeAndClick(page);
         // await page.goto(src);
         // await waitForInput()
-        browser.close();
+        // browser.close();
+        await sleep(5000)
+        await sleep(5000)
 
         await reuse(isToken, proxy);
     } catch (error) {
@@ -109,6 +111,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 (async () => {
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
+            if (i == 4) continue
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");

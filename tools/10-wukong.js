@@ -51,7 +51,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [page] = await browser.pages();
         if (proxy != null) {
             const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
+            await page2.goto("https://www.myip.com/");
             await sleep(3000);
             await page.bringToFront();
         }

@@ -20,8 +20,7 @@ async function fetchData(url, method, { authKey = null, authValue = null, header
 
         // Thêm proxy nếu có
         if (proxy) {
-            const { username, password, ip, port } = proxy;
-            const agent = new HttpsProxyAgent(`http://${username}:${password}@${ip.substring(7)}:${port}`);
+            const agent = new HttpsProxyAgent(proxy);
             requestOptions.httpsAgent = agent;
             requestOptions.httpAgent = agent;
         }

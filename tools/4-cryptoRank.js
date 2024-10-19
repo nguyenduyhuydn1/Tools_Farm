@@ -109,8 +109,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [page] = await browser.pages();
         if (proxy != null) {
             const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
-            await sleep(3000);
+            await page2.goto("https://www.myip.com/");
+            await sleep(1000);
             await page.bringToFront();
         }
 
@@ -130,11 +130,15 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
         await checkIframeAndClick(page);
+        await sleep(5000)
+        await sleep(5000)
+        await sleep(5000)
+        await sleep(5000)
         let authorization = await getAuthorization
 
         // await waitForInput()
         fs.appendFileSync(pathFile, `${authorization}\n`, 'utf-8');
-        browser.close();
+
 
         await reuse(authorization, proxy);
     } catch (error) {
@@ -146,12 +150,13 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
 
-(async (check = true) => {
+(async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
+            if (i == 4) continue
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");

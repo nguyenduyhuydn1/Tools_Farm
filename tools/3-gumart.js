@@ -37,7 +37,6 @@ let fetchClaim = async (token, proxy) => {
     else console.log(`Check Error ${log('fetchClaim()')}`);
 }
 
-
 let fetchBoost = async (token, proxy) => {
     let data = await fetchData("https://api.gumart.click/api/boost", "POST", { authKey: 'authorization', authValue: `Bearer ${token}`, body: {}, headers, proxy });
     if (data) console.log(`Đã boost`, JSON.stringify(data));
@@ -126,8 +125,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [page] = await browser.pages();
         if (proxy != null) {
             const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
-            await sleep(3000);
+            await page2.goto("https://www.myip.com/");
+            await sleep(1000);
             await page.bringToFront();
         }
 
@@ -151,8 +150,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         let isToken = await getAuthorization;
 
         // await waitForInput()
+        await sleep(5000)
+        await sleep(5000)
+        await sleep(5000)
+        await sleep(5000)
         fs.appendFileSync(pathFile, `${isToken}\n`, 'utf-8');
-        browser.close();
+        // browser.close();
 
         await reuse(isToken, proxy);
     } catch (error) {
@@ -164,12 +167,13 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 let promiseTasks = [];
 let pathFile = path.join(__dirname, 'data', 'token', 'gumart.txt');
 
-(async (check = true) => {
+(async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
-    for (let offset = 0; offset < distance; offset++) {
+    for (let offset = 1; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
+            if (i == 4) continue
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
@@ -184,6 +188,6 @@ let pathFile = path.join(__dirname, 'data', 'token', 'gumart.txt');
             console.log('Tất cả các task đã hoàn thành');
         });
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '3-gumart.txt', 3).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '3-gumart.txt', 2).then(() => process.exit(1));
     process.exit(1)
 })();

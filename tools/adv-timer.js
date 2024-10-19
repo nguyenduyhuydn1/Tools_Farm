@@ -23,7 +23,7 @@ const headers = {
 let arr = [7712064825, 7417294726, 6025437423, 8148954049, 7057910081, 7562053994, 8026505897, 7324083771, 6509993479, 7743327554];
 
 const MainBrowser = async (countFolder, dataProxy = null) => {
-    await sleep(countFolder * 1000);
+    await sleep(countFolder * 6000);
     setInterval(async () => {
         printFormattedTitle(`tài khoản ${countFolder} - Profile ${countFolder + 100}`, "red")
         let data = await fetchData(`https://api.adsgram.ai/adv?blockId=2994&tg_id=${arr[countFolder]}&tg_platform=web&platform=Win32&language=en`, 'get', { headers, proxyUrl: dataProxy });
