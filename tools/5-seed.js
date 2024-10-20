@@ -179,7 +179,6 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [src, isToken] = await checkIframeAndClick(page);
 
         // await waitForInput()
-        browser.close()
 
         await fetchClaimFarm(isToken, proxy)
         await fetchCatchWorms(isToken, proxy)
@@ -227,6 +226,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         //     }
         // }
         // await waitForInput()
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()

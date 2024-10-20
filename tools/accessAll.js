@@ -95,35 +95,30 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     }
 };
 
-(async () => {
-    for (let i = 4; i < 55; i++) {
-        let proxy = (i > 9) ? proxies[i] : null;
-        proxy = proxies[i] == 'null' ? null : proxies[i];
-        printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
-
-        await MainBrowser(proxy, i);
-        await waitForInput();
-    }
-    process.exit(1);
-})();
-
-
 // (async () => {
-//     for (let offset = 0; offset < distance; offset++) {
-//         for (let i = offset; i < totalElements; i += distance) {
-//             // if (i == 4) continue
-//             let proxy = (i > 9) ? proxies[i] : null;
-//             proxy = proxies[i] == 'null' ? null : proxies[i];
-//             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+//     for (let i = 4; i < 55; i++) {
+//         let proxy = (i > 9) ? proxies[i] : null;
+//         proxy = proxies[i] == 'null' ? null : proxies[i];
+//         printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-//             await MainBrowser(proxy, i);
-//             await sleep(1000);
-//             await sleep(1000);
-//             await sleep(1000);
-//             await sleep(1000);
-//             await sleep(1000);
-//             await sleep(1000);
-//         }
+//         await MainBrowser(proxy, i);
+//         await waitForInput();
 //     }
-//     process.exit(1)
+//     process.exit(1);
 // })();
+
+
+(async () => {
+    for (let offset = 0; offset < distance; offset++) {
+        for (let i = offset; i < totalElements; i += distance) {
+            // if (i == 4) continue
+            let proxy = (i > 9) ? proxies[i] : null;
+            proxy = proxies[i] == 'null' ? null : proxies[i];
+            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+
+            await MainBrowser(proxy, i);
+            await waitForInput();
+        }
+    }
+    process.exit(1)
+})();
