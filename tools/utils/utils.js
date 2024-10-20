@@ -122,7 +122,14 @@ const takeTimeEnd = (timeStart, addTime = 4 * 60 * 60 * 1000) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 const randomNumber = () => {
     const ranges = [
-        { start: 872884, end: 872939 },
+        { start: 872875, end: 872925 },
+        { start: 873875, end: 873925 },
+        { start: 874875, end: 874925 },
+        { start: 875875, end: 875925 },
+        { start: 876875, end: 876925 },
+        { start: 877875, end: 877925 },
+        { start: 878875, end: 878925 },
+        { start: 879875, end: 879925 },
     ];
 
     function getRandomInRange(min, max) {

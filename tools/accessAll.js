@@ -44,14 +44,16 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             proxy,
         });
         const [page] = await browser.pages();
-        if (proxy != null) {
+        if (proxy) {
             const page2 = await browser.newPage();
-            await page2.goto("https://google.com");
-            await sleep(1000);
+            // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
+            // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
+            await page2.goto("https://www.myip.com/");
+            await sleep(3000);
             await page.bringToFront();
         }
 
-        // await setMobile(page);
+        await setMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -75,7 +77,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         //     }
         // });
 
-        await page.goto("https://ipinfo.io/");
+        await page.goto("https://web.telegram.org/k/#@wukobot");
         // await page.goto("https://web.telegram.org/k/");
         // await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
@@ -93,35 +95,35 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     }
 };
 
-// (async () => {
-//     for (let i = 0; i < 55; i++) {
-//         let proxy = (i > 9) ? proxies[i] : null;
-//         proxy = proxies[i] == 'null' ? null : proxies[i];
-//         printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
-
-//         await MainBrowser(proxy, i);
-//         await waitForInput();
-//     }
-//     process.exit(1);
-// })();
-
-
 (async () => {
-    for (let offset = 0; offset < distance; offset++) {
-        for (let i = offset; i < totalElements; i += distance) {
-            // if (i == 4) continue
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+    for (let i = 4; i < 55; i++) {
+        let proxy = (i > 9) ? proxies[i] : null;
+        proxy = proxies[i] == 'null' ? null : proxies[i];
+        printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            await MainBrowser(proxy, i);
-            await sleep(1000);
-            await sleep(1000);
-            await sleep(1000);
-            await sleep(1000);
-            await sleep(1000);
-            await sleep(1000);
-        }
+        await MainBrowser(proxy, i);
+        await waitForInput();
     }
-    process.exit(1)
+    process.exit(1);
 })();
+
+
+// (async () => {
+//     for (let offset = 0; offset < distance; offset++) {
+//         for (let i = offset; i < totalElements; i += distance) {
+//             // if (i == 4) continue
+//             let proxy = (i > 9) ? proxies[i] : null;
+//             proxy = proxies[i] == 'null' ? null : proxies[i];
+//             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+
+//             await MainBrowser(proxy, i);
+//             await sleep(1000);
+//             await sleep(1000);
+//             await sleep(1000);
+//             await sleep(1000);
+//             await sleep(1000);
+//             await sleep(1000);
+//         }
+//     }
+//     process.exit(1)
+// })();

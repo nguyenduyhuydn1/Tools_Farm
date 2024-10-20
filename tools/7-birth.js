@@ -101,8 +101,10 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             proxy,
         });
         const [page] = await browser.pages();
-        if (proxy != null) {
+        if (proxy) {
             const page2 = await browser.newPage();
+            // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
+            // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
             await page2.goto("https://www.myip.com/");
             await sleep(3000);
             await page.bringToFront();
@@ -110,13 +112,11 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
         await page.goto("https://web.telegram.org/k/#@birdx2_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
         const [src, iframe] = await checkIframeAndClick(page);
-
         await page.goto(src);
+        await sleep(1000);
         await page.goto('https://birdx.birds.dog/mini-game');
-        // await waitForInput()
-        browser.close()
+        await sleep(3000);
 
         await fetchMintStatusWorms(iframe, proxy);
         let data = await fetchEggPlay(iframe, proxy);
@@ -126,6 +126,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
             await fetchEggClaim(iframe, proxy);
         }
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -133,17 +134,22 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 
 
-// khong co token
 (async () => {
+    // let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
+            // if (i == 44) {
+            //     ok = true;
+            // }
+            // if (ok) {
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
             await MainBrowser(proxy, i);
-            await sleep(1000);
+            //     await sleep(1000);
+            // }
         }
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '7-birth.txt', 4).then(() => process.exit(1));

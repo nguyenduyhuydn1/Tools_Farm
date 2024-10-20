@@ -80,20 +80,22 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         });
 
         const [page] = await browser.pages();
-        if (proxy != null) {
+        if (proxy) {
             const page2 = await browser.newPage();
+            // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
+            // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
             await page2.goto("https://www.myip.com/");
-            await sleep(1000);
+            await sleep(3000);
             await page.bringToFront();
         }
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
         const [src, isToken] = await checkIframeAndClick(page);
-        // await page.goto(src);
-        // await waitForInput()
-        await reuse(isToken, proxy);
         browser.close();
+        // await page.goto(src);
+        await reuse(isToken, proxy);
+        // await waitForInput()
     } catch (error) {
         console.error("Error:", error);
         await waitForInput()

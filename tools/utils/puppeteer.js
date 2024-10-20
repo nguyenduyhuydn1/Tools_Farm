@@ -14,15 +14,15 @@ puppeteer.use(stealth);
 
 async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
     const defaultArgs = [
-        '--disable-3d-apis',               // Vô hiệu hóa WebGL
-        '--disable-video',                 // Vô hiệu hóa video decoding
-        '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
-        '--disable-gl-drawing-for-tests',
+        // '--disable-3d-apis',               // Vô hiệu hóa WebGL
+        // '--disable-video',                 // Vô hiệu hóa video decoding
+        // '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
+        // '--disable-gl-drawing-for-tests',
 
         '--test-type',
-        '--disable-gpu',               // Vô hiệu hóa GPU
-        '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
-        '--disable-software-rasterizer', // Tắt rasterizer dự phòng bằng phần mềm
+        // '--disable-gpu',               // Vô hiệu hóa GPU
+        // '--disable-gpu-compositing',       // Vô hiệu hóa GPU compositing
+        // '--disable-software-rasterizer', // Tắt rasterizer dự phòng bằng phần mềm
         '--no-sandbox',                 // Bỏ sandbox để tăng tính ổn định
         '--disable-dev-shm-usage', // Hạn chế bộ nhớ dùng cho shared memory
         '--disable-setuid-sandbox',
@@ -30,8 +30,8 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--ignore-certificate-errors',
         '--mute-audio',
         '--disable-notifications',
-        '--window-size=1300,1000',
-        // '--window-size=300,800',
+        // '--window-size=1300,1000',
+        '--window-size=300,800',
         `--window-position=0,0`,
         // '--start-maximized'
         '--disable-blink-features=AutomationControlled',
@@ -88,7 +88,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
 }
 
 const setMobile = async (page) => {
-    const iPhone = KnownDevices['Galaxy S9+'];
+    const iPhone = KnownDevices['iPhone 15 Pro'];
     await page.emulate(iPhone);
 }
 

@@ -109,7 +109,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             });
         }
 
-        if (existToken != null && existToken.length > 2) {
+        if (existToken != null && existToken != 'null' && existToken.length > 7) {
             await reuse(existToken, proxy);
             return;
         }
@@ -123,10 +123,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             proxy,
         });
         const [page] = await browser.pages();
-        if (proxy != null) {
+        if (proxy) {
             const page2 = await browser.newPage();
+            // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
+            // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
             await page2.goto("https://www.myip.com/");
-            await sleep(1000);
+            await sleep(3000);
             await page.bringToFront();
         }
 
@@ -148,12 +150,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
         await checkIframeAndClick(page);
         let isToken = await getAuthorization;
-
-        // await waitForInput()
-        // await sleep(5000)
-        // await sleep(5000)
-        fs.appendFileSync(pathFile, `${isToken}\n`, 'utf-8');
-        // browser.close();
+        browser.close();
+        fs.appendFileSync(pathFile, `${JSON.stringify({ isToken, countFolder })}\n`, 'utf-8');
 
         await reuse(isToken, proxy);
     } catch (error) {
@@ -165,26 +163,33 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 let promiseTasks = [];
 let pathFile = path.join(__dirname, 'data', 'token', 'gumart.txt');
 
-// phan tu 26
-(async (check = false) => {
+(async (check = true) => {
     let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
-    let ok = false;
+    let lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0).map(v => JSON.parse(v));
+
+    // let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            if (i == 26) {
-                ok = true;
-            }
-            if (ok) {
-                let proxy = (i > 9) ? proxies[i] : null;
-                proxy = proxies[i] == 'null' ? null : proxies[i];
-                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            // if (i == 26) {
+            //     ok = true;
+            // }
+            // if (ok) {
+            let proxy = (i > 9) ? proxies[i] : null;
+            proxy = proxies[i] == 'null' ? null : proxies[i];
+            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-                if (check) await MainBrowser(proxy, i, lines[i]);
-                else await MainBrowser(proxy, i);
+            if (check) {
+                const result = lines.find(({ countFolder }) => countFolder === i);
+                console.log("token: ", result);
+                await MainBrowser(proxy, i, result.isToken);
+            }
+            else {
+                await MainBrowser(proxy, i);
                 await sleep(1000);
             }
+            //     await waitForInput()
+            // }
         }
     }
     if (promiseTasks.length > 0) {

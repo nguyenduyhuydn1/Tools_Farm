@@ -97,7 +97,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
         }
 
-        if (existToken != null && existToken.length > 2) {
+        if (existToken != null && existToken != 'null' && existToken.length > 7) {
             await reuse(existToken, proxy);
             return;
         }
@@ -107,10 +107,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             proxy,
         });
         const [page] = await browser.pages();
-        if (proxy != null) {
+        if (proxy) {
             const page2 = await browser.newPage();
+            // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
+            // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
             await page2.goto("https://www.myip.com/");
-            await sleep(1000);
+            await sleep(3000);
             await page.bringToFront();
         }
 
@@ -128,18 +130,14 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         });
         await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
-
         await checkIframeAndClick(page);
         let authorization = await getAuthorization
         browser.close()
-
-        fs.appendFileSync(pathFile, `${JSON.stringify({
-            authorization,
-            countFolder
-        })}\n`, 'utf-8');
+        fs.appendFileSync(pathFile, `${JSON.stringify({ authorization, countFolder })}\n`, 'utf-8');
 
         await reuse(authorization, proxy);
         // await waitForInput()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()
@@ -149,20 +147,33 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
 
-(async (check = false) => {
+(async (check = true) => {
     let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
+    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0).map(v => JSON.parse(v));
 
+    // let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
+            // if (i == 4) {
+            //     ok = true;
+            // }
+            // if (ok) {
             let proxy = (i > 9) ? proxies[i] : null;
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) await MainBrowser(proxy, i, lines[i]);
-            else await MainBrowser(proxy, i);
-            await sleep(1000);
+            if (check) {
+                const result = lines.find(({ countFolder }) => countFolder === i);
+                console.log("token: ", result);
+                await MainBrowser(proxy, i, result.authorization);
+            }
+            else {
+                await MainBrowser(proxy, i);
+                await sleep(1000);
+            }
+            //     await waitForInput()
+            // }
         }
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '4-cryptoRank.txt', 6).then(() => process.exit(1));
