@@ -4,7 +4,7 @@ async function clickIfExists(page, selector, timeout = 500, callback = () => { }
     const elementExists = await page.$(selector);
     if (elementExists) {
         await page.waitForSelector(selector, { hidden: true, visible: true, timeout: timeout }).then(e => e.click());
-        await sleep(2000);
+        await sleep(1000);
     } else {
         callback()
     }

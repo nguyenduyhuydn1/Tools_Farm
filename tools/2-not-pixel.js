@@ -58,7 +58,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             let { charges = 5 } = await getStatus(reuseToken, reuseProxy);
             log(`[${charges} charges]`)
 
-            // await getClaim(reuseToken, reuseProxy);
+            await getClaim(reuseToken, reuseProxy);
             for (let i = 0; i < charges; i++) {
                 await postStart(reuseToken, arrNumber[Math.floor(Math.random() * arrNumber.length - 1)], reuseProxy);
                 // await sleep(500)
@@ -84,16 +84,15 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://www.myip.com/");
+            await page2.goto("https://example.com/");
             await sleep(3000);
             await page.bringToFront();
         }
 
         await page.goto("https://web.telegram.org/k/#@notpixel");
-        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
         const [src, isToken] = await checkIframeAndClick(page);
         browser.close();
-        // await page.goto(src);
         await reuse(isToken, proxy);
         // await waitForInput()
     } catch (error) {
@@ -107,15 +106,20 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 // khong the tai su dung lai token cua thang not-pixel
 (async () => {
+    let ok = true;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 10) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            await MainBrowser(proxy, i);
-            await sleep(1000);
+                await MainBrowser(proxy, i);
+            }
         }
     }
     process.exit(1)

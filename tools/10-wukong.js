@@ -39,20 +39,44 @@ const fetchMine = async (token, proxy) => {
 // =====================================================================
 // =====================================================================
 
+// // Giả lập các thuộc tính navigator để chống phát hiện
+// await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, 'platform', { get: () => 'iPhone' });
+//     Object.defineProperty(navigator, 'vendor', { get: () => 'Apple Inc.' });
+//     Object.defineProperty(navigator, 'webdriver', { get: () => undefined }); // Bỏ cờ phát hiện bot
+//     Object.defineProperty(navigator, 'languages', { get: () => ['vi-VN', 'en-US'] });
+
+//     // Xử lý WebRTC leaks
+//     Object.defineProperty(navigator, 'mediaDevices', {
+//         get: () => ({
+//             enumerateDevices: async () => [{ kind: 'videoinput', label: 'Camera ảo' }],
+//         }),
+//     });
+// });
+
+// // Chặn Canvas fingerprinting và sửa đổi dữ liệu trả về
+// await page.evaluateOnNewDocument(() => {
+//     const getContext = HTMLCanvasElement.prototype.getContext;
+//     HTMLCanvasElement.prototype.getContext = function (...args) {
+//         const context = getContext.apply(this, args);
+//         if (context && context.getImageData) {
+//             const originalGetImageData = context.getImageData;
+//             context.getImageData = function (...imgArgs) {
+//                 console.log('Phát hiện và chặn fingerprinting trên canvas!');
+//                 const imageData = originalGetImageData.apply(this, imgArgs);
+//                 imageData.data[0] = (imageData.data[0] + 1) % 255; // Sửa nhẹ dữ liệu để phá fingerprint.
+//                 return imageData;
+//             };
+//         }
+//         return context;
+//     };
+// });
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
-        const reuse = async (reuseToken, reuseProxy) => {
-            await fetchMine(reuseToken, reuseProxy);
-        }
-
-        if (existToken != null && existToken != 'null' && existToken.length > 7) {
-            await reuse(existToken, proxy);
-            return;
-        }
-
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
-            args: ['--window-size=400,800'],
+            args: ['--window-size=400,800', '--disable-web-security',
+                '--disable-features=IsolateOrigins,site-per-process',],
             proxy,
         });
         const [page] = await browser.pages();
@@ -60,7 +84,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://www.myip.com/");
+            await page2.goto("https://example.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -85,20 +109,13 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         let [src, iframe] = await checkIframeAndClick(page);
         await page.goto(src);
         await sleep(3000);
-
         await clickIfExists(page, "#root > div > div > button");
-
         let authorization = await getAuthorization
 
-        fs.appendFileSync(pathFile, `${JSON.stringify({ token: authorization.jwtToken, countFolder })}\n`, 'utf-8');
-
         let [now, endTimeTimestamp] = takeTimeEnd(authorization.user.mineStartTimestamp * 1000, 8 * 60 * 60 * 1000);
-
-        if (now > endTimeTimestamp) {
-            await reuse(authorization.jwtToken, proxy);
-        } else {
-            log(`end farm lúc: [${formatTime(endTimeTimestamp)}], quay lai sau`, 'yellow');
-        }
+        if (now > endTimeTimestamp) await fetchMine(authorization.jwtToken, proxy);
+        else log(`end farm lúc: [${formatTime(endTimeTimestamp)}], quay lai sau`, 'yellow');
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
         // await waitForInput()
@@ -106,16 +123,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 };
 
 
-let pathFile = path.join(__dirname, 'data', 'token', 'wukong.txt');
-(async (check = false) => {
-    let data = fs.readFileSync(pathFile, 'utf8');
-    const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
-
-    // let ok = false;
+(async () => {
+    let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 30) {
+            // if (i == 46) {
             //     ok = true;
             // }
             // if (ok) {
@@ -123,9 +136,9 @@ let pathFile = path.join(__dirname, 'data', 'token', 'wukong.txt');
             proxy = proxies[i] == 'null' ? null : proxies[i];
             printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) await MainBrowser(proxy, i, lines[i]);
-            else await MainBrowser(proxy, i);
+            await MainBrowser(proxy, i);
             await sleep(1000);
+            await waitForInput()
             // }
         }
     }

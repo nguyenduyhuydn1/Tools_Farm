@@ -122,7 +122,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://www.myip.com/");
+            await page2.goto("https://example.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -144,30 +144,29 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.goto("https://web.telegram.org/k/#@TimeFarmCryptoBot");
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
         await checkIframeAndClick(page);
-
         let authorization = await getAuthorization
-        browser.close();
         fs.appendFileSync(pathFile, `${JSON.stringify({ authorization, countFolder })}\n`, 'utf-8');
 
         await reuse(authorization, proxy);
+        browser.close();
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()
     }
 };
 
-
+d
 let pathFile = path.join(__dirname, 'data', 'token', 'timer.txt');
 
 (async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);;
 
-    // let ok = false;
+    let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 28) {
+            // if (i == 27) {
             //     ok = true;
             // }
             // if (ok) {

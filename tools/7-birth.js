@@ -105,7 +105,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://www.myip.com/");
+            await page2.goto("https://example.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -126,7 +126,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
             await fetchEggClaim(iframe, proxy);
         }
-        browser.close()
+        // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }

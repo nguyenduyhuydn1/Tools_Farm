@@ -111,32 +111,32 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://www.myip.com/");
+            await page2.goto("https://example.com/");
             await sleep(3000);
             await page.bringToFront();
         }
 
-        await page.setRequestInterception(true);
-        const getAuthorization = new Promise((resolve) => {
-            page.on('request', request => {
-                if (request.url() == 'https://api.cryptorank.io/v0/tma/account') {
-                    if (request.headers().authorization) {
-                        let authorization = request.headers().authorization;
-                        resolve(authorization);
-                    }
-                }
-                request.continue();
-            });
-        });
-        await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
-        await page.waitForNavigation({ waitUntil: 'networkidle0' });
-        await checkIframeAndClick(page);
-        let authorization = await getAuthorization
-        browser.close()
-        fs.appendFileSync(pathFile, `${JSON.stringify({ authorization, countFolder })}\n`, 'utf-8');
+        // await page.setRequestInterception(true);
+        // const getAuthorization = new Promise((resolve) => {
+        //     page.on('request', request => {
+        //         if (request.url() == 'https://api.cryptorank.io/v0/tma/account') {
+        //             if (request.headers().authorization) {
+        //                 let authorization = request.headers().authorization;
+        //                 resolve(authorization);
+        //             }
+        //         }
+        //         request.continue();
+        //     });
+        // });
+        await page.goto("https://web.telegram.org/k/");
+        // await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
+        // await page.waitForNavigation({ waitUntil: 'networkidle0' });
+        // await checkIframeAndClick(page);
+        // let authorization = await getAuthorization
+        // fs.appendFileSync(pathFile, `${JSON.stringify({ authorization, countFolder })}\n`, 'utf-8');
 
-        await reuse(authorization, proxy);
-        // await waitForInput()
+        // await reuse(authorization, proxy);
+        // // await waitForInput()
         // browser.close()
     } catch (error) {
         console.error("Error:", error.message);
@@ -147,33 +147,33 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
 
-(async (check = true) => {
+(async (check = false) => {
     let data = fs.readFileSync(pathFile, 'utf8');
     const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0).map(v => JSON.parse(v));
 
-    // let ok = false;
+    let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 4) {
-            //     ok = true;
-            // }
-            // if (ok) {
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 39) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) {
-                const result = lines.find(({ countFolder }) => countFolder === i);
-                console.log("token: ", result);
-                await MainBrowser(proxy, i, result.authorization);
+                if (check) {
+                    const result = lines.find(({ countFolder }) => countFolder === i);
+                    console.log("token: ", result);
+                    await MainBrowser(proxy, i, result.authorization);
+                }
+                else {
+                    await MainBrowser(proxy, i);
+                    await sleep(1000);
+                    await waitForInput()
+                }
             }
-            else {
-                await MainBrowser(proxy, i);
-                await sleep(1000);
-            }
-            //     await waitForInput()
-            // }
         }
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '4-cryptoRank.txt', 6).then(() => process.exit(1));
