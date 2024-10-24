@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { runPuppeteer, proxies, totalElements, distance } = require('./utils/puppeteer.js');
+const { runPuppeteer, setMobile, proxies, totalElements, distance } = require('./utils/puppeteer.js');
 const { sleep, formatTime, userAgent, waitForInput, printFormattedTitle, log, writeTimeToFile } = require('./utils/utils.js');
 const { checkIframeAndClick } = require('./utils/selector.js');
 const { fetchData } = require('./utils/axios.js');
@@ -111,11 +111,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://example.com/");
+            await page2.goto("https://google.com/");
             await sleep(3000);
             await page.bringToFront();
         }
 
+        // await setMobile(page);
         // await page.setRequestInterception(true);
         // const getAuthorization = new Promise((resolve) => {
         //     page.on('request', request => {
@@ -128,6 +129,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         //         request.continue();
         //     });
         // });
+
         await page.goto("https://web.telegram.org/k/");
         // await page.goto("https://web.telegram.org/k/#@CryptoRank_app_bot");
         // await page.waitForNavigation({ waitUntil: 'networkidle0' });
@@ -155,7 +157,7 @@ let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            if (i == 39) {
+            if (i == 37) {
                 ok = true;
             }
             if (ok) {
@@ -170,7 +172,6 @@ let pathFile = path.join(__dirname, 'data', 'token', 'cryptoRank.txt');
                 }
                 else {
                     await MainBrowser(proxy, i);
-                    await sleep(1000);
                     await waitForInput()
                 }
             }

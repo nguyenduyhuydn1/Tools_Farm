@@ -24,7 +24,7 @@ async function checkIframeAndClick(page) {
             await clickIfExists(page, "#column-center .bubbles-group-last .reply-markup > :nth-of-type(1) > :nth-of-type(1)");
             await clickIfExists(page, ".popup-confirmation.active .popup-buttons button:nth-child(1)");
         }
-        await sleep(5000);
+        await sleep(4000);
         iframeExists = await page.$('iframe') !== null;
     }
 

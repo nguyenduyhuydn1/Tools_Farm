@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const { KnownDevices } = require('puppeteer');
+const { KnownDevices, executablePath } = require('puppeteer');
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const ProxyPlugin = require('puppeteer-extra-plugin-proxy');
@@ -10,10 +10,15 @@ const stealth = StealthPlugin();
 stealth.enabledEvasions.delete('iframe.contentWindow');
 stealth.enabledEvasions.delete('navigator.plugins');
 stealth.enabledEvasions.delete('media.codecs');
+const AnonymizeUA = require('puppeteer-extra-plugin-anonymize-ua');
+
+// Add the anonymize UA plugin
+puppeteer.use(AnonymizeUA());
 puppeteer.use(stealth);
 
 async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
     const defaultArgs = [
+        '--disable-features=Translate,OptimizationHints,MediaRouter,DialMediaRouteProvider,CalculateNativeWinOcclusion,InterestFeedContentSuggestions,CertificateTransparencyComponentUpdater,AutofillServerCommunication,PrivacySandboxSettings4,AutomationControlled',
         // '--disable-3d-apis',               // Vô hiệu hóa WebGL
         // '--disable-video',                 // Vô hiệu hóa video decoding
         // '--disable-accelerated-2d-canvas', // Tắt tăng tốc canvas 2D
@@ -30,8 +35,8 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         '--ignore-certificate-errors',
         '--mute-audio',
         '--disable-notifications',
-        // '--window-size=1300,1000',
-        '--window-size=300,800',
+        '--window-size=1300,1000',
+        // '--window-size=300,800',
         `--window-position=0,0`,
         // '--start-maximized'
         '--disable-blink-features=AutomationControlled',
@@ -58,6 +63,7 @@ async function runPuppeteer({ userDataDir = null, args = [], proxy = null }) {
         // phải fix lỗi ở puppeteer-extra-plugin-proxy nếu không là k chạy đc proxy
         const browser = await puppeteer.launch({
             headless: false,
+            // executablePath: executablePath(),
             executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
             userDataDir,
             args: [

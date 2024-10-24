@@ -122,7 +122,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://example.com/");
+            await page2.goto("https://google.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -145,17 +145,15 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.waitForNavigation({ waitUntil: 'networkidle0' });
         await checkIframeAndClick(page);
         let authorization = await getAuthorization
-        fs.appendFileSync(pathFile, `${JSON.stringify({ authorization, countFolder })}\n`, 'utf-8');
 
         await reuse(authorization, proxy);
-        browser.close();
+        // browser.close();
     } catch (error) {
         console.error("Error:", error.message);
         await waitForInput()
     }
 };
 
-d
 let pathFile = path.join(__dirname, 'data', 'token', 'timer.txt');
 
 (async (check = false) => {
@@ -166,18 +164,18 @@ let pathFile = path.join(__dirname, 'data', 'token', 'timer.txt');
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 27) {
-            //     ok = true;
-            // }
-            // if (ok) {
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 35) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            if (check) await MainBrowser(proxy, i, lines[i]);
-            else await MainBrowser(proxy, i);
-            await sleep(1000);
-            // }
+                if (check) await MainBrowser(proxy, i, lines[i]);
+                else await MainBrowser(proxy, i);
+                // await waitForInput()
+            }
         }
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '6-timer.txt', 4).then(() => process.exit(1));

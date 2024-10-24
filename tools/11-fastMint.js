@@ -106,7 +106,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
-            args: ['--window-size=700,800',
+            args: [
+                '--window-size=700,800',
                 // '--disable-web-security',
                 // '--disable-features=IsolateOrigins,site-per-process',
             ],
@@ -117,7 +118,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://example.com/");
+            await page2.goto("https://google.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -128,10 +129,12 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await page.goto(src);
         let cookies = await page.cookies();
 
-        let isVisitToday = cookies.find(obj => obj.name == "isVisitToday");
+        let isVisitToday = false;
+        isVisitToday = cookies.find(obj => obj.name == "isVisitToday");
         let sessionToken = cookies.find(obj => obj.name == "sessionToken");
-        let isToken = sessionToken.value;
-        let checkVisit = isVisitToday.value;
+        let isToken = sessionToken?.value;
+        let checkVisit = isVisitToday?.value;
+
 
         if (!(checkVisit == true || checkVisit == 'true')) {
             let clicked = false;
@@ -190,7 +193,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
         }
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '11-fastmint.txt', 8).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '11-fastmint.txt', 6).then(() => process.exit(1));
     process.exit(1)
 })();
 

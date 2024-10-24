@@ -71,6 +71,23 @@ const fetchMine = async (token, proxy) => {
 //         return context;
 //     };
 // });
+// Vô hiệu hóa WebGL fingerprinting (nếu cần thiết)
+// await page.evaluateOnNewDocument(() => {
+//     const getParameter = WebGLRenderingContext.prototype.getParameter;
+//     WebGLRenderingContext.prototype.getParameter = function (parameter) {
+//         if (parameter === 37445 || parameter === 37446) {
+//             return 'Fake GPU Vendor';  // GPU vendor giả lập
+//         }
+//         return getParameter(parameter);
+//     };
+// });
+
+// // Chặn WebRTC nếu trang sử dụng để fingerprinting
+// await page.evaluateOnNewDocument(() => {
+//     Object.defineProperty(navigator, 'mediaDevices', {
+//         get: () => undefined
+//     });
+// });
 const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const browser = await runPuppeteer({
@@ -84,7 +101,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://example.com/");
+            await page2.goto("https://google.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -106,6 +123,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         await setMobile(page);
 
         await page.goto("https://web.telegram.org/k/#@wukobot");
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
         let [src, iframe] = await checkIframeAndClick(page);
         await page.goto(src);
         await sleep(3000);
@@ -115,34 +133,34 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         let [now, endTimeTimestamp] = takeTimeEnd(authorization.user.mineStartTimestamp * 1000, 8 * 60 * 60 * 1000);
         if (now > endTimeTimestamp) await fetchMine(authorization.jwtToken, proxy);
         else log(`end farm lúc: [${formatTime(endTimeTimestamp)}], quay lai sau`, 'yellow');
+        // await waitForInput()
         browser.close()
     } catch (error) {
-        console.error("Error:", error.message);
         // await waitForInput()
+        console.error("Error:", error.message);
     }
 };
 
 
 (async () => {
-    let ok = false;
+    let ok = true;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 46) {
-            //     ok = true;
-            // }
-            // if (ok) {
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 20) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            await MainBrowser(proxy, i);
-            await sleep(1000);
-            await waitForInput()
-            // }
+                await MainBrowser(proxy, i);
+                // await waitForInput()
+            }
         }
     }
-    writeTimeToFile('thời gian nhận thưởng tiếp theo', '10-wukong.txt', 8).then(() => process.exit(1));
+    writeTimeToFile('thời gian nhận thưởng tiếp theo', '10-wukong.txt', 6).then(() => process.exit(1));
     process.exit(1)
 })();
 

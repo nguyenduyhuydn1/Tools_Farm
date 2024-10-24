@@ -289,6 +289,7 @@
   var webAppVersion = '6.0';
   var webAppPlatform = 'unknown';
 
+  // initParams.tgWebAppPlatform = 'iphone';
   initParams.tgWebAppPlatform = 'android';
   if (initParams.tgWebAppData && initParams.tgWebAppData.length) {
     webAppInitData = initParams.tgWebAppData;

@@ -12,9 +12,11 @@ top_left_x, top_left_y, width_specific, height_specific = int(top_left_x), int(t
 
 # Delay to allow time to switch windows
 print("chờ 3s")
+print(color)
 time.sleep(3)
 controller = ScriptController()
 
+# tomato
 target_colors = [(205, 219, 0)]
 steps = 5
 

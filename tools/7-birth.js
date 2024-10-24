@@ -98,6 +98,11 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
     try {
         const browser = await runPuppeteer({
             userDataDir: `C:\\Users\\Huy\\AppData\\Local\\Google\\Chrome\\User Data\\Profile ${countFolder + 100}`,
+            args: [
+                '--window-size=700,800',
+                // '--disable-web-security',
+                // '--disable-features=IsolateOrigins,site-per-process',
+            ],
             proxy,
         });
         const [page] = await browser.pages();
@@ -105,7 +110,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             const page2 = await browser.newPage();
             // let randomUrl = ['https://ipinfo.io/', "https://www.myip.com/"]
             // await page2.goto(randomUrl[Math.floor(Math.random() * randomUrl.length)]);
-            await page2.goto("https://example.com/");
+            await page2.goto("https://google.com/");
             await sleep(3000);
             await page.bringToFront();
         }
@@ -115,8 +120,10 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         const [src, iframe] = await checkIframeAndClick(page);
         await page.goto(src);
         await sleep(1000);
+        await page.goto('https://birdx.birds.dog/home');
+        await sleep(2000);
         await page.goto('https://birdx.birds.dog/mini-game');
-        await sleep(3000);
+        await sleep(1000);
 
         await fetchMintStatusWorms(iframe, proxy);
         let data = await fetchEggPlay(iframe, proxy);
@@ -126,7 +133,8 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             }
             await fetchEggClaim(iframe, proxy);
         }
-        // browser.close()
+        // await sleep(5000);
+        browser.close()
     } catch (error) {
         console.error("Error:", error.message);
     }
@@ -135,21 +143,19 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 
 (async () => {
-    // let ok = false;
+    let ok = true;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
             if (i == 4) continue
-            // if (i == 44) {
-            //     ok = true;
-            // }
-            // if (ok) {
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
-
-            await MainBrowser(proxy, i);
-            //     await sleep(1000);
-            // }
+            if (i == 10) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+                await MainBrowser(proxy, i);
+            }
         }
     }
     writeTimeToFile('thời gian nhận thưởng tiếp theo', '7-birth.txt', 4).then(() => process.exit(1));

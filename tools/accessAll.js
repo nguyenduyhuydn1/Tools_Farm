@@ -53,7 +53,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
             await page.bringToFront();
         }
 
-        await setMobile(page);
+        // await setMobile(page);
 
         // const addFunc = async (page) => {
         //     const pathPreloadFile = path.join(__dirname, 'public', 'preload.js');
@@ -77,7 +77,7 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
         //     }
         // });
 
-        await page.goto("https://web.telegram.org/k/#@wukobot");
+        await page.goto("https://web.telegram.org/k/");
         // await page.goto("https://web.telegram.org/k/");
         // await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
@@ -109,15 +109,21 @@ const MainBrowser = async (proxy, countFolder, existToken = null) => {
 
 
 (async () => {
+    let ok = false;
     for (let offset = 0; offset < distance; offset++) {
         for (let i = offset; i < totalElements; i += distance) {
-            // if (i == 4) continue
-            let proxy = (i > 9) ? proxies[i] : null;
-            proxy = proxies[i] == 'null' ? null : proxies[i];
-            printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
+            if (i == 4) continue
+            if (i == 25) {
+                ok = true;
+            }
+            if (ok) {
+                let proxy = (i > 9) ? proxies[i] : null;
+                proxy = proxies[i] == 'null' ? null : proxies[i];
+                printFormattedTitle(`account ${i} - Profile ${i + 100} - proxy ${proxy}`, "red");
 
-            await MainBrowser(proxy, i);
-            await waitForInput();
+                await MainBrowser(proxy, i);
+                await waitForInput()
+            }
         }
     }
     process.exit(1)
